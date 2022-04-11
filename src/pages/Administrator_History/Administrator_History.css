@@ -1,0 +1,34 @@
+#title {
+    text-align: center;
+    font-family: arial,sans-serif;
+    font-weight: bold;
+}
+
+#administrator_History {
+    text-align: center;
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    border: 3px solid #000;
+    border-width: 1px 0;
+}
+
+#administrator_History td, #administrator_History th {
+    border: 1px solid #000;
+    padding: 8px;
+}
+
+#administrator_History tr:nth-child(even){
+    background-color: #f2f2f2
+}
+
+#administrator_History tr:hover {
+    background-color: #ddd
+}
+
+#administrator_History th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    background-color: #029B36;
+    color: white;
+}

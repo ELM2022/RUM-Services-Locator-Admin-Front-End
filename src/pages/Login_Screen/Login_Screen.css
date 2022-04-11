@@ -1,0 +1,21 @@
+#Header {
+    background-color: #029B36;
+    color: #fff;
+    font-family: 'Roboto';
+    font-size: 45px;
+    text-align: center;
+}
+
+.Center-content {
+    justify-content: center;
+}
+
+.Center-text {
+    text-align: center;
+}
+
+.image_location {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
