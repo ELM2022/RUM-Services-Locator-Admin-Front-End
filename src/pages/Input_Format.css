@@ -1,0 +1,48 @@
+#input_information {
+    text-align: center;
+}
+
+#font-type{
+    font-family: "Roboto";
+    font-weight: bold;
+}
+
+#logo {
+    height: 300px;
+    width: 325px;
+}
+
+
+#button-font {
+    font-family: "Roboto";
+}
+
+#logo_home {
+    height: 300px;
+    width: 325px;
+    justify-content: center;
+    align-items: center;
+
+}
+
+#logo_padding {
+    padding-top: 150px;
+}
+
+#login_textbox_padding {
+    padding-top: 75px;
+}
+
+#create_account_textbox_padding {
+    padding-top: 25px;
+}
+
+#button_padding {
+    padding-top: 10px;
+}
+
+.button_location {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

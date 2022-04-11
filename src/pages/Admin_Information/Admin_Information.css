@@ -1,0 +1,38 @@
+#title {
+    text-align: center;
+    font-family: arial,sans-serif;
+    font-weight: bold;
+}
+
+#admin_information {
+    text-align: center;
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    border: 3px solid #000;
+    border-width: 1px 0;
+}
+
+#admin_information td, #admin_information th {
+    border: 1px solid #000;
+    padding: 8px;
+}
+
+#admin_information tr:nth-child(even){
+    background-color: #f2f2f2
+}
+
+#admin_information tr:hover {
+    background-color: #ddd
+}
+
+#admin_information th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    background-color: #029B36;
+    color: white;
+}
+
+#edit_button {
+    background-color: #029B36
+}

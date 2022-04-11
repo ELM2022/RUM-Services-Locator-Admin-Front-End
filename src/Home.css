@@ -1,0 +1,24 @@
+#Home {
+    text-align: center;
+    font-family: 'Roboto';
+    background-color: #029B36;
+}
+
+#Home-button {
+    font-family: 'Roboto';
+    padding-top: 12px;
+}
+
+#Header-color {
+    background-color: #029B36;
+}
+
+#Home-header {
+    color: #fff;
+    font-family: 'Roboto';
+    font-size: 45px;
+}
+
+#absolute-position {
+    position: fixed;
+}
