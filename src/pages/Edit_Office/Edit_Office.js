@@ -1,90 +1,163 @@
-import React, { Component } from 'react'
+import React, { Component, useEffect, useState } from 'react'
 import '../Table_Format.css'
 import 'bootstrap/dist/css/bootstrap.css'
 
-class Edit_Office extends Component {
+const Edit_Office = () => {
 
-    constructor(props){
-        super(props)
-        this.state = {
-            office_information: [
-                {office_name: 'Actividades Sociales y Culturales', office_description: 'Test Description', office_schedule: 'L-V 7:45AM-4:30PM', office_latitude: 18.2101382977879, office_longitude: -67.1411936055247, office_floor_number: 3, office_room_code: 'CE-306', office_email: 'actividadessociales@uprm.edu', office_phone_number: '(787)-832-4040', office_extension_number: 'Ext. 3366,3370', office_website: 'https://www.uprm.edu/p/actividades-sociales', office_active_status: true}
-            ]
-        }
+    const [officeName, setOfficeName] = useState("Actividades Sociales y Culturales");
+    const [officeDescription, setOfficeDescription] = useState("Test Description");
+    const [officeSchedule, setOfficeSchedule] = useState("L-V 7:45AM-4:30PM");
+    const [officeLatitude, setOfficeLatitude] = useState(18.2101382977879);
+    const [officeLongitude, setOfficeLongitude] = useState(-67.1411936055247);
+    const [officeFloorNumber, setOfficeFloorNumber] = useState(3);
+    const [officeRoomCode, setOfficeRoomCode] = useState("CE-306");
+    const [officeEmail, setOfficeEmail] = useState("actividadessociales@uprm.edu");
+    const [officePhoneNumber, setOfficePhoneNumber] = useState("(787)-832-4040");
+    const [officeExtensionNumber, setOfficeExtensionNumber] = useState("Ext. 3366,3370");
+    const [officeWebsite, setOfficeWebsite] = useState("https://www.uprm.edu/p/actividades-sociales");
+    const [officeActiveStatus, setOfficeActiveStatus] = useState(true);
+
+    const handleOfficeNameChange = (e) => {
+        setOfficeName(e.target.value)
+        localStorage.setItem("officeName", e.target.value)
     }
 
-    renderTableData() {
-        return this.state.office_information.map((office_information, index) => {
-            const {office_name, office_schedule, office_description, office_latitude, office_longitude, office_floor_number, office_room_code, office_email, office_phone_number, office_extension_number, office_website, office_active_status} = office_information 
-            return (
-                <tr key={index}>
-                    <td>{office_name}</td>
-                    <td>{office_description}</td>
-                    <td>{office_schedule}</td>
-                    <td>{office_latitude}</td>
-                    <td>{office_longitude}</td>
-                    <td>{office_floor_number}</td>
-                    <td>{office_room_code}</td>
-                    <td>{office_email}</td>
-                    <td>{office_phone_number}</td>
-                    <td>{office_extension_number}</td>
-                    <td>{office_website}</td>
-                    <td>{office_active_status}</td>
-                </tr>
-            )
-        })
+    const handleOfficeDescriptionChange = (e) => {
+        setOfficeDescription(e.target.value)
+        localStorage.setItem("officeDescription", e.target.value)
     }
 
-    renderEditableTableData () {
-        return this.state.office_information.map((office_information, index) => {
-            const {office_name, office_schedule, office_description, office_latitude, office_longitude, office_floor_number, office_room_code, office_email, office_phone_number, office_extension_number, office_website, office_active_status} = office_information 
-            return (
-                <tr key={index}>
-                    <td><input type='text' defaultValue={office_name}></input></td>
-                    <td><input type='text' defaultValue={office_description}></input></td>
-                    <td><input type='text' defaultValue={office_schedule}></input></td>
-                    <td><input type='text' defaultValue={office_latitude}></input></td>
-                    <td><input type='text' defaultValue={office_longitude}></input></td>
-                    <td><input type='text' defaultValue={office_floor_number}></input></td>
-                    <td><input type='text' defaultValue={office_room_code}></input></td>
-                    <td><input type='text' defaultValue={office_email}></input></td>
-                    <td><input type='text' defaultValue={office_phone_number}></input></td>
-                    <td><input type='text' defaultValue={office_extension_number}></input></td>
-                    <td><input type='text' defaultValue={office_website}></input></td>
-                    <td><input type='text' defaultValue={office_active_status}></input></td>
-                </tr>
-            )
-        })
+    const handleOfficeScheduleChange = (e) => {
+        setOfficeSchedule(e.target.value)
+        localStorage.setItem("officeSchedule", e.target.value)
     }
 
-    renderTableHeader() {
-       let header = Object.keys(this.state.office_information[0])
-       return header.map((key, index) => {
-           return <th key={index}>{key.replace(/_/g, " ").toUpperCase()}</th>
-       })
+    const handleOfficeLatitudeChange = (e) => {
+        setOfficeLatitude(e.target.value)
+        localStorage.setItem("officeLatitude", e.target.value)
     }
 
-    render() {
-        return (
-            <div>
-                <h1 id='title'>Edit Office Information</h1>
-                <div id="office_table_padding" class="table-responsive">
-                    <table id='table_information'>
-                        <tbody>
-                            <tr>{this.renderTableHeader()}</tr>
-                            {this.renderEditableTableData()}
-                        </tbody>
-                    </table>
-                </div>
-                <a href="/Active_Directory">
-                    <button class='btn btn-success btn-block'>Save</button>
-                </a>
-                <a href="/Office_Information">
-                    <button class='btn btn-danger btn-block'>Cancel</button>
-                </a>
-            </div>
+    const handleOfficeLongitudeChange = (e) => {
+        setOfficeLongitude(e.target.value)
+        localStorage.setItem("officeLongitude", e.target.value)
+    }
+
+    const handleOfficeFloorNumberChange = (e) => {
+        setOfficeFloorNumber(e.target.value)
+        localStorage.setItem("officeFloorNumber", e.target.value)
+    }
+
+    const handleOfficeRoomCodeChange = (e) => {
+        setOfficeRoomCode(e.target.value)
+        localStorage.setItem("officeRoomCode", e.target.value)
+    }
+
+    const handleOfficeEmailChange = (e) => {
+        setOfficeEmail(e.target.value)
+        localStorage.setItem("officeEmail", e.target.value)
+    }
+
+    const handleOfficePhoneNumberChange = (e) => {
+        setOfficePhoneNumber(e.target.value)
+        localStorage.setItem("officePhoneNumber", e.target.value)
+    }
+
+    const handleOfficeExtensionNumberChange = (e) => {
+        setOfficeExtensionNumber(e.target.value)
+        localStorage.setItem("officeExtensionNumber", e.target.value)
+    }
+
+    const handleOfficeWebsiteChange = (e) => {
+        setOfficeWebsite(e.target.value)
+        localStorage.setItem("officeWebsite", e.target.value)
+    }
+
+    const handleOfficeActiveStatusChange = (e) => {
+        setOfficeActiveStatus(e.target.value)
+        localStorage.setItem("officeActiveStatus", e.target.value)
+    }
+
+    useEffect(() => {
+        setOfficeName(localStorage.getItem("officeName"));
+        setOfficeDescription(localStorage.getItem("officeDescription"));
+        setOfficeSchedule(localStorage.getItem("officeSchedule"));
+        setOfficeLatitude(localStorage.getItem("officeLatitude"));
+        setOfficeLongitude(localStorage.getItem("officeLongitude"));
+        setOfficeFloorNumber(localStorage.getItem("officeFloorNumber"));
+        setOfficeRoomCode(localStorage.getItem("officeRoomCode"));
+        setOfficeEmail(localStorage.getItem("officeEmail"));
+        setOfficePhoneNumber(localStorage.getItem("officePhoneNumber"));
+        setOfficeExtensionNumber(localStorage.getItem("officeExtensionNumber"));
+        setOfficeWebsite(localStorage.getItem("officeWebsite"));
+        setOfficeActiveStatus(localStorage.getItem("officeActiveStatus"));
+    })
+
+
+    function renderTableHeader() {
+        return(
+            <tr>
+            <th>Office Name</th>
+            <th>Office Description</th>
+            <th>Office Schedule</th>
+            <th>Office Latitude</th>
+            <th>Office Longitude</th>
+            <th>Office Floor Number</th>
+            <th>Office Room Code</th>
+            <th>Office Email</th>
+            <th>Office Phone Number</th>
+            <th>Office Extension Number</th>
+            <th>Office Website</th>
+            <th>Office Active Status</th>
+        </tr>
         )
     }
+
+    function renderEditableTableData() {
+                return (
+                    <tr>
+                        <td><input type='text' value={officeName} onChange={handleOfficeNameChange}></input></td>
+                        <td><input type='text' value={officeDescription} onChange={handleOfficeDescriptionChange}></input></td>
+                        <td><input type='text' value={officeSchedule} onChange={handleOfficeScheduleChange}></input></td>
+                        <td><input type='text' value={officeLatitude} onChange={handleOfficeLatitudeChange}></input></td>
+                        <td><input type='text' value={officeLongitude} onChange={handleOfficeLongitudeChange}></input></td>
+                        <td><input type='text' value={officeFloorNumber} onChange={handleOfficeFloorNumberChange}></input></td>
+                        <td><input type='text' value={officeRoomCode} onChange={handleOfficeRoomCodeChange}></input></td>
+                        <td><input type='text' value={officeEmail} onChange={handleOfficeEmailChange}></input></td>
+                        <td><input type='text' value={officePhoneNumber} onChange={handleOfficePhoneNumberChange}></input></td>
+                        <td><input type='text' value={officeExtensionNumber} onChange={handleOfficeExtensionNumberChange}></input></td>
+                        <td><input type='text' value={officeWebsite} onChange={handleOfficeWebsiteChange}></input></td>
+                        <td><input type='text' value={officeActiveStatus} onCHange={handleOfficeActiveStatusChange}></input></td>
+                    </tr>
+                )
+            }
+    
+    function render() {
+        return (
+            <div>
+                 <h1 id='title'>Edit Office Information</h1>
+                 <div id="office_table_padding" class="table-responsive">
+                     <table id='table_information'>
+                         <tbody>
+                             {renderTableHeader()}
+                             {renderEditableTableData()}
+                         </tbody>
+                     </table>
+                 </div>
+                 <a href="/Active_Directory">
+                     <button class='btn btn-success btn-block'>Save</button>
+                 </a>
+                 <a href="/Office_Information">
+                     <button class='btn btn-danger btn-block'>Cancel</button>
+                 </a>
+        </div>
+        )
+    }
+
+    return (
+        render()
+    )
 }
 
-export default Edit_Office
+export default Edit_Office;
+
+
