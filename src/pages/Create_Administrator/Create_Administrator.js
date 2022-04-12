@@ -55,9 +55,9 @@ class Create_Administrator extends Component {
 
     render() {
         return (
-            <div>
+            <div id="office_table_padding">
                 <h1 id='title'>Create Administrator</h1>
-                <div id="office_table_padding">
+                <div>
                     <table id='table_information' align='center'>
                         <tbody>
                             <tr>{this.renderTableHeader()}</tr>

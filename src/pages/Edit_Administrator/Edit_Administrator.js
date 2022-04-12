@@ -8,7 +8,6 @@ const Edit_Administrator = () => {
     const [administratorName, setAdministratorName] = useState("Lola");
     const [administratorLastName, setAdministratorLastName] = useState("Mento");
     const [administratorPassword, setAdministratorPassword] = useState("*********");
-    const [administratorActiveStatus, setAdministratorActiveStatus] = useState(true);
 
     const handleAdministratorEmailChange = (e) => {
         setAdministratorEmail(e.target.value)
@@ -30,17 +29,11 @@ const Edit_Administrator = () => {
         localStorage.setItem("administratorPassword", e.target.value)
     }
 
-    const handleAdministratorActiveStatus = (e) => {
-        setAdministratorActiveStatus(e.target.value)
-        localStorage.setItem("administratorActiveStatus", e.target.value)
-    }
-
     useEffect(() => {
         setAdministratorEmail(localStorage.getItem("administratorEmail"));
         setAdministratorName(localStorage.getItem("administratorName"));
         setAdministratorLastName(localStorage.getItem("administratorLastName"));
         setAdministratorPassword(localStorage.getItem("administratorPassword"));
-        setAdministratorActiveStatus(localStorage.getItem("administratorActiveStatus"));
     })
 
 
@@ -51,7 +44,6 @@ const Edit_Administrator = () => {
             <th>Administrator Name</th>
             <th>Administrator Last Name</th>
             <th>Administrator Password</th>
-            <th>Administrator Active Status</th>
         </tr>
         )
     }
@@ -63,23 +55,20 @@ const Edit_Administrator = () => {
                         <td><input type='text' value={administratorName} onChange={handleAdministratorNameChange}></input></td>
                         <td><input type='text' value={administratorLastName} onChange={handleAdministratorLastNameChange}></input></td>
                         <td><input type='text' value={administratorPassword} onChange={handleAdministratorPasswordChange}></input></td>
-                        <td><input type='text' value={administratorActiveStatus} onChange={handleAdministratorActiveStatus}></input></td>
                     </tr>
                 )
             }
     
     function render() {
         return (
-            <div>
+            <div id="office_table_padding">
                  <h1 id='title'>Edit Administrator Information</h1>
-                 <div id="office_table_padding" class="table-responsive">
-                     <table id='table_information'>
+                     <table id='table_information' align="center">
                          <tbody>
                              {renderTableHeader()}
                              {renderEditableTableData()}
                          </tbody>
                      </table>
-                 </div>
                  <a href="/Active_Administrator">
                      <button class='btn btn-success btn-block'>Save</button>
                  </a>

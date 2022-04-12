@@ -15,7 +15,6 @@ const Edit_Office = () => {
     const [officePhoneNumber, setOfficePhoneNumber] = useState("(787)-832-4040");
     const [officeExtensionNumber, setOfficeExtensionNumber] = useState("Ext. 3366,3370");
     const [officeWebsite, setOfficeWebsite] = useState("https://www.uprm.edu/p/actividades-sociales");
-    const [officeActiveStatus, setOfficeActiveStatus] = useState(true);
 
     const handleOfficeNameChange = (e) => {
         setOfficeName(e.target.value)
@@ -72,11 +71,6 @@ const Edit_Office = () => {
         localStorage.setItem("officeWebsite", e.target.value)
     }
 
-    const handleOfficeActiveStatusChange = (e) => {
-        setOfficeActiveStatus(e.target.value)
-        localStorage.setItem("officeActiveStatus", e.target.value)
-    }
-
     useEffect(() => {
         setOfficeName(localStorage.getItem("officeName"));
         setOfficeDescription(localStorage.getItem("officeDescription"));
@@ -89,7 +83,6 @@ const Edit_Office = () => {
         setOfficePhoneNumber(localStorage.getItem("officePhoneNumber"));
         setOfficeExtensionNumber(localStorage.getItem("officeExtensionNumber"));
         setOfficeWebsite(localStorage.getItem("officeWebsite"));
-        setOfficeActiveStatus(localStorage.getItem("officeActiveStatus"));
     })
 
 
@@ -107,7 +100,6 @@ const Edit_Office = () => {
             <th>Office Phone Number</th>
             <th>Office Extension Number</th>
             <th>Office Website</th>
-            <th>Office Active Status</th>
         </tr>
         )
     }
@@ -126,16 +118,15 @@ const Edit_Office = () => {
                         <td><input type='text' value={officePhoneNumber} onChange={handleOfficePhoneNumberChange}></input></td>
                         <td><input type='text' value={officeExtensionNumber} onChange={handleOfficeExtensionNumberChange}></input></td>
                         <td><input type='text' value={officeWebsite} onChange={handleOfficeWebsiteChange}></input></td>
-                        <td><input type='text' value={officeActiveStatus} onCHange={handleOfficeActiveStatusChange}></input></td>
                     </tr>
                 )
             }
     
     function render() {
         return (
-            <div>
+            <div id="office_table_padding">
                  <h1 id='title'>Edit Office Information</h1>
-                 <div id="office_table_padding" class="table-responsive">
+                 <div class="table-responsive">
                      <table id='table_information'>
                          <tbody>
                              {renderTableHeader()}

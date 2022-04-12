@@ -10,6 +10,7 @@
     border-collapse: collapse;
     border: 3px solid #000;
     border-width: 1px 0;
+    table-layout: fixed;
 }
 
 #table_information td, #table_information th {
@@ -31,5 +32,10 @@
 }
 
 #office_table_padding {
-    padding-left: 17%;
+    padding-left: 230px;
+    }
+    
+    #administrator_office_center {
+        margin-left: auto;
+        margin-right: auto;
 }

@@ -8,7 +8,7 @@ class Admin_Information extends Component {
         super(props)
         this.state = {
             admin_information: [
-                {email:'lolaMento@gmail.com', admin_name: 'Lola', admin_last_name: 'Mento', admin_password: '********', admin_active_status: true}
+                {email:localStorage.getItem("administratorEmail"), admin_name: localStorage.getItem("administratorName"), admin_last_name: localStorage.getItem("administratorLastName"), admin_password: localStorage.getItem("administratorPassword")}
             ]
         }
     }
@@ -22,7 +22,6 @@ class Admin_Information extends Component {
                     <td>{admin_name}</td>
                     <td>{admin_last_name}</td>
                     <td>{admin_password}</td>
-                    <td>{admin_active_status}</td>
                 </tr>
             )
         })
@@ -37,7 +36,6 @@ class Admin_Information extends Component {
                     <td><input type='text' value={admin_name}></input></td>
                     <td><input type='text' value={admin_last_name}></input></td>
                     <td><input type='text' value={admin_password}></input></td>
-                    <td><input type='text' value={admin_active_status}></input></td>
                 </tr>
             )
         })
@@ -56,7 +54,7 @@ class Admin_Information extends Component {
 
     render() {
         return (
-            <div>
+            <div id="office_table_padding">
                 <h1 id='title'>Admin Information</h1>
                 <table id='table_information' align='center'>
                     <tbody>

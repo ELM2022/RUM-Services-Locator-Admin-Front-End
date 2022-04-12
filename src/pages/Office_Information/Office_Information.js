@@ -8,14 +8,14 @@ class Office_Information extends Component {
         super(props)
         this.state = {
             office_information: [
-                {office_name: 'Actividades Sociales y Culturales', office_description: 'Test Description', office_schedule: 'L-V 7:45AM-4:30PM', office_latitude: 18.2101382977879, office_longitude: -67.1411936055247, office_floor_number: 3, office_room_code: 'CE-306', office_email: 'actividadessociales@uprm.edu', office_phone_number: '(787)-832-4040', office_extension_number: 'Ext. 3366,3370', office_website: 'https://www.uprm.edu/p/actividades-sociales', office_active_status: true}
+                {office_name: localStorage.getItem('officeName'), office_description: localStorage.getItem('officeDescription'), office_schedule: localStorage.getItem('officeSchedule'), office_latitude: localStorage.getItem('officeLatitude'), office_longitude: localStorage.getItem('officeLongitude'), office_floor_number: localStorage.getItem("officeFloorNumber"), office_room_code: localStorage.getItem('officeRoomCode'), office_email: localStorage.getItem('officeEmail'), office_phone_number: localStorage.getItem('officePhoneNumber'), office_extension_number: localStorage.getItem('officeExtensionNumber'), office_website: localStorage.getItem('officeWebsite')}
             ]
         }
     }
 
     renderTableData() {
         return this.state.office_information.map((office_information, index) => {
-            const {office_name, office_schedule, office_description, office_latitude, office_longitude, office_floor_number, office_room_code, office_email, office_phone_number, office_extension_number, office_website, office_active_status} = office_information 
+            const {office_name, office_schedule, office_description, office_latitude, office_longitude, office_floor_number, office_room_code, office_email, office_phone_number, office_extension_number, office_website} = office_information 
             return (
                 <tr key={index}>
                     <td>{office_name}</td>
@@ -29,7 +29,6 @@ class Office_Information extends Component {
                     <td>{office_phone_number}</td>
                     <td>{office_extension_number}</td>
                     <td>{office_website}</td>
-                    <td>{office_active_status}</td>
                 </tr>
             )
         })
@@ -70,9 +69,9 @@ class Office_Information extends Component {
 
     render() {
         return (
-            <div>
+            <div id="office_table_padding">
                 <h1 id='title'>Office Information</h1>
-                <div id="office_table_padding" class="table-responsive">
+                <div class="table-responsive">
                     <table id='table_information'>
                         <tbody>
                             <tr>{this.renderTableHeader()}</tr>

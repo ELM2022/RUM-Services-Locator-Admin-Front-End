@@ -32,7 +32,7 @@ class Active_Administrator extends Component {
 
     render() {
         return(
-            <div>
+            <div id="office_table_padding">
             <h1 id='title'>Active Administrator</h1>
             <table id='menu_information' align='center' class='table'>
                 <tbody>
