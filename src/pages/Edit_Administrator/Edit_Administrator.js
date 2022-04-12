@@ -1,63 +1,100 @@
-import React, { Component, useState } from 'react'
+import React, { Component, useEffect, useState } from 'react'
 import '../Table_Format.css'
 import 'bootstrap/dist/css/bootstrap.css'
 
-class Edit_Administrator extends Component {
+const Edit_Administrator = () => {
 
-    constructor(props){
-        super(props)
-        this.state = {
-            admin_information: [
-                { email:'lolaMento@gmail.com', admin_name: 'Lola', admin_last_name: 'Mento', admin_password: '********', admin_active_status: true}
-            ]
-        }
+    const [administratorEmail, setAdministratorEmail] = useState("lolaMento@gmail.com");
+    const [administratorName, setAdministratorName] = useState("Lola");
+    const [administratorLastName, setAdministratorLastName] = useState("Mento");
+    const [administratorPassword, setAdministratorPassword] = useState("*********");
+    const [administratorActiveStatus, setAdministratorActiveStatus] = useState(true);
+
+    const handleAdministratorEmailChange = (e) => {
+        setAdministratorEmail(e.target.value)
+        localStorage.setItem("administratorEmail", e.target.value)
     }
 
-    handleInputEdit(e) {
-        console.log(e.target.value)
+    const handleAdministratorNameChange = (e) => {
+        setAdministratorName(e.target.value)
+        localStorage.setItem("administratorName", e.target.value)
     }
 
-    renderEditableTableData () {
-        return this.state.admin_information.map((admin_information, index) => {
-            const {email, admin_password, admin_name, admin_last_name, admin_active_status} = admin_information 
-            return (
-                <tr key={index}>
-                    <td><input type='text' defaultValue={email} onChange={this.handleInputEdit}></input></td>
-                    <td><input type='text' defaultValue={admin_name}></input></td>
-                    <td><input type='text' defaultValue={admin_last_name}></input></td>
-                    <td><input type='text' defaultValue={admin_password}></input></td>
-                    <td><input type='text' defaultValue={admin_active_status}></input></td>
-                </tr>
-            )
-        })
+    const handleAdministratorLastNameChange = (e) => {
+        setAdministratorLastName(e.target.value)
+        localStorage.setItem("administratorLastName", e.target.value)
     }
 
-    renderTableHeader() {
-       let header = Object.keys(this.state.admin_information[0])
-       return header.map((key, index) => {
-           return <th key={index}>{key.replace(/_/g, " ").toUpperCase()}</th>
-       })
+    const handleAdministratorPasswordChange = (e) => {
+        setAdministratorPassword(e.target.value)
+        localStorage.setItem("administratorPassword", e.target.value)
     }
 
-    render() {
-        return (
-            <div>
-                <h1 id='title'>Admin Information</h1>
-                <table id='table_information' align='center'>
-                    <tbody>
-                        <tr>{this.renderTableHeader()}</tr>
-                        {this.renderEditableTableData()}
-                    </tbody>
-                </table>
-                <a href="/Active_Administrator">
-                    <button class='btn btn-success btn-block'>Save</button>
-                </a>
-                <a href='/Admin_Information'>
-                    <button class='btn btn-danger btn-block'>Cancel</button>
-                </a>
-            </div>
+    const handleAdministratorActiveStatus = (e) => {
+        setAdministratorActiveStatus(e.target.value)
+        localStorage.setItem("administratorActiveStatus", e.target.value)
+    }
+
+    useEffect(() => {
+        setAdministratorEmail(localStorage.getItem("administratorEmail"));
+        setAdministratorName(localStorage.getItem("administratorName"));
+        setAdministratorLastName(localStorage.getItem("administratorLastName"));
+        setAdministratorPassword(localStorage.getItem("administratorPassword"));
+        setAdministratorActiveStatus(localStorage.getItem("administratorActiveStatus"));
+    })
+
+
+    function renderTableHeader() {
+        return(
+            <tr>
+            <th>Administrator Email</th>
+            <th>Administrator Name</th>
+            <th>Administrator Last Name</th>
+            <th>Administrator Password</th>
+            <th>Administrator Active Status</th>
+        </tr>
         )
     }
+
+    function renderEditableTableData() {
+                return (
+                    <tr>
+                        <td><input type='text' value={administratorEmail} onChange={handleAdministratorEmailChange}></input></td>
+                        <td><input type='text' value={administratorName} onChange={handleAdministratorNameChange}></input></td>
+                        <td><input type='text' value={administratorLastName} onChange={handleAdministratorLastNameChange}></input></td>
+                        <td><input type='text' value={administratorPassword} onChange={handleAdministratorPasswordChange}></input></td>
+                        <td><input type='text' value={administratorActiveStatus} onChange={handleAdministratorActiveStatus}></input></td>
+                    </tr>
+                )
+            }
+    
+    function render() {
+        return (
+            <div>
+                 <h1 id='title'>Edit Administrator Information</h1>
+                 <div id="office_table_padding" class="table-responsive">
+                     <table id='table_information'>
+                         <tbody>
+                             {renderTableHeader()}
+                             {renderEditableTableData()}
+                         </tbody>
+                     </table>
+                 </div>
+                 <a href="/Active_Administrator">
+                     <button class='btn btn-success btn-block'>Save</button>
+                 </a>
+                 <a href="/Office_Information">
+                     <button class='btn btn-danger btn-block'>Cancel</button>
+                 </a>
+        </div>
+        )
+    }
+
+    return (
+        render()
+    )
 }
 
-export default Edit_Administrator
+export default Edit_Administrator;
+
+
