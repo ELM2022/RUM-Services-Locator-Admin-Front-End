@@ -50,6 +50,10 @@ class Admin_Information extends Component {
        })
     }
 
+    handleDelete(e) {
+        alert("This item will be deleted");
+    }
+
     render() {
         return (
             <div>
@@ -63,7 +67,9 @@ class Admin_Information extends Component {
                 <a href="/Edit_Administrator">
                     <button class='btn btn-success btn-block'>Edit</button>
                 </a>
-                <button class='btn btn-danger btn-block'>Delete</button>
+                <a href="/Active_Administrator">
+                    <button class='btn btn-danger btn-block' onClick={this.handleDelete}>Delete</button>
+                </a>
             </div>
         )
     }
