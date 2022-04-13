@@ -2,7 +2,7 @@ import React, { Component, useEffect, useState } from 'react'
 import '../Table_Format.css'
 import 'bootstrap/dist/css/bootstrap.css'
 
-const Edit_Administrator = () => {
+const Edit_Administrator = (props) => {
 
     const [administratorEmail, setAdministratorEmail] = useState("lolaMento@gmail.com");
     const [administratorName, setAdministratorName] = useState("Lola");

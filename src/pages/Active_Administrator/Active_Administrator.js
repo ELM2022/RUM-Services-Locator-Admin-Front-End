@@ -10,6 +10,13 @@ class Active_Administrator extends Component {
                 {name: 'Magaly'},
                 {name: 'Luis Miguel'},
                 {name: 'Lola Mento'}
+            ],
+            administratorEntry: [
+                {administratorEmail: 'lolaMento@gmail.com',
+                firstName: 'Lola',
+                lastName: 'Mento',
+                password: '*****'
+            }
             ]
         }
     }
