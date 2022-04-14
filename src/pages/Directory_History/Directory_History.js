@@ -1,5 +1,6 @@
 import '../Table_Format.css'
 import React, { Component } from 'react'
+import { getAllOfficesUpdateHistoryHandler } from '../../handlers/officeHistoryHandler'
 
 class Directory_History extends Component {
     constructor(props) {
@@ -10,6 +11,13 @@ class Directory_History extends Component {
                 {editor: 'Magaly Mercado', name: 'Registraduria',latitude: 18.2093337, longitude: -67.1410899, room_code: 'C-203-B', email:'registro@uprm.edu', date: '03/31/20222', justification: 'Updated Room Code'}
             ]
         }
+    }
+
+    componentDidMount() {
+        getAllOfficesUpdateHistoryHandler().then((res) => {
+            console.log(res.data.data.office_updates);
+            // in ordero to store this use this.setState({directory_history: res.data.data.office_updates})
+        })
     }
 
     renderTableData() {

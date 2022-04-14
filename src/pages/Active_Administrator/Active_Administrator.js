@@ -1,5 +1,7 @@
 import './Active_Administrator.css'
 import React, { Component } from 'react';
+import { allAdministratorsHandler } from '../../handlers/administratorHandler'
+
 
 class Active_Administrator extends Component {
 
@@ -10,23 +12,23 @@ class Active_Administrator extends Component {
                 {name: 'Magaly'},
                 {name: 'Luis Miguel'},
                 {name: 'Lola Mento'}
-            ],
-            administratorEntry: [
-                {administratorEmail: 'lolaMento@gmail.com',
-                firstName: 'Lola',
-                lastName: 'Mento',
-                password: '*****'
-            }
             ]
         }
     }
 
+    componentDidMount() {
+        allAdministratorsHandler().then((res) => {
+            this.setState({administrators: res.data.data.admins})
+        })
+
+    }
+
     renderTableData() {
         return this.state.administrators.map((administrators, index) => {
-            const { id, name} = administrators
+            const {admin_name, admin_last_name} = administrators
             return(
                 <tr key={index}>
-                    <td>{name}</td>
+                    <td>{`${admin_name} ${admin_last_name}`}</td>
                     <td>
                         <a href="/Admin_Information">
                             <button class='btn btn-primary btn-success' id='menu_button'>Ver Mas</button>

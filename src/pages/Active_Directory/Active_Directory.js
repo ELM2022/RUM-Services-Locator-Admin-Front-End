@@ -1,26 +1,30 @@
 import React, { Component } from 'react';
 import './Active_Directory.css'
 import '../Menu_Format.css'
+import { allOfficesHandler } from '../../handlers/officeHandler'
 
 class Active_Directory extends Component{
 
         constructor(props){
             super(props)
             this.state = {
-                offices: [
-                        {name: 'Asistencia Economica'},
-                        {name: 'Oficina de Registraduria'},
-                        {name: 'Recaudaciones'}
-                    ]
+                offices: []
             }
+        }
+
+
+        componentDidMount() {
+            allOfficesHandler().then(res => {
+                this.setState({offices: res.data.data.offices})
+            })
         }
 
         renderTableData(){
             return this.state.offices.map((offices, index) => {
-                const {id, name} = offices
+                const {office_name} = offices
                 return(
                     <tr key={index}>
-                        <td>{name}</td>
+                        <td>{office_name}</td>
                         <td><a href="/Office_Information"><button class="btn btn-primary btn-success" id='menu_button'>Ver Mas</button></a></td>
                     </tr>
                 )

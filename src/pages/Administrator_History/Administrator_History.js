@@ -1,5 +1,6 @@
 import '../Table_Format.css'
 import React, { Component } from 'react'
+import { getAllAdministratorUpdateHistoryHandler } from '../../handlers/administratorHistoryHandler'
 
 class Administrator_History extends Component {
     constructor(props) {
@@ -10,6 +11,14 @@ class Administrator_History extends Component {
                 {editor: 'Magaly Mercado', updated_record: 'Nelson', last_name: 'Pagan', email: 'nelson.pagan2@upr.edu', date: '03/15/2022', justification: 'Deleted Account, no longer works here.'}
             ]
         }
+    }
+
+    componentDidMount() {
+        getAllAdministratorUpdateHistoryHandler().then((res) => {
+            console.log(res.data.data.admin_updates);
+            //in order to store in state use this.setState({administrator_history: res.data.data.admin_updates})
+        })
+
     }
 
     renderTableData() {

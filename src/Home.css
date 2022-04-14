@@ -30,3 +30,6 @@
 #header-center {
     text-align: center;
 }
+#header-position {
+    position: fixed;
+}
