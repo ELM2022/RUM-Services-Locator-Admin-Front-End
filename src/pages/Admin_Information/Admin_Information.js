@@ -53,7 +53,7 @@ class Admin_Information extends Component {
     render() {
         return (
             <div id="office_table_padding">
-                <h1 id='title'>Admin Information</h1>
+                <h1 id='title'>Información del Administrador</h1>
                 <table id='table_information' align='center'>
                     <tbody>
                         <tr>{this.renderTableHeader()}</tr>

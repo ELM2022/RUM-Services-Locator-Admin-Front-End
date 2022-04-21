@@ -60,7 +60,7 @@ const Edit_Administrator = (props) => {
     function render() {
         return (
             <div id="office_table_padding">
-                 <h1 id='title'>Edit Administrator Information</h1>
+                 <h1 id='title'>Editar Información del Administrador</h1>
                      <table id='table_information' align="center">
                          <tbody>
                              {renderTableHeader()}
@@ -69,7 +69,7 @@ const Edit_Administrator = (props) => {
                      </table>
                     <div class='form-group'>
                         <h2 id='title'>Justificación</h2>
-                        <label for='textArea' id='title'>Porfavor entrar justificacion de cambio</label>
+                        <label for='textArea' id='title'>Porfavor escribir justificación de cambio</label>
                         <textarea class='form-control' id='textArea'></textarea>
                     </div>
                  <a href="/Active_Administrator">

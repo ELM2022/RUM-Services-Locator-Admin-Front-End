@@ -70,7 +70,7 @@ class Office_Information extends Component {
     render() {
         return (
             <div id="office_table_padding">
-                <h1 id='title'>Office Information</h1>
+                <h1 id='title'>Información de Oficina</h1>
                 <div class="table-responsive">
                     <table id='table_information'>
                         <tbody>

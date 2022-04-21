@@ -125,7 +125,7 @@ const Edit_Office = () => {
     function render() {
         return (
             <div id="office_table_padding">
-                 <h1 id='title'>Edit Office Information</h1>
+                 <h1 id='title'>Editar Información de Oficina</h1>
                  <div class="table-responsive">
                      <table id='table_information'>
                          <tbody>
@@ -136,9 +136,9 @@ const Edit_Office = () => {
                  </div>
                  <div class='form-group'>
                         <h2 id='title'>Justificación</h2>
-                        <label for='textArea' id='title'>Porfavor entrar justificacion de cambio</label>
+                        <label for='textArea' id='title'>Porfavor escribir justificación de cambio</label>
                         <textarea class='form-control' id='textArea'></textarea>
-                    </div>
+                </div>
                  <a href="/Active_Directory">
                      <button class='btn btn-success btn-block'>Save</button>
                  </a>
