@@ -56,7 +56,7 @@ class Create_Administrator extends Component {
 
     render() {
         return (
-            <div class='container'>
+            <div class='container' id="office_table_padding">
                 <div id='font-type'>
                     <h1>Create Administrator</h1>
                     <h2>Introduzca el correo electrónico del administrador a ser creado</h2>

@@ -40,7 +40,7 @@ class Active_Administrator extends Component {
     render() {
         return(
             <div id="office_table_padding">
-            <h1 id='title'>Active Administrator</h1>
+            <h1 id='title'>Directorio de Administradores</h1>
             <table id='menu_information' align='center' class='table'>
                 <tbody>
                     {this.renderTableData()}

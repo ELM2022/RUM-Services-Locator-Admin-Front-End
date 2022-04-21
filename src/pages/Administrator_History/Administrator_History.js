@@ -47,7 +47,7 @@ class Administrator_History extends Component {
         return(
             <div id="office_table_padding">
                 <h1 id='title'>
-                    Administrator
+                    Historial de Administradores
                 </h1>
                 <div>
                     <table id='table_information' align='center'>
