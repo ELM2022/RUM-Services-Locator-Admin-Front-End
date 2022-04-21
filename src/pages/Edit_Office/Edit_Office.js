@@ -134,6 +134,11 @@ const Edit_Office = () => {
                          </tbody>
                      </table>
                  </div>
+                 <div class='form-group'>
+                        <h2 id='title'>Justificación</h2>
+                        <label for='textArea' id='title'>Porfavor entrar justificacion de cambio</label>
+                        <textarea class='form-control' id='textArea'></textarea>
+                    </div>
                  <a href="/Active_Directory">
                      <button class='btn btn-success btn-block'>Save</button>
                  </a>

@@ -43,7 +43,6 @@ const Edit_Administrator = (props) => {
             <th>Administrator Email</th>
             <th>Administrator Name</th>
             <th>Administrator Last Name</th>
-            <th>Administrator Password</th>
         </tr>
         )
     }
@@ -54,7 +53,6 @@ const Edit_Administrator = (props) => {
                         <td><input type='text' value={administratorEmail} onChange={handleAdministratorEmailChange}></input></td>
                         <td><input type='text' value={administratorName} onChange={handleAdministratorNameChange}></input></td>
                         <td><input type='text' value={administratorLastName} onChange={handleAdministratorLastNameChange}></input></td>
-                        <td><input type='text' value={administratorPassword} onChange={handleAdministratorPasswordChange}></input></td>
                     </tr>
                 )
             }
@@ -69,6 +67,11 @@ const Edit_Administrator = (props) => {
                              {renderEditableTableData()}
                          </tbody>
                      </table>
+                    <div class='form-group'>
+                        <h2 id='title'>Justificación</h2>
+                        <label for='textArea' id='title'>Porfavor entrar justificacion de cambio</label>
+                        <textarea class='form-control' id='textArea'></textarea>
+                    </div>
                  <a href="/Active_Administrator">
                      <button class='btn btn-success btn-block'>Save</button>
                  </a>
