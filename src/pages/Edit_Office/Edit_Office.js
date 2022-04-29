@@ -10,7 +10,6 @@ const Edit_Office = () => {
     const {officeid} = useParams();
     const navigate = useNavigate();
 
-    const [buildingId, setBuildingId] = useState();
     const [officeName, setOfficeName] = useState("");
     const [officeDescription, setOfficeDescription] = useState("");
     const [officeSchedule, setOfficeSchedule] = useState("");
@@ -23,6 +22,7 @@ const Edit_Office = () => {
     const [officeExtensionNumber, setOfficeExtensionNumber] = useState("");
     const [officeWebsite, setOfficeWebsite] = useState("");
     const [officeActiveStatus, setOfficeActiveStatus] = useState();
+    const [justification, setJustification] = useState("");
 
     useEffect(() => {
         officeGetHandler(officeid).then((res) => {
@@ -69,7 +69,7 @@ const Edit_Office = () => {
                     office_id: officeid,
                     admin_id: 1,
                     update_datetime: new Date(Date.now()),
-                    update_justification: ""
+                    update_justification: justification
                 }
                 addOfficeUpdateHandler(office_update).then((res) => {
                     if (res.status === 200) {
@@ -120,20 +120,25 @@ const Edit_Office = () => {
     function render() {
         return (
             <div id="office_table_padding">
-                <h1 id='title'>Edit Office Information</h1>
-                <div class="table-responsive">
-                    <table id='table_information'>
-                        <tbody>
-                            {renderTableHeader()}
-                            {renderEditableTableData()}
-                        </tbody>
-                    </table>
+                 <h1 id='title'>Editar Información de Oficina</h1>
+                 <div class="table-responsive">
+                     <table id='table_information'>
+                         <tbody>
+                             {renderTableHeader()}
+                             {renderEditableTableData()}
+                         </tbody>
+                     </table>
+                 </div>
+                 <div class='form-group'>
+                        <h2 id='title'>Justificación</h2>
+                        <label for='textArea' id='title'>Porfavor escribir justificación de cambio</label>
+                        <textarea class='form-control' id='textArea' onChange={(e) => setJustification(e.target.value)}></textarea>
                 </div>
-                    <button class='btn btn-success btn-block' onClick={(e) => handleSave(e)}>Save</button>
-                <a href={`/Office_Information/${officeid}`}>
-                    <button class='btn btn-danger btn-block'>Cancel</button>
-                </a>
-            </div>
+                     <button class='btn btn-success btn-block' onClick={(e) => handleSave(e)}>Save</button>
+                 <a href={`/Office_Information/${officeid}`}>
+                     <button class='btn btn-danger btn-block'>Cancel</button>
+                 </a>
+        </div>
         )
     }
 

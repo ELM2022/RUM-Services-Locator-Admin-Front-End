@@ -12,6 +12,7 @@ const Edit_Administrator = () => {
     const [administratorEmail, setAdministratorEmail] = useState("");
     const [administratorName, setAdministratorName] = useState("");
     const [administratorLastName, setAdministratorLastName] = useState("");
+    const [justification, setJustification] = useState("");
 
     useEffect(() => {
         administratorGetHandler(adminid).then((res) => {
@@ -63,13 +64,19 @@ const Edit_Administrator = () => {
     function render() {
         return (
             <div id="office_table_padding">
-                 <h1 id='title'>Edit Administrator Information</h1>
+                 <h1 id='title'>Editar Información del Administrador</h1>
                      <table id='table_information' align="center">
                          <tbody>
                              {renderTableHeader()}
                              {renderEditableTableData()}
                          </tbody>
                      </table>
+
+                    <div class='form-group'>
+                        <h2 id='title'>Justificación</h2>
+                        <label for='textArea' id='title'>Por favor escribir justificación de cambio</label>
+                        <textarea class='form-control' id='textArea' onChange={(e) => setJustification(e.target.value)}></textarea>
+                    </div>
                      <button class='btn btn-success btn-block' onClick={(e) => handleSave(e)}>Save</button>
                  <a href={`/Admin_Information/${adminid}`}>
                      <button class='btn btn-danger btn-block'>Cancel</button>

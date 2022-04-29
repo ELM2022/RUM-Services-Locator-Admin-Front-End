@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import './Create_Administrator.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import '../Table_Format.css'
+import '../Input_Format.css'
 import { createPendingAdministrator } from '../../handlers/pendingAdministratorHandler'
 
 class Create_Administrator extends Component {
@@ -58,23 +59,30 @@ class Create_Administrator extends Component {
 
     render() {
         return (
-            <div id="office_table_padding">
-                <h1 id='title'>Create Administrator</h1>
-                <div>
-                    <table id='table_information' align='center'>
-                        <tbody>
-                            <tr>{this.renderTableHeader()}</tr>
-                            {this.renderEditableTableData()}
-                        </tbody>
-                    </table>
+            <div class='container' id="office_table_padding">
+                <div id='font-type'>
+                    <h1 id='title'>Crear Administrador</h1>
+                    <h2>Introduzca el correo electrónico del administrador a ser creado</h2>
                 </div>
-                <a href="/Active_Administrator">
-                    <button class='btn btn-success btn-block'>Save</button>
-                </a>
-                <a href="/Active_Administrator">
-                    <button class='btn btn-danger btn-block'>Cancel</button>
-                </a>
+                <div class='row'>
+                    <div class='form-outline'>
+                        <input type='text' class='form-control' placeholder='correo electronico'></input>
+                    </div>
+                </div>
+                <div class='row'>
+                    <div class='col'>
+                        <a href="/Active_Administrator">
+                            <button class="btn btn-primary btn-lg btn-success" id='button-font'>Save</button>
+                        </a>
+                    </div>
+                    <div class='col'>
+                        <a href="/Active_Administrator">
+                            <button class="btn btn-primary btn-lg btn-danger" id='button-font'>Cancel</button>
+                        </a>
+                    </div>
+                </div>
             </div>
+            
         )
     }
 }

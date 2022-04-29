@@ -82,7 +82,7 @@ const Create_Office = () => {
     function render() {
         return(
             <div>
-                <h1 id='title'>Create Office</h1>
+                <h1 id='title'>Crear Oficina</h1>
                 <div id="office_table_padding" class="table-responsive">
                     <table id='table_information'>
                         <tbody>

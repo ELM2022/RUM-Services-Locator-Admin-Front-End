@@ -60,7 +60,7 @@ class Directory_History extends Component {
     render() {
         return(
         <div id="office_table_padding">
-            <h1 id='title'>Directory History</h1>
+            <h1 id='title'>Historial de Oficinas</h1>
             <div>
                 <table id='table_information' align='center'>
                     <tbody>

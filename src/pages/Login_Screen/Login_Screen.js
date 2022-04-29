@@ -34,9 +34,9 @@ export default function Login_Screen({ setToken }) {
             <div class='row' id='Header'>
                 <div class='col'>
                     <h1>RUM Services Locator</h1>
-                </div>
             </div>
-                <h1 id='font-type' className="Center-text">Login</h1>
+            </div>
+                <h1 id='font-type' className="Center-text">Iniciar Sesión</h1>
                 <div class='row'>
                     <div class='col d-flex justify-content-center'>
                         <img src="/elmLogo.jpeg" alt="image" id='logo'/>
@@ -48,7 +48,7 @@ export default function Login_Screen({ setToken }) {
                             </div>
                             <div class='w-100'></div>
                             <div class="form-outline">
-                                <input type="password" id="input_information" placeholder="password" class="form-control" onChange={e => setPassword(e.target.value)}/>
+                                <input type="password" id="input_information" placeholder="contraseña" class="form-control" onChange={e => setPassword(e.target.value)}/>
                             </div>
                             <div class='w-100' id="button_padding"></div>
                             <div class="col d-flex justify-content-center">

@@ -9,7 +9,7 @@ function Home() {
                 </div>
                 <div class='col d-flex justify-content-end' id='Home-button'>
                     <a href='/Login_Screen'>
-                        <button class='btn btn-primary btn-success'>Sign Out</button>
+                        <button class='btn btn-primary btn-success'>Cerrar Sesión</button>
                     </a>
                 </div>
             </div>
