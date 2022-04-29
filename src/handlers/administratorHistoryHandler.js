@@ -12,9 +12,9 @@ export const getAllAdministratorUpdateHistoryHandler = () => {
     })
 }
 
-export const getSpecificAdministratorUpdatesHistoryHandler = (administrator) => {
+export const getSpecificAdministratorUpdatesHistoryHandler = (update_admin_id) => {
     return axios
-    .get(`${apiRoute}/admin/updates/${administrator.admin_id}`)
+    .get(`${apiRoute}/admin/updates/${update_admin_id}`)
     .then((response) => {
         return response;
     })
@@ -23,9 +23,9 @@ export const getSpecificAdministratorUpdatesHistoryHandler = (administrator) => 
     })
 }
 
-export const addAdministratorUpdateHandler = (update) => {
+export const addAdministratorUpdateHandler = (admin_update) => {
     return axios
-    .post(`${apiRoute}/admin/updates`, { update })
+    .post(`${apiRoute}/admin/updates`, { admin_update })
     .then((response) => {
         return response;
     })

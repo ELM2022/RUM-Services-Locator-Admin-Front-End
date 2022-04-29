@@ -12,9 +12,9 @@ export const getAllOfficesUpdateHistoryHandler = () => {
     })
 }
 
-export const getSpecificOfficeUpdatesHistoryHandler = (office) => {
+export const getSpecificOfficeUpdatesHistoryHandler = (update_office_id) => {
     return axios
-    .get(`${apiRoute}/offices/updates/${office.office_id}`)
+    .get(`${apiRoute}/offices/updates/${update_office_id}`)
     .then((response) => {
         return response;
     })
@@ -23,9 +23,9 @@ export const getSpecificOfficeUpdatesHistoryHandler = (office) => {
     })
 }
 
-export const addOfficeUpdateHandler = (update) => {
+export const addOfficeUpdateHandler = (office_update) => {
     return axios
-    .put(`${apiRoute}/offices/updates`, { update })
+    .put(`${apiRoute}/offices/updates`, { office_update })
     .then((response) => {
         return response;
     })

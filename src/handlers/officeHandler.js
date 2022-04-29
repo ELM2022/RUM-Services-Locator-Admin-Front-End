@@ -3,7 +3,7 @@ import { apiRoute } from './apiRoute'
 
 export const allOfficesHandler = () => {
     return axios
-    .get(`${apiRoute}/offices`)
+    .get(`${apiRoute}/offices/active`)
     .then((response) => {
         return response;
     })
@@ -12,9 +12,9 @@ export const allOfficesHandler = () => {
     })
 }
 
-export const officeGetHandler = (office) => {
+export const officeGetHandler = (office_id) => {
     return axios
-    .get(`${apiRoute}/offices/${office.office_id}`)
+    .get(`${apiRoute}/offices/${office_id}`)
     .then((response) => {
         return response;
     })
@@ -30,6 +30,7 @@ export const officeUpdateHandler = (office) => {
         return response;
     })
     .catch((err) => {
+        console.log(err.response);
         return err.response;
     })
 }
@@ -45,9 +46,9 @@ export const officeCreateHandler = (office) => {
     })
 }
 
-export const officeDeleteHandler = (office) => {
+export const officeDeleteHandler = (office_id) => {
     return axios
-    .put(`${apiRoute}/offices/delete/${office.office_id}`, { office })
+    .put(`${apiRoute}/offices/${office_id}/delete`)
     .then((response) => {
         return response;
     })

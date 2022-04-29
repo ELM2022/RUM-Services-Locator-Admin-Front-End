@@ -13,25 +13,25 @@ export default function Navbar() {
                         <img src='elmLogo.jpeg' alt='logo' className="Logo"/>
                     </a>
                 <div className="button-list">
-                    <Nav.Link className="Navbar-button" href="Active_Directory">
+                    <Nav.Link className="Navbar-button" href="/Active_Directory">
                         <text>
                             Ver Directorio Activo
                         </text>
                     </Nav.Link>
                     <div className="Navbar-padding"/>
-                    <Nav.Link className="Navbar-button" href="Active_Administrator">
+                    <Nav.Link className="Navbar-button" href="/Active_Administrator">
                         <text>
                             Ver Administradores Activos
                         </text>
                     </Nav.Link>
                     <div className="Navbar-padding"/>
-                    <Nav.Link className="Navbar-button" href="Directory_History">
+                    <Nav.Link className="Navbar-button" href="/Directory_History">
                         <text>
                             Ver Historial de Oficinas
                         </text>
                     </Nav.Link>
                     <div className="Navbar-padding"/>
-                    <Nav.Link className="Navbar-button" href="Administrator_History">
+                    <Nav.Link className="Navbar-button" href="/Administrator_History">
                         <text>
                             Ver Historial de Administradores
                         </text>

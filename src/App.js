@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import logo from './logo.svg';
+import React from 'react';
+// import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter, Route, Routes} from 'react-router-dom';
 
@@ -25,7 +25,7 @@ import Edit_Office from "./pages/Edit_Office/Edit_Office"
 import useToken from './useToken';
 
 function App() {
-  const {token, setToken} = useToken();
+  const {token} = useToken();
 
   if(!token) {
     //return <Login_Screen setToken={setToken}/>
@@ -45,16 +45,16 @@ function App() {
         <Routes>
           <Route path="/Home" element={<Home_Screen/>}/>
           <Route path="/Create_Account" element={<Create_Account/>}/>
-          <Route path="/Admin_Information" element={<Admin_Information/>}/>
+          <Route path="/Admin_Information/:adminid" element={<Admin_Information />}/>
           <Route path="/Password_Recovery" element={<Password_Recovery/>}/>
           <Route path="/Password_Reset" element={<Password_Reset/>}/>
           <Route path="/Create_Office" element={<Create_Office/>}/>
-          <Route path="/Edit_Office" element={<Edit_Office/>}/>
+          <Route path="/Edit_Office/:officeid" element={<Edit_Office />}/>
           <Route path="/Create_Administrator" element={<Create_Administrator/>}/>
           <Route path="/Login_Screen" element={<Login_Screen/>}/>
           <Route path="/Token" element={<Token/>}/>
-          <Route path='Edit_Administrator' element={<Edit_Administrator/>}/>
-          <Route path="/Office_Information" element={<Office_Information/>}/>
+          <Route path='Edit_Administrator/:adminid' element={<Edit_Administrator />}/>
+          <Route path="/Office_Information/:officeid" element={<Office_Information />}/>
           <Route path="/Active_Directory" element={<Active_Directory/>}/>
           <Route path="/Active_Administrator" element={<Active_Administrator/>}/>
           <Route path="/Administrator_History" element={<Administrator_History/>}/>

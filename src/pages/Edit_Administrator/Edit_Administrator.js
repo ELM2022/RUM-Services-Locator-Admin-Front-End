@@ -1,41 +1,44 @@
-import React, { Component, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useParams, useNavigate } from 'react-router-dom'
 import '../Table_Format.css'
 import 'bootstrap/dist/css/bootstrap.css'
+import { administratorGetHandler, administratorUpdateHandler } from '../../handlers/administratorHandler'
 
-const Edit_Administrator = (props) => {
+const Edit_Administrator = () => {
 
-    const [administratorEmail, setAdministratorEmail] = useState("lolaMento@gmail.com");
-    const [administratorName, setAdministratorName] = useState("Lola");
-    const [administratorLastName, setAdministratorLastName] = useState("Mento");
-    const [administratorPassword, setAdministratorPassword] = useState("*********");
+    const { adminid } = useParams();
+    const navigate = useNavigate();
 
-    const handleAdministratorEmailChange = (e) => {
-        setAdministratorEmail(e.target.value)
-        localStorage.setItem("administratorEmail", e.target.value)
-    }
-
-    const handleAdministratorNameChange = (e) => {
-        setAdministratorName(e.target.value)
-        localStorage.setItem("administratorName", e.target.value)
-    }
-
-    const handleAdministratorLastNameChange = (e) => {
-        setAdministratorLastName(e.target.value)
-        localStorage.setItem("administratorLastName", e.target.value)
-    }
-
-    const handleAdministratorPasswordChange = (e) => {
-        setAdministratorPassword(e.target.value)
-        localStorage.setItem("administratorPassword", e.target.value)
-    }
+    const [administratorEmail, setAdministratorEmail] = useState("");
+    const [administratorName, setAdministratorName] = useState("");
+    const [administratorLastName, setAdministratorLastName] = useState("");
 
     useEffect(() => {
-        setAdministratorEmail(localStorage.getItem("administratorEmail"));
-        setAdministratorName(localStorage.getItem("administratorName"));
-        setAdministratorLastName(localStorage.getItem("administratorLastName"));
-        setAdministratorPassword(localStorage.getItem("administratorPassword"));
-    })
+        administratorGetHandler(adminid).then((res) => {
+            if (res.status === 200) {
+                const admin = res.data.data.admin;
 
+                setAdministratorEmail(admin.admin_email);
+                setAdministratorName(admin.admin_name);
+                setAdministratorLastName(admin.admin_last_name);
+            }
+        });
+    }, [adminid])
+
+    const handleSave = (e) => {
+        e.preventDefault();
+        const new_admin = {
+            admin_id: adminid,
+            admin_email: administratorEmail,
+            admin_name: administratorName,
+            admin_last_name: administratorLastName
+        }
+        administratorUpdateHandler(new_admin).then((res) => {
+            if (res.status === 200) {
+                navigate(`/Admin_Information/${adminid}`, { replace: true });
+            }
+        });
+    }
 
     function renderTableHeader() {
         return(
@@ -43,7 +46,6 @@ const Edit_Administrator = (props) => {
             <th>Administrator Email</th>
             <th>Administrator Name</th>
             <th>Administrator Last Name</th>
-            <th>Administrator Password</th>
         </tr>
         )
     }
@@ -51,10 +53,9 @@ const Edit_Administrator = (props) => {
     function renderEditableTableData() {
                 return (
                     <tr>
-                        <td><input type='text' value={administratorEmail} onChange={handleAdministratorEmailChange}></input></td>
-                        <td><input type='text' value={administratorName} onChange={handleAdministratorNameChange}></input></td>
-                        <td><input type='text' value={administratorLastName} onChange={handleAdministratorLastNameChange}></input></td>
-                        <td><input type='text' value={administratorPassword} onChange={handleAdministratorPasswordChange}></input></td>
+                        <td><input type='text' value={administratorEmail} onChange={(e) => setAdministratorEmail(e.target.value)}></input></td>
+                        <td><input type='text' value={administratorName} onChange={(e) => setAdministratorName(e.target.value)}></input></td>
+                        <td><input type='text' value={administratorLastName} onChange={(e) => setAdministratorLastName(e.target.value)}></input></td>
                     </tr>
                 )
             }
@@ -69,10 +70,8 @@ const Edit_Administrator = (props) => {
                              {renderEditableTableData()}
                          </tbody>
                      </table>
-                 <a href="/Active_Administrator">
-                     <button class='btn btn-success btn-block'>Save</button>
-                 </a>
-                 <a href="/Office_Information">
+                     <button class='btn btn-success btn-block' onClick={(e) => handleSave(e)}>Save</button>
+                 <a href={`/Admin_Information/${adminid}`}>
                      <button class='btn btn-danger btn-block'>Cancel</button>
                  </a>
         </div>

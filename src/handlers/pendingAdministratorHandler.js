@@ -12,9 +12,9 @@ export const getAllPendingAdministratorsHandler = () => {
     })
 }
 
-export const getSpecificPendingAdministrator = (administrator) => {
+export const getSpecificPendingAdministrator = (pending_admin) => {
     return axios
-    .get(`${apiRoute}/admin/pending/${administrator.admin_id}`)
+    .get(`${apiRoute}/admin/pending/${pending_admin.pending_admin_id}`)
     .then((response) => {
         return response;
     })
@@ -23,9 +23,9 @@ export const getSpecificPendingAdministrator = (administrator) => {
     })
 }
 
-export const createPendingAdministrator = (administrator) => {
+export const createPendingAdministrator = (pending_admin) => {
     return axios
-    .post(`${apiRoute}/admin/pending`, { administrator })
+    .post(`${apiRoute}/admin/pending`, { pending_admin })
     .then((response) => {
         return response;
     })
@@ -34,9 +34,9 @@ export const createPendingAdministrator = (administrator) => {
     })
 }
 
-export const deletePendingAdministrator = (administrator) => {
+export const deletePendingAdministrator = (pending_admin) => {
     return axios
-    .put(`${apiRoute}/admin/pending/${administrator.admin_id}/delete`, { administrator })
+    .put(`${apiRoute}/admin/pending/${pending_admin.pending_admin_id}/delete`, { pending_admin })
     .then((response) => {
         return response;
     })

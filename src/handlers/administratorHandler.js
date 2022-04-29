@@ -3,7 +3,7 @@ import { apiRoute } from './apiRoute'
 
 export const allAdministratorsHandler = () => {
     return axios
-    .get(`${apiRoute}/admin`)
+    .get(`${apiRoute}/admin/active`)
     .then((response) => {
         return response;
     })
@@ -12,9 +12,9 @@ export const allAdministratorsHandler = () => {
     })
 }
 
-export const administratorGetHandler = (administrator) => {
+export const administratorGetHandler = (admin_id) => {
     return axios
-    .get(`${apiRoute}/admin/${administrator.admin_id}`)
+    .get(`${apiRoute}/admin/${admin_id}`)
     .then((response) => {
         return response;
     })
@@ -45,9 +45,9 @@ export const administratorCreateHandler = (administrator) => {
     })
 }
 
-export const administratorDeleteHandler = (administrator) => {
+export const administratorDeleteHandler = (admin_id) => {
     return axios
-    .put(`${apiRoute}/admin/${administrator.admin_id}`, { administrator })
+    .put(`${apiRoute}/admin/${admin_id}/delete`)
     .then((response) => {
         return response;
     })

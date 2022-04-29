@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import './Create_Administrator.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import '../Table_Format.css'
+import { createPendingAdministrator } from '../../handlers/pendingAdministratorHandler'
 
 class Create_Administrator extends Component {
 
@@ -13,6 +14,8 @@ class Create_Administrator extends Component {
             ]
         }
     }
+
+    
 
     renderTableData() {
         return this.state.admin_information.map((admin_information, index) => {
