@@ -25,7 +25,7 @@ export const getSpecificOfficeUpdatesHistoryHandler = (update_office_id) => {
 
 export const addOfficeUpdateHandler = (office_update) => {
     return axios
-    .put(`${apiRoute}/offices/updates`, { office_update })
+    .post(`${apiRoute}/offices/updates`, { office_update })
     .then((response) => {
         return response;
     })

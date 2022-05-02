@@ -71,12 +71,12 @@ const Edit_Office = () => {
                     update_datetime: new Date(Date.now()),
                     update_justification: justification
                 }
-                addOfficeUpdateHandler(office_update).then((res) => {
-                    if (res.status === 200) {
-                        navigate(`/Office_Information/${officeid}`, { replace: true });
-                    }
-                });
-                // navigate(`/Office_Information/${officeid}`, { replace: true });
+                // addOfficeUpdateHandler(office_update).then((res) => {
+                //     if (res.status === 200) {
+                //         navigate(`/Office_Information/${officeid}`, { replace: true });
+                //     }
+                // });
+                navigate(`/Office_Information/${officeid}`, { replace: true });
             }
         });
     }
@@ -131,7 +131,7 @@ const Edit_Office = () => {
                  </div>
                  <div class='form-group'>
                         <h2 id='title'>Justificación</h2>
-                        <label for='textArea' id='title'>Porfavor escribir justificación de cambio</label>
+                        <label for='textArea' id='title'>Por favor escribir justificación de cambio</label>
                         <textarea class='form-control' id='textArea' onChange={(e) => setJustification(e.target.value)}></textarea>
                 </div>
                      <button class='btn btn-success btn-block' onClick={(e) => handleSave(e)}>Save</button>

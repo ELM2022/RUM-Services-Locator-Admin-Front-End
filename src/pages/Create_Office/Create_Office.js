@@ -1,12 +1,13 @@
 import React, { Component, useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useHistory } from 'react-router-dom'
 import '../Table_Format.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import { officeCreateHandler } from '../../handlers/officeHandler';
 
 const Create_Office = () => {
 
-    const navigate = useNavigate();
+    let navigate = useNavigate();
+    // const history = useHistory();
     const [officeName, setOfficeName] = useState("");
     const [officeDescription, setOfficeDescription] = useState("");
     const [officeSchedule, setOfficeSchedule] = useState("");
@@ -23,24 +24,34 @@ const Create_Office = () => {
 
     const handleSave = (e) => {
         e.preventDefault();
-        const new_office = {
-            office_name: officeName,
-            office_description: officeDescription,
-            office_schedule: officeSchedule,
-            office_latitude: officeLatitude,
-            office_longitude: officeLongitude,
-            office_floor_number: officeFloorNumber,
-            office_room_code: officeRoomCode,
-            office_email: officeEmail,
-            office_phone_number: officePhoneNumber,
-            office_extension_number: officeExtensionNumber,
-            office_website: officeWebsite
-        }
-        officeCreateHandler(new_office).then((res) => {
-            if (res.status === 200) {
-                navigate('/Active_Directory', { replace: true });
+
+        try {
+            const new_office = {
+                office_name: officeName,
+                office_description: officeDescription,
+                office_schedule: officeSchedule,
+                office_latitude: officeLatitude,
+                office_longitude: officeLongitude,
+                office_floor_number: officeFloorNumber,
+                office_room_code: officeRoomCode,
+                office_email: officeEmail,
+                office_phone_number: officePhoneNumber,
+                office_extension_number: officeExtensionNumber,
+                office_website: officeWebsite
             }
-        });
+    
+            officeCreateHandler(new_office).then((res) => {
+                if (res.status === 200) {
+                    navigate(`/Active_Directory`, { replace: true });
+                    // history.push('/Active_Directory');
+                }
+                else {
+                    console.log(res);
+                }
+            });
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     function renderTableHeader() {
