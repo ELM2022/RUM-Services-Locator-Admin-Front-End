@@ -1,15 +1,38 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import './Password_Reset'
 import '../Input_Format.css'
 import 'bootstrap/dist/css/bootstrap.css'
+import { resetAdministratorPasswordHandler } from '../../handlers/administratorAuthenticationHandler'
 
-class Password_Reset extends Component {
+const Password_Reset = () => {
 
-    constructor(props) {
-        super(props)
+    const token = useParams();
+    const navigate = useNavigate();
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        try {
+            const admin = {
+                reset_passw_token: token,
+                admin_password: password,
+                confirm_password: confirmPassword
+            }
+            resetAdministratorPasswordHandler(admin).then((res) => {
+                if (res.status === 200) {
+                    alert("Su contraseña ha sido actualizada. Por favor vuelva a iniciar su sesión.");
+                    navigate('/Login_Screen', { replace: true });
+                }
+            });
+        } catch (error) {
+            console.log(error);
+        }
     }
 
-    render() {
+    const render = () => {
         return (
             <div class='container'>
                 <div id="font-type">
@@ -20,7 +43,7 @@ class Password_Reset extends Component {
                 </div>
                 <div class='row'>
                     <div class="form-outline">
-                        <input type='text' class="form-control"></input>
+                        <input type='text' class="form-control" placeholder='Contraseña' value={password} onChange={(e) => setPassword(e.target.value)}></input>
                     </div>
                 </div>
                 <div class='row'>
@@ -28,17 +51,22 @@ class Password_Reset extends Component {
                 </div>
                 <div class='row'>
                     <div class="form-outline">
-                        <input type='text' class="form-control"></input>   
+                        <input type='text' class="form-control" placeholder='Confirmar contraseña' value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}></input>   
                     </div>
                 </div>
                 <div class='row'>
-                    <a href="/Login_Screen">
-                    <button class='btn btn-primary btn-large btn-success' id="button-font">Restablecer Contraseña </button>
-                    </a>
+                    {/* <a href="/Login_Screen"> */}
+                    <button class='btn btn-primary btn-large btn-success' id="button-font" onClick={(e) => handleSubmit(e)}>Restablecer Contraseña </button>
+                    {/* </a> */}
                 </div>
             </div>
         )
     }
+
+    return (
+        render()
+    )
+
 }
 
-export default Password_Reset
+export default Password_Reset;

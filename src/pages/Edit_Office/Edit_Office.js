@@ -1,97 +1,96 @@
 import React, { Component, useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import '../Table_Format.css'
 import 'bootstrap/dist/css/bootstrap.css'
+import { officeGetHandler, officeUpdateHandler } from '../../handlers/officeHandler';
+import { addOfficeUpdateHandler } from '../../handlers/officeHistoryHandler'
+import UpdateDeleteModal from '../../components/updateDeleteModal'
+import ErrorHandlingModal from '../../components/errorHandlingModal'
 
 const Edit_Office = () => {
 
-    const [officeName, setOfficeName] = useState("Actividades Sociales y Culturales");
-    const [officeDescription, setOfficeDescription] = useState("Test Description");
-    const [officeSchedule, setOfficeSchedule] = useState("L-V 7:45AM-4:30PM");
-    const [officeLatitude, setOfficeLatitude] = useState(18.2101382977879);
-    const [officeLongitude, setOfficeLongitude] = useState(-67.1411936055247);
-    const [officeFloorNumber, setOfficeFloorNumber] = useState(3);
-    const [officeRoomCode, setOfficeRoomCode] = useState("CE-306");
-    const [officeEmail, setOfficeEmail] = useState("actividadessociales@uprm.edu");
-    const [officePhoneNumber, setOfficePhoneNumber] = useState("(787)-832-4040");
-    const [officeExtensionNumber, setOfficeExtensionNumber] = useState("Ext. 3366,3370");
-    const [officeWebsite, setOfficeWebsite] = useState("https://www.uprm.edu/p/actividades-sociales");
-    const [officeActiveStatus, setOfficeActiveStatus] = useState(true);
+    const {officeid} = useParams();
+    const navigate = useNavigate();
 
-    const handleOfficeNameChange = (e) => {
-        setOfficeName(e.target.value)
-        localStorage.setItem("officeName", e.target.value)
-    }
+    const [errorModalOpen, setErrorModalOpen] = useState(false);
+    const [updateDeleteModalOpen, setUpdateDeleteModalOpen] = useState(false);
+    const [userErrors, setUserErrors] = useState([]);
 
-    const handleOfficeDescriptionChange = (e) => {
-        setOfficeDescription(e.target.value)
-        localStorage.setItem("officeDescription", e.target.value)
-    }
-
-    const handleOfficeScheduleChange = (e) => {
-        setOfficeSchedule(e.target.value)
-        localStorage.setItem("officeSchedule", e.target.value)
-    }
-
-    const handleOfficeLatitudeChange = (e) => {
-        setOfficeLatitude(e.target.value)
-        localStorage.setItem("officeLatitude", e.target.value)
-    }
-
-    const handleOfficeLongitudeChange = (e) => {
-        setOfficeLongitude(e.target.value)
-        localStorage.setItem("officeLongitude", e.target.value)
-    }
-
-    const handleOfficeFloorNumberChange = (e) => {
-        setOfficeFloorNumber(e.target.value)
-        localStorage.setItem("officeFloorNumber", e.target.value)
-    }
-
-    const handleOfficeRoomCodeChange = (e) => {
-        setOfficeRoomCode(e.target.value)
-        localStorage.setItem("officeRoomCode", e.target.value)
-    }
-
-    const handleOfficeEmailChange = (e) => {
-        setOfficeEmail(e.target.value)
-        localStorage.setItem("officeEmail", e.target.value)
-    }
-
-    const handleOfficePhoneNumberChange = (e) => {
-        setOfficePhoneNumber(e.target.value)
-        localStorage.setItem("officePhoneNumber", e.target.value)
-    }
-
-    const handleOfficeExtensionNumberChange = (e) => {
-        setOfficeExtensionNumber(e.target.value)
-        localStorage.setItem("officeExtensionNumber", e.target.value)
-    }
-
-    const handleOfficeWebsiteChange = (e) => {
-        setOfficeWebsite(e.target.value)
-        localStorage.setItem("officeWebsite", e.target.value)
-    }
-
-    const handleOfficeActiveStatusChange = (e) => {
-        setOfficeActiveStatus(e.target.value)
-        localStorage.setItem("officeActiveStatus", e.target.value)
-    }
+    const [officeName, setOfficeName] = useState("");
+    const [officeDescription, setOfficeDescription] = useState("");
+    const [officeSchedule, setOfficeSchedule] = useState("");
+    const [officeLatitude, setOfficeLatitude] = useState();
+    const [officeLongitude, setOfficeLongitude] = useState();
+    const [officeFloorNumber, setOfficeFloorNumber] = useState();
+    const [officeRoomCode, setOfficeRoomCode] = useState("");
+    const [officeEmail, setOfficeEmail] = useState("");
+    const [officePhoneNumber, setOfficePhoneNumber] = useState("");
+    const [officeExtensionNumber, setOfficeExtensionNumber] = useState("");
+    const [officeWebsite, setOfficeWebsite] = useState("");
+    const [officeActiveStatus, setOfficeActiveStatus] = useState();
+    const [justification, setJustification] = useState("");
 
     useEffect(() => {
-        setOfficeName(localStorage.getItem("officeName"));
-        setOfficeDescription(localStorage.getItem("officeDescription"));
-        setOfficeSchedule(localStorage.getItem("officeSchedule"));
-        setOfficeLatitude(localStorage.getItem("officeLatitude"));
-        setOfficeLongitude(localStorage.getItem("officeLongitude"));
-        setOfficeFloorNumber(localStorage.getItem("officeFloorNumber"));
-        setOfficeRoomCode(localStorage.getItem("officeRoomCode"));
-        setOfficeEmail(localStorage.getItem("officeEmail"));
-        setOfficePhoneNumber(localStorage.getItem("officePhoneNumber"));
-        setOfficeExtensionNumber(localStorage.getItem("officeExtensionNumber"));
-        setOfficeWebsite(localStorage.getItem("officeWebsite"));
-        setOfficeActiveStatus(localStorage.getItem("officeActiveStatus"));
-    })
+        officeGetHandler(officeid).then((res) => {
+            if (res.status === 200) {
+                const office = res.data.data.office;
 
+                setOfficeName(office.office_name);
+                setOfficeDescription(office.office_description);
+                setOfficeSchedule(office.office_schedule);
+                setOfficeLatitude(office.office_latitude);
+                setOfficeLongitude(office.office_longitude);
+                setOfficeFloorNumber(office.office_floor_number);
+                setOfficeRoomCode(office.office_room_code);
+                setOfficeEmail(office.office_email);
+                setOfficePhoneNumber(office.office_phone_number);
+                setOfficeExtensionNumber(office.office_extension_number);
+                setOfficeWebsite(office.office_website);
+                setOfficeActiveStatus(office.office_active_status);
+            }
+        });
+    }, [officeid])
+
+    const handleSave = (e) => {
+        e.preventDefault();
+        const new_office = {
+            office_id: officeid,
+            office_name: officeName,
+            office_description: officeDescription,
+            office_schedule: officeSchedule,
+            office_latitude: officeLatitude,
+            office_longitude: officeLongitude,
+            office_floor_number: officeFloorNumber,
+            office_room_code: officeRoomCode,
+            office_email: officeEmail,
+            office_phone_number: officePhoneNumber,
+            office_extension_number: officeExtensionNumber,
+            office_website: officeWebsite,
+            office_active_status: officeActiveStatus
+        }
+
+        officeUpdateHandler(new_office).then((res) => {
+            if (res.status === 200) {
+                const office_update = {
+                    office_id: officeid,
+                    admin_id: 1,
+                    update_datetime: new Date(Date.now()),
+                    update_justification: justification
+                }
+                setUpdateDeleteModalOpen(true);
+                // addOfficeUpdateHandler(office_update).then((res) => {
+                //     if (res.status === 200) {
+                //         navigate(`/Office_Information/${officeid}`, { replace: true });
+                //     }
+                // });
+                //navigate(`/Office_Information/${officeid}`, { replace: true });
+            }
+            else {
+                setUserErrors(res.data.errors);
+                setErrorModalOpen(true);
+            }
+        });
+    }
 
     function renderTableHeader() {
         return(
@@ -107,35 +106,33 @@ const Edit_Office = () => {
             <th>Office Phone Number</th>
             <th>Office Extension Number</th>
             <th>Office Website</th>
-            <th>Office Active Status</th>
         </tr>
         )
     }
 
     function renderEditableTableData() {
-                return (
-                    <tr>
-                        <td><input type='text' value={officeName} onChange={handleOfficeNameChange}></input></td>
-                        <td><input type='text' value={officeDescription} onChange={handleOfficeDescriptionChange}></input></td>
-                        <td><input type='text' value={officeSchedule} onChange={handleOfficeScheduleChange}></input></td>
-                        <td><input type='text' value={officeLatitude} onChange={handleOfficeLatitudeChange}></input></td>
-                        <td><input type='text' value={officeLongitude} onChange={handleOfficeLongitudeChange}></input></td>
-                        <td><input type='text' value={officeFloorNumber} onChange={handleOfficeFloorNumberChange}></input></td>
-                        <td><input type='text' value={officeRoomCode} onChange={handleOfficeRoomCodeChange}></input></td>
-                        <td><input type='text' value={officeEmail} onChange={handleOfficeEmailChange}></input></td>
-                        <td><input type='text' value={officePhoneNumber} onChange={handleOfficePhoneNumberChange}></input></td>
-                        <td><input type='text' value={officeExtensionNumber} onChange={handleOfficeExtensionNumberChange}></input></td>
-                        <td><input type='text' value={officeWebsite} onChange={handleOfficeWebsiteChange}></input></td>
-                        <td><input type='text' value={officeActiveStatus} onCHange={handleOfficeActiveStatusChange}></input></td>
-                    </tr>
-                )
-            }
+        return (
+            <tr>
+                <td><input type='text' value={officeName} onChange={(e) => setOfficeName(e.target.value)}></input></td>
+                <td><input type='text' value={officeDescription} onChange={(e) => setOfficeDescription(e.target.value)}></input></td>
+                <td><input type='text' value={officeSchedule} onChange={(e) => setOfficeSchedule(e.target.value)}></input></td>
+                <td><input type='text' value={officeLatitude} onChange={(e) => setOfficeLatitude(e.target.value)}></input></td>
+                <td><input type='text' value={officeLongitude} onChange={(e) => setOfficeLongitude(e.target.value)}></input></td>
+                <td><input type='text' value={officeFloorNumber} onChange={(e) => setOfficeFloorNumber(e.target.value)}></input></td>
+                <td><input type='text' value={officeRoomCode} onChange={(e) => setOfficeRoomCode(e.target.value)}></input></td>
+                <td><input type='text' value={officeEmail} onChange={(e) => setOfficeEmail(e.target.value)}></input></td>
+                <td><input type='text' value={officePhoneNumber} onChange={(e) => setOfficePhoneNumber(e.target.value)}></input></td>
+                <td><input type='text' value={officeExtensionNumber} onChange={(e) => setOfficeExtensionNumber(e.target.value)}></input></td>
+                <td><input type='text' value={officeWebsite} onChange={(e) => setOfficeWebsite(e.target.value)}></input></td>
+            </tr>
+        )
+    }
     
     function render() {
         return (
-            <div>
-                 <h1 id='title'>Edit Office Information</h1>
-                 <div id="office_table_padding" class="table-responsive">
+            <div id="office_table_padding">
+                 <h1 id='title'>Editar Información de Oficina</h1>
+                 <div class="table-responsive">
                      <table id='table_information'>
                          <tbody>
                              {renderTableHeader()}
@@ -143,12 +140,17 @@ const Edit_Office = () => {
                          </tbody>
                      </table>
                  </div>
-                 <a href="/Active_Directory">
-                     <button class='btn btn-success btn-block'>Save</button>
-                 </a>
-                 <a href="/Office_Information">
+                 <div class='form-group'>
+                        <h2 id='title'>Justificación</h2>
+                        <label for='textArea' id='title'>Por favor escribir justificación de cambio</label>
+                        <textarea class='form-control' id='textArea' onChange={(e) => setJustification(e.target.value)}></textarea>
+                </div>
+                     <button class='btn btn-success btn-block' onClick={(e) => handleSave(e)}>Save</button>
+                 <a href={`/Office_Information/${officeid}`}>
                      <button class='btn btn-danger btn-block'>Cancel</button>
                  </a>
+                 {updateDeleteModalOpen && <UpdateDeleteModal type="EDIT" setOpenModal={setUpdateDeleteModalOpen} routeid={officeid} navigation={navigate} route="/Office_Information/"/>}
+                 {errorModalOpen && <ErrorHandlingModal text={userErrors} setOpenModal={setErrorModalOpen}/>}
         </div>
         )
     }

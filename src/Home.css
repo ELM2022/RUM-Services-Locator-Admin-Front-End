@@ -17,8 +17,19 @@
     color: #fff;
     font-family: 'Roboto';
     font-size: 45px;
+    text-align: center;
 }
 
 #absolute-position {
+    position: fixed;
+}
+#header-padding {
+    padding-left: 345px;
+}
+
+#header-center {
+    text-align: center;
+}
+#header-position {
     position: fixed;
 }

@@ -1,78 +1,83 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useParams, useNavigate } from 'react-router-dom'
 import '../Table_Format.css'
 import 'bootstrap/dist/css/bootstrap.css'
+import { administratorGetHandler, administratorDeleteHandler } from '../../handlers/administratorHandler'
+import UpdateDeleteModal from '../../components/updateDeleteModal'
 
-class Admin_Information extends Component {
+const Admin_Information = () => {
 
-    constructor(props){
-        super(props)
-        this.state = {
-            admin_information: [
-                {email:'lolaMento@gmail.com', admin_name: 'Lola', admin_last_name: 'Mento', admin_password: '********', admin_active_status: true}
-            ]
-        }
+    const { adminid } = useParams();
+    const navigate = useNavigate();
+
+    const [admin_information, setAdminInformation] = useState({});
+
+    const [updateDeleteModalOpen, setUpdateDeleteModalOpen] = useState(false);
+
+    useEffect(() => {
+        administratorGetHandler(adminid).then((res) => {
+            if (res.status === 200) {
+                setAdminInformation(res.data.data.admin);
+            }
+        });
+    }, [adminid]);
+
+    const handleDelete = (e) => {
+        e.preventDefault();
+        alert("This administrator will be deactivated.");
+        administratorDeleteHandler(adminid).then((res) => {
+            if (res.status === 200) {
+                //alert("Administrator deactivated successfully.");
+                //alertnavigate('/Active_Administrator', { replace: true });
+                setUpdateDeleteModalOpen(true);
+            }
+        });
     }
 
-    renderTableData() {
-        return this.state.admin_information.map((admin_information, index) => {
-            const {email, admin_name, admin_last_name, admin_password, admin_active_status} = admin_information 
-            return (
-                <tr key={index}>
-                    <td>{email}</td>
-                    <td>{admin_name}</td>
-                    <td>{admin_last_name}</td>
-                    <td>{admin_password}</td>
-                    <td>{admin_active_status}</td>
-                </tr>
-            )
-        })
+    const renderTableHeader = () => {
+        return(
+            <tr>
+                <th>Administrator Email</th>
+                <th>Administrator Name</th>
+                <th>Administrator Last Name</th>
+            </tr>
+        )
     }
 
-    renderEditableTableData () {
-        return this.state.admin_information.map((admin_information, index) => {
-            const {email, admin_password, admin_name, admin_last_name, admin_active_status} = admin_information 
-            return (
-                <tr key={index}>
-                    <td><input type='text' value={email}></input></td>
-                    <td><input type='text' value={admin_name}></input></td>
-                    <td><input type='text' value={admin_last_name}></input></td>
-                    <td><input type='text' value={admin_password}></input></td>
-                    <td><input type='text' value={admin_active_status}></input></td>
-                </tr>
-            )
-        })
-    }
-
-    renderTableHeader() {
-       let header = Object.keys(this.state.admin_information[0])
-       return header.map((key, index) => {
-           return <th key={index}>{key.replace(/_/g, " ").toUpperCase()}</th>
-       })
-    }
-
-    handleDelete(e) {
-        alert("This item will be deleted");
-    }
-
-    render() {
+    const renderTableData = () => {
+        const {admin_email, admin_name, admin_last_name} = admin_information;
         return (
-            <div>
-                <h1 id='title'>Admin Information</h1>
+            <tr>
+                <td>{admin_email}</td>
+                <td>{admin_name}</td>
+                <td>{admin_last_name}</td>
+            </tr>
+        )
+    }
+
+    const render = () => {
+        return (
+            <div id="office_table_padding">
+                <h1 id='title'>Información del Administrador</h1>
                 <table id='table_information' align='center'>
                     <tbody>
-                        <tr>{this.renderTableHeader()}</tr>
-                        {this.renderTableData()}
+                        {renderTableHeader()}
+                        {renderTableData()}
                     </tbody>
                 </table>
-                <a href="/Edit_Administrator">
+                <a href={`/Edit_Administrator/${adminid}`}>
                     <button class='btn btn-success btn-block'>Edit</button>
                 </a>
-                <a href="/Active_Administrator">
-                    <button class='btn btn-danger btn-block' onClick={this.handleDelete}>Delete</button>
-                </a>
+                    <button class='btn btn-danger btn-block' onClick={(e) => handleDelete(e)}>Delete</button>
+                    {updateDeleteModalOpen && <UpdateDeleteModal type="DELETE" setOpenModal={setUpdateDeleteModalOpen} navigation={navigate} route="/Active_Administrator"/>}
             </div>
         )
     }
+
+    return (
+        render()
+    )
+
 }
 
-export default Admin_Information
+export default Admin_Information;

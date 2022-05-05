@@ -43,7 +43,10 @@ class Create_Account extends Component {
                         <div class='row'>
                         </div>
                         <a href='/Login_Screen'>
-                        <button type='button' class="btn btn-primary btn-lg btn-success" id="button-font">Crear Cuenta</button>
+                            <button type='button' class="btn btn-primary btn-lg btn-success" id="button-font">Crear Cuenta</button>
+                        </a>
+                        <a href="/Login_Screen">
+                            <button type='button' class="btn btn-primary btn-lg btn-danger" id="button-font">Regresar</button>
                         </a>
                     </div>
                 </div>

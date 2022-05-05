@@ -1,46 +1,45 @@
-
-.button-list{
-    position: absolute;
-    top: 256.94px; 
-    display: flex;
-    flex-direction: column;
-    justify-content: center; 
+.button-list {
+  position: absolute;
+  top: 256.94px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.Navbar-button{
-    width: 230px;
-    height: 75.51px;
-    background: #F6DEDC;
-    text-decoration: none;
-    text-align: center;
-    padding-top: 25%;
-    padding-bottom: 25%;
-}
-  
-.Navbar-button > text{
-    width: 230px;
-    height: 38px;
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: bold;
-    font-size: 22px;
-    color: #000;
-} 
-  
-.Navbar-button:hover{
-    background: #C6B3B2;
-    box-shadow: 0px rgba(0, 0, 0, 0.25);
+.Navbar-button {
+  width: 230px;
+  height: 75.51px;
+  background: #F6DEDC;
+  text-decoration: none;
+  text-align: center;
+  padding-top: 25%;
+  padding-bottom: 25%;
 }
 
-.Navbar-button:active{
+.Navbar-button>text {
+  width: 230px;
+  height: 38px;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 22px;
+  color: #000;
+}
+
+.Navbar-button:hover {
   background: #C6B3B2;
   box-shadow: 0px rgba(0, 0, 0, 0.25);
 }
 
-.menu{
-  position: absolute;
+.Navbar-button:active {
+  background: #C6B3B2;
+  box-shadow: 0px rgba(0, 0, 0, 0.25);
+}
+
+.menu {
+  position: fixed;
   width: 230px;
-  height: 100%;  
+  height: 100%;
   /* height: 972.77px; */
   left: 0px;
   top: 0px;
@@ -53,16 +52,16 @@
 }
 
 .Logo {
-  top:40px;
+  top: 40px;
   left: 10%;
-  height:150px;
-  width:175px;
+  height: 150px;
+  width: 175px;
   position: absolute;
 }
 
 .Logo:hover {
   background: #C6B3B2;
-    box-shadow: 0px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px rgba(0, 0, 0, 0.25);
 }
 
 .Logo:active {
