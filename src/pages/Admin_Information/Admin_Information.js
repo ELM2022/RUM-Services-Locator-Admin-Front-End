@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import '../Table_Format.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import { administratorGetHandler, administratorDeleteHandler } from '../../handlers/administratorHandler'
+import UpdateDeleteModal from '../../components/updateDeleteModal'
 
 const Admin_Information = () => {
 
@@ -10,6 +11,8 @@ const Admin_Information = () => {
     const navigate = useNavigate();
 
     const [admin_information, setAdminInformation] = useState({});
+
+    const [updateDeleteModalOpen, setUpdateDeleteModalOpen] = useState(false);
 
     useEffect(() => {
         administratorGetHandler(adminid).then((res) => {
@@ -24,8 +27,9 @@ const Admin_Information = () => {
         alert("This administrator will be deactivated.");
         administratorDeleteHandler(adminid).then((res) => {
             if (res.status === 200) {
-                alert("Administrator deactivated successfully.");
-                navigate('/Active_Administrator', { replace: true });
+                //alert("Administrator deactivated successfully.");
+                //alertnavigate('/Active_Administrator', { replace: true });
+                setUpdateDeleteModalOpen(true);
             }
         });
     }
@@ -65,6 +69,7 @@ const Admin_Information = () => {
                     <button class='btn btn-success btn-block'>Edit</button>
                 </a>
                     <button class='btn btn-danger btn-block' onClick={(e) => handleDelete(e)}>Delete</button>
+                    {updateDeleteModalOpen && <UpdateDeleteModal type="DELETE" setOpenModal={setUpdateDeleteModalOpen} navigation={navigate} route="/Active_Administrator"/>}
             </div>
         )
     }

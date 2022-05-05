@@ -11,7 +11,7 @@ import Token from './pages/Token/Token'
 import Password_Reset from './pages/Password_Reset/Password_Reset';
 import Create_Account from './pages/Create_Account/Create_Account'
 import Home_Screen from './pages/Home_Screen/Home_Screen'
-import Home_Screen_Logged from './pages/Home_Screen/Home_Screen_Logged'
+// import Home_Screen_Logged from './pages/Home_Screen/Home_Screen_Logged'
 import Create_Office from './pages/Create_Office/Create_Office'
 import Admin_Information from './pages/Admin_Information/Admin_Information'
 import Create_Administrator from './pages/Create_Administrator/Create_Administrator'

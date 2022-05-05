@@ -1,15 +1,15 @@
 import axios from "axios";
 import { apiRoute } from './apiRoute'
-import { wrapper } from 'axios-cookiejar-support';
-import { CookieJar } from 'tough-cookie';
+// import { wrapper } from 'axios-cookiejar-support';
+// import { CookieJar } from 'tough-cookie';
 
-axios.defaults.withCredentials = true;
-const jar = new CookieJar();
-const client = wrapper(axios.create({ jar }));
+// axios.defaults.withCredentials = true;
+// const jar = new CookieJar();
+// const client = wrapper(axios.create({ jar }));
 
 export const loginAdministratorHandler = async (credentials) => {
     // console.log(JSON.stringify(credentials));
-    return client
+    return axios
     .post(`${apiRoute}/login`, JSON.stringify(credentials), {
         headers: {"Content-Type": "application/json"},
         // jar: cookieJar,
@@ -27,10 +27,10 @@ export const loginAdministratorHandler = async (credentials) => {
 
 export const validateAdministratorLoginHandler = async (token) => {
     // console.log(JSON.stringify(token));
-    return client
+    return axios
     .post(`${apiRoute}/login/validate`, JSON.stringify(token), {
         headers: {"Content-Type": "application/json"},
-        jar: jar,
+        // jar: jar,
         withCredentials: true,
         credentials: 'include'
     })
