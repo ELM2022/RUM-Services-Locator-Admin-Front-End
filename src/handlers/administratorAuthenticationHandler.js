@@ -1,20 +1,28 @@
 import axios from "axios";
 import { apiRoute } from './apiRoute'
-import { wrapper } from 'axios-cookiejar-support';
-import { CookieJar } from 'tough-cookie';
+// import { wrapper } from 'axios-cookiejar-support';
+// import { CookieJar } from 'tough-cookie';
 
-axios.defaults.withCredentials = true;
-const jar = new CookieJar();
-const client = wrapper(axios.create({ jar }));
+// axios.defaults.withCredentials = true;
+// const jar = new CookieJar();
+// const client = wrapper(axios.create({ jar }));
 
 export const loginAdministratorHandler = async (credentials) => {
     // console.log(JSON.stringify(credentials));
-    return client
-    .post(`${apiRoute}/login`, JSON.stringify(credentials), {
-        headers: {"Content-Type": "application/json"},
-        // jar: cookieJar,
+    // return axios
+    // .post(`${apiRoute}/login`, JSON.stringify(credentials), 
+    // {
+    //     headers: {"Content-Type": "application/json"},
+    //     // jar: cookieJar,
+    //     withCredentials: true,
+    //     // credentials: 'include'
+    // }
+    // )
+    return axios({
+        url: `${apiRoute}/login`,
+        method: 'POST',
+        data: credentials,
         withCredentials: true,
-        credentials: 'include'
     })
     .then((response) => {
         console.log(response);
@@ -25,14 +33,23 @@ export const loginAdministratorHandler = async (credentials) => {
     })
 }
 
-export const validateAdministratorLoginHandler = async (token) => {
+export const validateAdministratorLoginHandler = (token) => {
     // console.log(JSON.stringify(token));
-    return client
-    .post(`${apiRoute}/login/validate`, JSON.stringify(token), {
-        headers: {"Content-Type": "application/json"},
-        jar: jar,
-        withCredentials: true,
-        credentials: 'include'
+    // const {token} = auth_token;
+    // console.log(token);
+    // return axios
+    // .get(`${apiRoute}/login/validate/?token=${token}`, 
+    // {
+    //     headers: {"Content-Type": "application/json"},
+    //     // jar: jar,
+    //     withCredentials: true,
+    //     // credentials: 'include'
+    // }
+    // )
+    return axios({
+        url: `${apiRoute}/login/validate/?token=${token}`,
+        method: 'GET',
+        withCredentials: true
     })
     .then((response) => {
         console.log(response);
