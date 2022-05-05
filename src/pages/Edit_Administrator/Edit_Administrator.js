@@ -3,11 +3,17 @@ import { useParams, useNavigate } from 'react-router-dom'
 import '../Table_Format.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import { administratorGetHandler, administratorUpdateHandler } from '../../handlers/administratorHandler'
+import UpdateDeleteModal from '../../components/updateDeleteModal'
+import ErrorHandlingModal from '../../components/errorHandlingModal'
 
 const Edit_Administrator = () => {
 
     const { adminid } = useParams();
     const navigate = useNavigate();
+
+    const [errorModalOpen, setErrorModalOpen] = useState(false);
+    const [updateDeleteModalOpen, setUpdateDeleteModalOpen] = useState(false);
+    const [userErrors, setUserErrors] = useState([]);
 
     const [administratorEmail, setAdministratorEmail] = useState("");
     const [administratorName, setAdministratorName] = useState("");
@@ -36,7 +42,8 @@ const Edit_Administrator = () => {
         }
         administratorUpdateHandler(new_admin).then((res) => {
             if (res.status === 200) {
-                navigate(`/Admin_Information/${adminid}`, { replace: true });
+                setUpdateDeleteModalOpen(true)
+                //navigate(`/Admin_Information/${adminid}`, { replace: true });
             }
         });
     }
@@ -81,6 +88,8 @@ const Edit_Administrator = () => {
                  <a href={`/Admin_Information/${adminid}`}>
                      <button class='btn btn-danger btn-block'>Cancel</button>
                  </a>
+                 {updateDeleteModalOpen && <UpdateDeleteModal type="EDIT" setOpenModal={setUpdateDeleteModalOpen} routeid={adminid} navigation={navigate} route="/Admin_Information/"/>}
+                 {errorModalOpen && <ErrorHandlingModal text={userErrors} setOpenModal={setErrorModalOpen}/>}
         </div>
         )
     }

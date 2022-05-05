@@ -47,6 +47,8 @@ const Create_Office = () => {
                 }
                 else {
                     console.log(res);
+
+                    
                 }
             });
         } catch (error) {

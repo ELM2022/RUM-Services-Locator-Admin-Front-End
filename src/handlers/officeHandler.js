@@ -30,7 +30,6 @@ export const officeUpdateHandler = (office) => {
         return response;
     })
     .catch((err) => {
-        console.log(err.response);
         return err.response;
     })
 }

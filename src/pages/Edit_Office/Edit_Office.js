@@ -4,11 +4,17 @@ import '../Table_Format.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import { officeGetHandler, officeUpdateHandler } from '../../handlers/officeHandler';
 import { addOfficeUpdateHandler } from '../../handlers/officeHistoryHandler'
+import UpdateDeleteModal from '../../components/updateDeleteModal'
+import ErrorHandlingModal from '../../components/errorHandlingModal'
 
 const Edit_Office = () => {
 
     const {officeid} = useParams();
     const navigate = useNavigate();
+
+    const [errorModalOpen, setErrorModalOpen] = useState(false);
+    const [updateDeleteModalOpen, setUpdateDeleteModalOpen] = useState(false);
+    const [userErrors, setUserErrors] = useState([]);
 
     const [officeName, setOfficeName] = useState("");
     const [officeDescription, setOfficeDescription] = useState("");
@@ -71,12 +77,17 @@ const Edit_Office = () => {
                     update_datetime: new Date(Date.now()),
                     update_justification: justification
                 }
+                setUpdateDeleteModalOpen(true);
                 // addOfficeUpdateHandler(office_update).then((res) => {
                 //     if (res.status === 200) {
                 //         navigate(`/Office_Information/${officeid}`, { replace: true });
                 //     }
                 // });
-                navigate(`/Office_Information/${officeid}`, { replace: true });
+                //navigate(`/Office_Information/${officeid}`, { replace: true });
+            }
+            else {
+                setUserErrors(res.data.errors);
+                setErrorModalOpen(true);
             }
         });
     }
@@ -138,6 +149,8 @@ const Edit_Office = () => {
                  <a href={`/Office_Information/${officeid}`}>
                      <button class='btn btn-danger btn-block'>Cancel</button>
                  </a>
+                 {updateDeleteModalOpen && <UpdateDeleteModal type="EDIT" setOpenModal={setUpdateDeleteModalOpen} routeid={officeid} navigation={navigate} route="/Office_Information/"/>}
+                 {errorModalOpen && <ErrorHandlingModal text={userErrors} setOpenModal={setErrorModalOpen}/>}
         </div>
         )
     }

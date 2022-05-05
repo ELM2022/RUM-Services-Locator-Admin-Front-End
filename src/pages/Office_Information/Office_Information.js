@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import '../Table_Format.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import { officeGetHandler, officeDeleteHandler } from '../../handlers/officeHandler';
+import UpdateDeleteModal from '../../components/updateDeleteModal'
 
 const Office_Information = () => {
 
@@ -10,6 +11,8 @@ const Office_Information = () => {
     const navigate = useNavigate();
     
     const [office_information, setOfficeInformation] = useState({});
+
+    const [updateDeleteModalOpen, setUpdateDeleteModalOpen] = useState(false);
 
     useEffect(() => {
         officeGetHandler(officeid).then((res) => {
@@ -21,11 +24,12 @@ const Office_Information = () => {
 
     const handleDelete = (e) => {
         e.preventDefault();
-        alert("This service office will be deactivated.");
+        //alert("This service office will be deactivated.");
         officeDeleteHandler(officeid).then((res) => {
             if (res.status === 200) {
-                alert("Office deactivated successfully.");
-                navigate('/Active_Directory', { replace: true });
+                //alert("Office deactivated successfully.");
+                setUpdateDeleteModalOpen(true);
+                //navigate('/Active_Directory', { replace: true });
                 // window.location.reload(false);
             }
         });
@@ -86,6 +90,7 @@ const Office_Information = () => {
                 {/* <a href="/Active_Directory"> */}
                     <button class='btn btn-danger btn-block' onClick={(e) => handleDelete(e)}>Delete</button>
                 {/* </a> */}
+                {updateDeleteModalOpen && <UpdateDeleteModal type="DELETE" setOpenModal={setUpdateDeleteModalOpen} navigation={navigate} route="/Active_Directory"/>}
             </div>
         )
     }
