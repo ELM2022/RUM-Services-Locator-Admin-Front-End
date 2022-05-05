@@ -21,8 +21,8 @@ export default function Login_Screen() {
 
     const navigate = useNavigate();
     const { setAuth } = useContext(AuthContext);
-    const [username, setUsername] = useState();
-    const [password, setPassword] = useState();
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -31,7 +31,7 @@ export default function Login_Screen() {
             // console.log(login);
             loginAdministratorHandler(login).then((res) => {
                 // console.log(res);
-                // if (res === 200) {
+                if (res.status === 200) {
                     // const auth = {
                     //     token: res.data.token,
                     //     user: res.data.user,
@@ -39,10 +39,11 @@ export default function Login_Screen() {
                     // }
                     // setAuth(auth);
                     navigate('/Token', { replace: true });
-                // }
-                // else {
-                //     console.log(res);
-                // }
+                }
+                else {
+                    console.log(res);
+                    alert("An error occurred.");
+                }
             });
 
         } catch (error) {

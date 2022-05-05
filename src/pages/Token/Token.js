@@ -15,15 +15,19 @@ const Token = () => {
         e.preventDefault();
 
         try {
-            const login_token = {token};
-            console.log(login_token);
-            validateAdministratorLoginHandler(login_token).then((res) => {
-                console.log(res);
+            // const login_token = {token};
+            // console.log(login_token);
+            validateAdministratorLoginHandler(token).then((res) => {
+                // console.log(res);
                 if (res.status === 200) {
-                    setAuth(res.data);
+                    // setAuth(res.data);
                     navigate('/Home', { replace: true });
+                } else {
+                    console.log(res);
+                    alert("An error occurred.");
                 }
-            });
+            })
+            .catch(error => console.log(error));
         } catch (error) {
             console.log(error);
         }

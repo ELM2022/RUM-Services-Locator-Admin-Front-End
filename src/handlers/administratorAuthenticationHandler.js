@@ -28,7 +28,7 @@ export const loginAdministratorHandler = async (credentials) => {
 export const validateAdministratorLoginHandler = async (token) => {
     // console.log(JSON.stringify(token));
     return axios
-    .post(`${apiRoute}/login/validate`, JSON.stringify(token), {
+    .get(`${apiRoute}/login/validate/?token=${token}`, {
         headers: {"Content-Type": "application/json"},
         // jar: jar,
         withCredentials: true,
