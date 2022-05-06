@@ -21,6 +21,10 @@ const Edit_Office = () => {
     const [officeSchedule, setOfficeSchedule] = useState("");
     const [officeLatitude, setOfficeLatitude] = useState();
     const [officeLongitude, setOfficeLongitude] = useState();
+    const [officeEntranceLatitude, setOfficeEntranceLatitude] = useState();
+    const [officeEntranceLongitude, setOfficeEntranceLongitude] = useState();
+    const [officeRouteInstructions, setOfficeRouteInstructions] = useState("");
+    const [officeSearchDescription, setOfficeSearchDescription] = useState("")
     const [officeFloorNumber, setOfficeFloorNumber] = useState();
     const [officeRoomCode, setOfficeRoomCode] = useState("");
     const [officeEmail, setOfficeEmail] = useState("");
@@ -40,6 +44,10 @@ const Edit_Office = () => {
                 setOfficeSchedule(office.office_schedule);
                 setOfficeLatitude(office.office_latitude);
                 setOfficeLongitude(office.office_longitude);
+                setOfficeEntranceLatitude(office.office_entrance_latitude);
+                setOfficeEntranceLongitude(office.office_entrance_longitude);
+                setOfficeRouteInstructions(office.office_route_instructions);
+                setOfficeSearchDescription(office.office_search_description);
                 setOfficeFloorNumber(office.office_floor_number);
                 setOfficeRoomCode(office.office_room_code);
                 setOfficeEmail(office.office_email);
@@ -60,6 +68,10 @@ const Edit_Office = () => {
             office_schedule: officeSchedule,
             office_latitude: officeLatitude,
             office_longitude: officeLongitude,
+            office_entrance_latitude: officeEntranceLatitude,
+            office_entrance_longitude: officeEntranceLongitude,
+            office_route_instructions: officeRouteInstructions,
+            office_search_description: officeSearchDescription,
             office_floor_number: officeFloorNumber,
             office_room_code: officeRoomCode,
             office_email: officeEmail,
@@ -71,18 +83,23 @@ const Edit_Office = () => {
 
         officeUpdateHandler(new_office).then((res) => {
             if (res.status === 200) {
+                const timeElapsed = Date.now();
+                const today = new Date(timeElapsed).toISOString();
+                const hour = new Date(timeElapsed).toString();
+                const datetime = today.slice(0,10) + " " +hour.slice(16,24);
                 const office_update = {
                     office_id: officeid,
                     admin_id: 1,
-                    update_datetime: new Date(Date.now()),
+                    update_datetime: datetime,
                     update_justification: justification
                 }
                 setUpdateDeleteModalOpen(true);
-                // addOfficeUpdateHandler(office_update).then((res) => {
-                //     if (res.status === 200) {
-                //         navigate(`/Office_Information/${officeid}`, { replace: true });
-                //     }
-                // });
+                addOfficeUpdateHandler(office_update).then((response) => {
+                    // console.log(response);
+                    // if (response.status === 201) {
+                        // navigate(`/Office_Information/${officeid}`, { replace: true });
+                    // }
+                });
                 //navigate(`/Office_Information/${officeid}`, { replace: true });
             }
             else {
@@ -100,6 +117,10 @@ const Edit_Office = () => {
             <th>Office Schedule</th>
             <th>Office Latitude</th>
             <th>Office Longitude</th>
+            <th>Office Entrance Latitude</th>
+            <th>Office Entrance Longitude</th>
+            <th>Office Route Instructions</th>
+            <th>Office Search Description</th>
             <th>Office Floor Number</th>
             <th>Office Room Code</th>
             <th>Office Email</th>
@@ -118,6 +139,10 @@ const Edit_Office = () => {
                 <td><input type='text' value={officeSchedule} onChange={(e) => setOfficeSchedule(e.target.value)}></input></td>
                 <td><input type='text' value={officeLatitude} onChange={(e) => setOfficeLatitude(e.target.value)}></input></td>
                 <td><input type='text' value={officeLongitude} onChange={(e) => setOfficeLongitude(e.target.value)}></input></td>
+                <td><input type='text' value={officeEntranceLatitude} onChange={(e) => setOfficeEntranceLatitude(e.target.value)}></input></td>
+                <td><input type='text' value={officeEntranceLongitude} onChange={(e) => setOfficeEntranceLongitude(e.target.value)}></input></td>
+                <td><input type='text' value={officeRouteInstructions} onChange={(e) => setOfficeRouteInstructions(e.target.value)}></input></td>
+                <td><input type='text' value={officeSearchDescription} onChange={(e) => setOfficeSearchDescription(e.target.value)}></input></td>
                 <td><input type='text' value={officeFloorNumber} onChange={(e) => setOfficeFloorNumber(e.target.value)}></input></td>
                 <td><input type='text' value={officeRoomCode} onChange={(e) => setOfficeRoomCode(e.target.value)}></input></td>
                 <td><input type='text' value={officeEmail} onChange={(e) => setOfficeEmail(e.target.value)}></input></td>

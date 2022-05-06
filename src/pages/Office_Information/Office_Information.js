@@ -43,6 +43,10 @@ const Office_Information = () => {
                 <th>Office Schedule</th>
                 <th>Office Latitude</th>
                 <th>Office Longitude</th>
+                <th>Office Entrance Latitude</th>
+                <th>Office Entrance Longitude</th>
+                <th>Office Route Instructions</th>
+                <th>Office Search Description</th>
                 <th>Office Floor Number</th>
                 <th>Office Room Code</th>
                 <th>Office Email</th>
@@ -54,7 +58,7 @@ const Office_Information = () => {
     }
 
     function renderTableData() {
-        const {office_name, office_schedule, office_description, office_latitude, office_longitude, office_floor_number, office_room_code, office_email, office_phone_number, office_extension_number, office_website} = office_information
+        const {office_name, office_schedule, office_description, office_latitude, office_longitude, office_entrance_latitude, office_entrance_longitude, office_route_instructions, office_search_description, office_floor_number, office_room_code, office_email, office_phone_number, office_extension_number, office_website} = office_information
         return (
             <tr>
                 <td>{office_name}</td>
@@ -62,6 +66,10 @@ const Office_Information = () => {
                 <td>{office_schedule}</td>
                 <td>{office_latitude}</td>
                 <td>{office_longitude}</td>
+                <td>{office_entrance_latitude}</td>
+                <td>{office_entrance_longitude}</td>
+                <td>{office_route_instructions}</td>
+                <td>{office_search_description}</td>
                 <td>{office_floor_number}</td>
                 <td>{office_room_code}</td>
                 <td>{office_email}</td>

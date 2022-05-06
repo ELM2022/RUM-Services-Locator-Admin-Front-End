@@ -3,22 +3,35 @@ import { useNavigate, useHistory } from 'react-router-dom'
 import '../Table_Format.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import { officeCreateHandler } from '../../handlers/officeHandler';
+import {getAllCategoriesHandler} from '../../handlers/categoriesHandler';
+import CreatableSelect from 'react-select/creatable';
+import makeAnimated from 'react-select/animated';
 
 const Create_Office = () => {
 
     let navigate = useNavigate();
+
+    const animatedComponents = makeAnimated();
     // const history = useHistory();
     const [officeName, setOfficeName] = useState("");
     const [officeDescription, setOfficeDescription] = useState("");
     const [officeSchedule, setOfficeSchedule] = useState("");
     const [officeLatitude, setOfficeLatitude] = useState();
     const [officeLongitude, setOfficeLongitude] = useState();
+    const [officeEntranceLatitude, setOfficeEntranceLatitude] = useState();
+    const [officeEntranceLongitude, setOfficeEntranceLongitude] = useState();
+    const [officeRouteInstructions, setOfficeRouteInstructions] = useState("");
+    const [officeSearchDescription, setOfficeSearchDescription] = useState("")
     const [officeFloorNumber, setOfficeFloorNumber] = useState();
     const [officeRoomCode, setOfficeRoomCode] = useState("");
     const [officeEmail, setOfficeEmail] = useState("");
     const [officePhoneNumber, setOfficePhoneNumber] = useState("");
     const [officeExtensionNumber, setOfficeExtensionNumber] = useState("");
     const [officeWebsite, setOfficeWebsite] = useState("");
+
+    const [categories, setCategories] = useState([]);
+    const [selectedCategories, setSelectedCategories] = useState([]);
+    const [newCategories, setNewCategories] = useState([]);
 
     // {id:1, building_id:1, office_name: 'Actividades Sociales y Culturales', office_description: 'Test Description', office_schedule: 'L-V 7:45AM-4:30PM', office_latitude: 18.2101382977879, office_longitude: -67.1411936055247, office_floor_number: 3, office_room_code: 'CE-306', office_email: 'actividadessociales@uprm.edu', office_phone_number: '(787)-832-4040', office_extension_number: 'Ext. 3366,3370', office_website: 'https://www.uprm.edu/p/actividades-sociales', office_active_status: true}
 
@@ -32,6 +45,10 @@ const Create_Office = () => {
                 office_schedule: officeSchedule,
                 office_latitude: officeLatitude,
                 office_longitude: officeLongitude,
+                office_entrance_latitude: officeEntranceLatitude,
+                office_entrance_longitude: officeEntranceLongitude,
+                office_route_instructions: officeRouteInstructions,
+                office_search_description: officeSearchDescription,
                 office_floor_number: officeFloorNumber,
                 office_room_code: officeRoomCode,
                 office_email: officeEmail,
@@ -56,6 +73,37 @@ const Create_Office = () => {
         }
     }
 
+    useEffect(() => {
+        getAllCategoriesHandler().then((res) => {
+            const result = [];
+            res.data.data.categories.map((category) => {
+                result.push({
+                    label: category.category_name,
+                    value: category.category_id
+                });
+            });
+            setCategories(result);
+            // console.log(res.data.data.categories);
+        });
+    },[]);
+
+    function categorySelection(e) {
+        const selection = [];
+        const created = [];
+        e.map((option) => {
+            if (typeof option.value !== 'string') {
+                selection.push(option.value);
+            } else {
+                created.push(option.label);
+            }
+        });
+        setSelectedCategories(selection);
+
+        if (created.length > 0) {
+            setNewCategories(created);
+        }
+    }
+
     function renderTableHeader() {
         return(
             <tr>
@@ -64,6 +112,10 @@ const Create_Office = () => {
                 <th>Office Schedule</th>
                 <th>Office Latitude</th>
                 <th>Office Longitude</th>
+                <th>Office Entrance Latitude</th>
+                <th>Office Entrance Longitude</th>
+                <th>Office Route Instructions</th>
+                <th>Office Search Description</th>
                 <th>Office Floor Number</th>
                 <th>Office Room Code</th>
                 <th>Office Email</th>
@@ -82,6 +134,10 @@ const Create_Office = () => {
                 <td><input type='text' value={officeSchedule} onChange={(e) => setOfficeSchedule(e.target.value)}></input></td>
                 <td><input type='text' value={officeLatitude} onChange={(e) => setOfficeLatitude(e.target.value)}></input></td>
                 <td><input type='text' value={officeLongitude} onChange={(e) => setOfficeLongitude(e.target.value)}></input></td>
+                <td><input type='text' value={officeEntranceLatitude} onChange={(e) => setOfficeEntranceLatitude(e.target.value)}></input></td>
+                <td><input type='text' value={officeEntranceLongitude} onChange={(e) => setOfficeEntranceLongitude(e.target.value)}></input></td>
+                <td><input type='text' value={officeRouteInstructions} onChange={(e) => setOfficeRouteInstructions(e.target.value)}></input></td>
+                <td><input type='text' value={officeSearchDescription} onChange={(e) => setOfficeSearchDescription(e.target.value)}></input></td>
                 <td><input type='text' value={officeFloorNumber} onChange={(e) => setOfficeFloorNumber(e.target.value)}></input></td>
                 <td><input type='text' value={officeRoomCode} onChange={(e) => setOfficeRoomCode(e.target.value)}></input></td>
                 <td><input type='text' value={officeEmail} onChange={(e) => setOfficeEmail(e.target.value)}></input></td>
@@ -89,6 +145,17 @@ const Create_Office = () => {
                 <td><input type='text' value={officeExtensionNumber} onChange={(e) => setOfficeExtensionNumber(e.target.value)}></input></td>
                 <td><input type='text' value={officeWebsite} onChange={(e) => setOfficeWebsite(e.target.value)}></input></td>
             </tr>
+        )
+    }
+
+    function renderDropdown() {
+        // console.log(categories);
+        return(
+            <div class="container">
+                <div class="row">
+                    <CreatableSelect options={categories} components={animatedComponents} isMulti isSearchable closeMenuOnSelect={false} onChange={(e) => categorySelection(e)}/>
+                </div>
+            </div>
         )
     }
     
@@ -104,6 +171,7 @@ const Create_Office = () => {
                         </tbody>
                     </table>
                 </div>
+                {renderDropdown()}
                     <button class='btn btn-success btn-block' onClick={(e) => handleSave(e)}>Save</button>
                 <a href="/Active_Directory">
                     <button class='btn btn-danger btn-block'>Cancel</button>
