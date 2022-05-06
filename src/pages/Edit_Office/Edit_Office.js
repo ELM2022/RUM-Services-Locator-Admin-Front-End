@@ -83,18 +83,23 @@ const Edit_Office = () => {
 
         officeUpdateHandler(new_office).then((res) => {
             if (res.status === 200) {
+                const timeElapsed = Date.now();
+                const today = new Date(timeElapsed).toISOString();
+                const hour = new Date(timeElapsed).toString();
+                const datetime = today.slice(0,10) + " " +hour.slice(16,24);
                 const office_update = {
                     office_id: officeid,
                     admin_id: 1,
-                    update_datetime: new Date(Date.now()),
+                    update_datetime: datetime,
                     update_justification: justification
                 }
                 setUpdateDeleteModalOpen(true);
-                // addOfficeUpdateHandler(office_update).then((res) => {
-                //     if (res.status === 200) {
-                //         navigate(`/Office_Information/${officeid}`, { replace: true });
-                //     }
-                // });
+                addOfficeUpdateHandler(office_update).then((response) => {
+                    // console.log(response);
+                    // if (response.status === 201) {
+                        // navigate(`/Office_Information/${officeid}`, { replace: true });
+                    // }
+                });
                 //navigate(`/Office_Information/${officeid}`, { replace: true });
             }
             else {
