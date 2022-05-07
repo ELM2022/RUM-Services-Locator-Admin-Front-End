@@ -1,16 +1,31 @@
-import React, { Component, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import '../Table_Format.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import { officeGetHandler, officeUpdateHandler } from '../../handlers/officeHandler';
 import { addOfficeUpdateHandler } from '../../handlers/officeHistoryHandler'
+import { getAllCategoriesHandler, getOfficeCategoriesHandler, addCategoryHandler, 
+        addCategoryMembershipHandler, deleteOfficeCategoriesHandler } 
+from '../../handlers/categoriesHandler'
 import UpdateDeleteModal from '../../components/updateDeleteModal'
 import ErrorHandlingModal from '../../components/errorHandlingModal'
+import CreatableSelect from 'react-select/creatable';
+import makeAnimated from 'react-select/animated';
+
+const genDatetime = () => {
+    const timeElapsed = Date.now();
+    const today = new Date(timeElapsed).toISOString();
+    const hour = new Date(timeElapsed).toString();
+    const datetime = today.slice(0,10) + " " + hour.slice(16,24);
+
+    return datetime;
+}
 
 const Edit_Office = () => {
 
     const {officeid} = useParams();
     const navigate = useNavigate();
+    const animatedComponents = makeAnimated();
 
     const [errorModalOpen, setErrorModalOpen] = useState(false);
     const [updateDeleteModalOpen, setUpdateDeleteModalOpen] = useState(false);
@@ -33,6 +48,10 @@ const Edit_Office = () => {
     const [officeWebsite, setOfficeWebsite] = useState("");
     const [officeActiveStatus, setOfficeActiveStatus] = useState();
     const [justification, setJustification] = useState("");
+
+    const [allCategories, setAllCategories] = useState([]);
+    const [selectedCategories, setSelectedCategories] = useState([]);
+    const [newCategories, setNewCategories] = useState([]);
 
     useEffect(() => {
         officeGetHandler(officeid).then((res) => {
@@ -59,54 +78,149 @@ const Edit_Office = () => {
         });
     }, [officeid])
 
-    const handleSave = (e) => {
-        e.preventDefault();
-        const new_office = {
-            office_id: officeid,
-            office_name: officeName,
-            office_description: officeDescription,
-            office_schedule: officeSchedule,
-            office_latitude: officeLatitude,
-            office_longitude: officeLongitude,
-            office_entrance_latitude: officeEntranceLatitude,
-            office_entrance_longitude: officeEntranceLongitude,
-            office_route_instructions: officeRouteInstructions,
-            office_search_description: officeSearchDescription,
-            office_floor_number: officeFloorNumber,
-            office_room_code: officeRoomCode,
-            office_email: officeEmail,
-            office_phone_number: officePhoneNumber,
-            office_extension_number: officeExtensionNumber,
-            office_website: officeWebsite,
-            office_active_status: officeActiveStatus
-        }
-
-        officeUpdateHandler(new_office).then((res) => {
+    useEffect(() => {
+        getAllCategoriesHandler().then((res) => {
             if (res.status === 200) {
-                const timeElapsed = Date.now();
-                const today = new Date(timeElapsed).toISOString();
-                const hour = new Date(timeElapsed).toString();
-                const datetime = today.slice(0,10) + " " +hour.slice(16,24);
-                const office_update = {
-                    office_id: officeid,
-                    admin_id: 1,
-                    update_datetime: datetime,
-                    update_justification: justification
-                }
-                setUpdateDeleteModalOpen(true);
-                addOfficeUpdateHandler(office_update).then((response) => {
-                    // console.log(response);
-                    // if (response.status === 201) {
-                        // navigate(`/Office_Information/${officeid}`, { replace: true });
-                    // }
+                const result = [];
+                res.data.data.categories.map((category) => {
+                    result.push({
+                        label: category.category_name,
+                        value: category.category_id
+                    });
                 });
-                //navigate(`/Office_Information/${officeid}`, { replace: true });
-            }
-            else {
-                setUserErrors(res.data.errors);
-                setErrorModalOpen(true);
+
+                setAllCategories(result);
             }
         });
+    }, [officeid]);
+
+    useEffect(() => {
+        getOfficeCategoriesHandler(officeid).then((res) => {
+            if (res.status === 200) {
+                const preselection = [];
+                res.data.data.categories.map((category) => {
+                    const temp = {
+                        label: category.category_name,
+                        value: category.category_id
+                    }
+
+                    preselection.push(temp);
+                });
+
+                setSelectedCategories(preselection);
+            }
+        });
+    }, [officeid]);
+
+    const handleSave = (e) => {
+        e.preventDefault();
+        
+        try {
+
+            const new_office = {
+                office_id: officeid,
+                office_name: officeName,
+                office_description: officeDescription,
+                office_schedule: officeSchedule,
+                office_latitude: officeLatitude,
+                office_longitude: officeLongitude,
+                office_entrance_latitude: officeEntranceLatitude,
+                office_entrance_longitude: officeEntranceLongitude,
+                office_route_instructions: officeRouteInstructions,
+                office_search_description: officeSearchDescription,
+                office_floor_number: officeFloorNumber,
+                office_room_code: officeRoomCode,
+                office_email: officeEmail,
+                office_phone_number: officePhoneNumber,
+                office_extension_number: officeExtensionNumber,
+                office_website: officeWebsite,
+                office_active_status: officeActiveStatus
+            }
+
+            console.log(newCategories);
+
+            if (newCategories.length > 0) {
+                newCategories.map((category_name) => {
+                    const category = {category_name};
+                    addCategoryHandler(category).then((res) => {
+                        if (res.status === 201) {
+                            selectedCategories.map((category) => {
+                                console.log(category_name);
+                                console.log(category.label);
+                                if (category_name === category.label) {
+                                    category.value = res.data.result.insertId;
+                                }
+                            });
+                        }
+                        else {
+                            console.log(res);
+                        }
+                    });
+                });
+            }
+    
+            officeUpdateHandler(new_office).then((res) => {
+                if (res.status === 200) {
+                    const office_update = {
+                        office_id: officeid,
+                        admin_id: 1,
+                        update_datetime: genDatetime(),
+                        update_justification: justification
+                    }
+
+                    const selected_ids = [];
+                    selectedCategories.map((category) => {
+                        if (typeof category.value !== 'string') {
+                            selected_ids.push(category.value);
+                        }
+                    });
+
+                    const membership = {
+                        office_id: officeid,
+                        categories: selected_ids
+                    }
+
+                    deleteOfficeCategoriesHandler(officeid).then((res) => {
+                        if (res.status === 200) {
+                            addCategoryMembershipHandler(membership).then((response) => {
+
+                            });
+                        }
+                    });
+
+                    setUpdateDeleteModalOpen(true);
+                    addOfficeUpdateHandler(office_update).then((response) => {
+
+                    });
+
+                    navigate(`/Office_Information/${officeid}`, { replace: true });
+
+                }
+                else {
+                    setUserErrors(res.data.errors);
+                    setErrorModalOpen(true);
+                }
+            }); 
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    function categorySelection(e) {
+        const selection = [];
+        const created = [];
+        e.map((option) => {
+            selection.push(option);
+            if (typeof option.value === 'string') {
+                created.push(option.value);
+            } 
+        });
+        setSelectedCategories(selection);
+
+        if (created.length > 0) {
+            setNewCategories(created);
+        }
     }
 
     function renderTableHeader() {
@@ -152,6 +266,24 @@ const Edit_Office = () => {
             </tr>
         )
     }
+
+    function renderDropdown() {
+        return(
+            <div class="container">
+                <div class="row">
+                    <CreatableSelect 
+                        options={allCategories} 
+                        components={animatedComponents} 
+                        value={selectedCategories} 
+                        isMulti 
+                        isSearchable
+                        closeMenuOnSelect={false} 
+                        onChange={(e) => categorySelection(e)}
+                    />
+                </div>
+            </div>
+        )
+    }
     
     function render() {
         return (
@@ -165,6 +297,8 @@ const Edit_Office = () => {
                          </tbody>
                      </table>
                  </div>
+                 <h3 id='title'>Categorías</h3>
+                 {renderDropdown()}
                  <div class='form-group'>
                         <h2 id='title'>Justificación</h2>
                         <label for='textArea' id='title'>Por favor escribir justificación de cambio</label>

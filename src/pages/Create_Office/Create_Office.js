@@ -174,7 +174,14 @@ const Create_Office = () => {
         return(
             <div class="container">
                 <div class="row">
-                    <CreatableSelect options={categories} components={animatedComponents} isMulti isSearchable closeMenuOnSelect={false} onChange={(e) => categorySelection(e)}/>
+                    <CreatableSelect 
+                        options={categories} 
+                        components={animatedComponents} 
+                        isMulti 
+                        isSearchable 
+                        closeMenuOnSelect={false} 
+                        onChange={(e) => categorySelection(e)}
+                    />
                 </div>
             </div>
         )

@@ -12,6 +12,17 @@ export const getAllCategoriesHandler = () => {
     })
 }
 
+export const getOfficeCategoriesHandler = (office_id) => {
+    return axios
+    .get(`${apiRoute}/offices/${office_id}/category`)
+    .then((response) => {
+        return response;
+    })
+    .catch((err) => {
+        return err.response;
+    })
+}
+
 export const addCategoryHandler = (category) => {
     return axios
     .post(`${apiRoute}/category`, category)
