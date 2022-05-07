@@ -84,7 +84,7 @@ export const resendValidateAdministratorLoginHandler = () => {
 
 export const recoverAdministratorPasswordHandler = (admin_email) => {
     return axios
-    .post(`${apiRoute}/recover`, JSON.stringify(admin_email))
+    .post(`${apiRoute}/recover`, {admin_email})
     .then((response) => {
         return response;
     })
@@ -95,7 +95,7 @@ export const recoverAdministratorPasswordHandler = (admin_email) => {
 
 export const resetAdministratorPasswordHandler = (administrator) => {
     return axios
-    .post(`${apiRoute}/reset/${administrator.reset_passwd_token}`, { administrator })
+    .post(`${apiRoute}/reset/${administrator.reset_passw_token}`, { administrator })
     .then((response) => {
         return response;
     })

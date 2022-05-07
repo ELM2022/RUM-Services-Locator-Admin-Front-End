@@ -17,10 +17,11 @@ const Password_Reset = () => {
 
         try {
             const admin = {
-                reset_passw_token: token,
+                reset_passw_token: token.token,
                 admin_password: password,
                 confirm_password: confirmPassword
             }
+            console.log(admin);
             resetAdministratorPasswordHandler(admin).then((res) => {
                 if (res.status === 200) {
                     alert("Su contraseña ha sido actualizada. Por favor vuelva a iniciar su sesión.");
