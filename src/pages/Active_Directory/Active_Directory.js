@@ -18,10 +18,6 @@ class Active_Directory extends Component{
         const today = new Date(timeElapsed).toISOString();
         const hour = new Date(timeElapsed).toString();
         const datetime = today.slice(0,10) + " " +hour.slice(16,24);
-        console.log(hour);
-        console.log(hour.slice(16, 24));
-        console.log(today.slice(0,10));
-        console.log(datetime)
         allOfficesHandler().then(res => {
             if (res.status === 200) {
                 this.setState({offices: res.data.data.offices});
