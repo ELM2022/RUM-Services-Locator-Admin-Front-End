@@ -60,9 +60,9 @@ export const validateAdministratorLoginHandler = (token) => {
     })
 }
 
-export const registerAdministratorHandler = (account) => {
+export const registerAdministratorHandler = (administrator) => {
     return axios
-    .post(`${apiRoute}/register`, { account })
+    .post(`${apiRoute}/register`, { administrator })
     .then((response) => {
         return response;
     })
