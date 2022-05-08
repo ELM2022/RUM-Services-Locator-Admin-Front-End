@@ -22,18 +22,18 @@ const Office_Information = () => {
         });
     }, [officeid]);
 
-    const handleDelete = (e) => {
-        e.preventDefault();
-        //alert("This service office will be deactivated.");
-        officeDeleteHandler(officeid).then((res) => {
-            if (res.status === 200) {
-                //alert("Office deactivated successfully.");
-                setUpdateDeleteModalOpen(true);
-                //navigate('/Active_Directory', { replace: true });
-                // window.location.reload(false);
-            }
-        });
-    }
+    // const handleDelete = (e) => {
+    //     e.preventDefault();
+    //     //alert("This service office will be deactivated.");
+    //     officeDeleteHandler(officeid).then((res) => {
+    //         if (res.status === 200) {
+    //             //alert("Office deactivated successfully.");
+    //             setUpdateDeleteModalOpen(true);
+    //             //navigate('/Active_Directory', { replace: true });
+    //             // window.location.reload(false);
+    //         }
+    //     });
+    // }
 
     function renderTableHeader() {
         return(
@@ -96,9 +96,9 @@ const Office_Information = () => {
                     <button class='btn btn-success btn-block'>Edit</button>
                 </a>
                 {/* <a href="/Active_Directory"> */}
-                    <button class='btn btn-danger btn-block' onClick={(e) => handleDelete(e)}>Delete</button>
+                    <button class='btn btn-danger btn-block' onClick={(e) => setUpdateDeleteModalOpen(true)}>Delete</button>
                 {/* </a> */}
-                {updateDeleteModalOpen && <UpdateDeleteModal type="DELETE" setOpenModal={setUpdateDeleteModalOpen} navigation={navigate} route="/Active_Directory"/>}
+                {updateDeleteModalOpen && <UpdateDeleteModal type="DELETE" setOpenModal={setUpdateDeleteModalOpen} navigation={navigate} route="/Active_Directory" information={office_information}/>}
             </div>
         )
     }

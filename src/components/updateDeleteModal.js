@@ -1,9 +1,12 @@
 import React, {useState} from 'react';
 import './Modal.css'
+import {officeUpdateHandler, officeDeleteHandler } from '../handlers/officeHandler';
+import { addOfficeUpdateHandler } from '../handlers/officeHistoryHandler'
 
-function UpdateDeleteModal({type, setOpenModal, navigation, routeid, route}) {
+function UpdateDeleteModal({type, setOpenModal, navigation, routeid, route, information, adminJustification}) {
 
     const [modalUse, setModalUse] = useState(type);
+    const [office, setOffice] = useState(information);
 
     const message = () => {
         if(modalUse === "DELETE"){
@@ -17,14 +20,52 @@ function UpdateDeleteModal({type, setOpenModal, navigation, routeid, route}) {
         }
     }
 
+    const handleUpdate = () => {
+        officeUpdateHandler(office).then((res) => {
+            if (res.status === 200) {
+                const timeElapsed = Date.now();
+                const today = new Date(timeElapsed).toISOString();
+                const hour = new Date(timeElapsed).toString();
+                const datetime = today.slice(0,10) + " " +hour.slice(16,24);
+                const office_update = {
+                    office_id: office.office_id,
+                    admin_id: 1,
+                    update_datetime: datetime,
+                    update_justification: adminJustification
+                }
+                addOfficeUpdateHandler(office_update).then((response) => {
+                    //console.log(response)
+                });
+            }
+            else {
+                alert(`Update did not occur due to ${res.data.errors}. Fix this and try again`)
+            }
+        });
+    }
+
+    const handleDelete = () => {
+        officeDeleteHandler(office.office_id).then((res) => {
+                    if (res.status === 200) {
+                        //alert("Office deactivated successfully.");
+                        alert("Entry has been deleted successfully.");
+                        //navigate('/Active_Directory', { replace: true });
+                        // window.location.reload(false);
+                    }
+                });
+    }
+
     const yesButton = () => {
         if(modalUse === "EDIT"){
-            return(<button onClick={() => navigation(`${route}${routeid}`, { replace: true })}>
+            return(<button onClick={() => {
+                handleUpdate()
+                navigation(`${route}${routeid}`, { replace: true })}}>
                     Si
                 </button>)     
         }
         else if(modalUse === "DELETE"){
-            return(<button onClick={() => navigation(`${route}`, { replace: true })}>
+            return(<button onClick={() => {
+                handleDelete();
+                navigation(`${route}`, { replace: true })}}>
                     Si
                 </button>)
         }
