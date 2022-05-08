@@ -137,8 +137,6 @@ const Edit_Office = () => {
                 office_active_status: officeActiveStatus
             }
 
-            console.log(newCategories);
-
             if (newCategories.length > 0) {
                 newCategories.map((category_name) => {
                     const category = {category_name};

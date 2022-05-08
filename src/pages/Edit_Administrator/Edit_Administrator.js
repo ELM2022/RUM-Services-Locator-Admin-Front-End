@@ -3,8 +3,18 @@ import { useParams, useNavigate } from 'react-router-dom'
 import '../Table_Format.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import { administratorGetHandler, administratorUpdateHandler } from '../../handlers/administratorHandler'
+import { addAdministratorUpdateHandler } from '../../handlers/administratorHistoryHandler'
 import UpdateDeleteModal from '../../components/updateDeleteModal'
 import ErrorHandlingModal from '../../components/errorHandlingModal'
+
+const genDatetime = () => {
+    const timeElapsed = Date.now();
+    const today = new Date(timeElapsed).toISOString();
+    const hour = new Date(timeElapsed).toString();
+    const datetime = today.slice(0,10) + " " + hour.slice(16,24);
+
+    return datetime;
+}
 
 const Edit_Administrator = () => {
 
@@ -42,7 +52,20 @@ const Edit_Administrator = () => {
         }
         administratorUpdateHandler(new_admin).then((res) => {
             if (res.status === 200) {
-                setUpdateDeleteModalOpen(true)
+                const admin_update = {
+                    editor_admin_id: 1,
+                    updated_admin_id: adminid,
+                    update_datetime: genDatetime(),
+                    update_justification: justification
+                }
+
+                setUpdateDeleteModalOpen(true);
+
+                addAdministratorUpdateHandler(admin_update).then((res) => {
+                    if (res.status === 201) {
+                        navigate(`/Admin_Information/${adminid}`, { replace: true });
+                    }
+                });
                 //navigate(`/Admin_Information/${adminid}`, { replace: true });
             }
         });
