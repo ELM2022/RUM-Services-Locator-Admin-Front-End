@@ -98,7 +98,7 @@ const Office_Information = () => {
                 {/* <a href="/Active_Directory"> */}
                     <button class='btn btn-danger btn-block' onClick={(e) => setUpdateDeleteModalOpen(true)}>Delete</button>
                 {/* </a> */}
-                {updateDeleteModalOpen && <UpdateDeleteModal type="DELETE" setOpenModal={setUpdateDeleteModalOpen} navigation={navigate} route="/Active_Directory" information={office_information}/>}
+                {updateDeleteModalOpen && <UpdateDeleteModal type="DELETE" setOpenModal={setUpdateDeleteModalOpen} navigation={navigate} route="/Active_Directory" information={office_information} use="OFFICE"/>}
             </div>
         )
     }

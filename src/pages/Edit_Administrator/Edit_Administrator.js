@@ -14,6 +14,8 @@ const Edit_Administrator = () => {
     const [errorModalOpen, setErrorModalOpen] = useState(false);
     const [updateDeleteModalOpen, setUpdateDeleteModalOpen] = useState(false);
     const [userErrors, setUserErrors] = useState([]);
+    const [formInvalid, setFormInvalid] = useState(false);
+    const [editedAdministrator, setEditedAdministrator] = useState({});
 
     const [administratorEmail, setAdministratorEmail] = useState("");
     const [administratorName, setAdministratorName] = useState("");
@@ -34,19 +36,59 @@ const Edit_Administrator = () => {
 
     const handleSave = (e) => {
         e.preventDefault();
-        const new_admin = {
-            admin_id: adminid,
-            admin_email: administratorEmail,
-            admin_name: administratorName,
-            admin_last_name: administratorLastName
+
+        setUserErrors([]);
+
+        compileErrors();
+
+        if(formInvalid) {
+            setFormInvalid(false);
+            setErrorModalOpen(true);
         }
-        administratorUpdateHandler(new_admin).then((res) => {
-            if (res.status === 200) {
-                setUpdateDeleteModalOpen(true)
-                //navigate(`/Admin_Information/${adminid}`, { replace: true });
+        else{
+            const new_admin = {
+                admin_id: adminid,
+                admin_email: administratorEmail,
+                admin_name: administratorName,
+                admin_last_name: administratorLastName
             }
-        });
+            setEditedAdministrator(new_admin);
+
+            setUpdateDeleteModalOpen(true);
+        }
+        setFormInvalid(false);
+
+        
     }
+
+    const compileErrors = () => {
+        fieldValidator('administratorEmail', administratorEmail)
+        fieldValidator('administratorName', administratorName)
+        fieldValidator('administratorLastName', administratorLastName)
+    }
+
+    function fieldValidator(fieldName, value) {
+        switch(fieldName) {
+            case 'administratorEmail':
+                if(!typeof value === 'string') {
+                        setFormInvalid(true);
+                        setUserErrors(prevState => [...prevState, "Administrator Email must be a string."])
+                }
+                break;
+            case 'administratorName':
+                if(!typeof value === 'string') {
+                    setUserErrors(prevState => [...prevState, "Administrator Name must be a string."])
+                    setFormInvalid(true);
+                }
+                break;
+            case 'administratorLastName':
+                if(!typeof value === 'string') {
+                    setUserErrors(prevState => [...prevState, "Administrator Last Name must be a string."])
+                    setFormInvalid(true);
+                }
+                break;
+    }
+}
 
     function renderTableHeader() {
         return(
@@ -88,7 +130,7 @@ const Edit_Administrator = () => {
                  <a href={`/Admin_Information/${adminid}`}>
                      <button class='btn btn-danger btn-block'>Cancel</button>
                  </a>
-                 {updateDeleteModalOpen && <UpdateDeleteModal type="EDIT" setOpenModal={setUpdateDeleteModalOpen} routeid={adminid} navigation={navigate} route="/Admin_Information/"/>}
+                 {updateDeleteModalOpen && <UpdateDeleteModal type="EDIT" setOpenModal={setUpdateDeleteModalOpen} routeid={adminid} navigation={navigate} route="/Admin_Information/" information={editedAdministrator} adminJustification={justification} use="OFFICE"/>}
                  {errorModalOpen && <ErrorHandlingModal text={userErrors} setOpenModal={setErrorModalOpen}/>}
         </div>
         )

@@ -70,9 +70,8 @@ const Edit_Office = () => {
         compileErrors();
 
         if(formInvalid) {
+            setFormInvalid(false);
             setErrorModalOpen(true);
-            setFormInvalid(false)
-            //setUserErrors([]);
         }
         else{
             const new_office = {
@@ -98,6 +97,7 @@ const Edit_Office = () => {
     
             setUpdateDeleteModalOpen(true);
         }
+        setFormInvalid(false);
 
         // officeUpdateHandler(new_office).then((res) => {
         //     if (res.status === 200) {
@@ -385,9 +385,9 @@ const Edit_Office = () => {
                         <label for='textArea' id='title'>Por favor escribir justificación de cambio</label>
                         <textarea class='form-control' id='textArea' onChange={(e) => setJustification(e.target.value)}></textarea>
                 </div>
-                     <button class='btn btn-success btn-block' onClick={(e) => handleSave(e)}>Save</button>
+                     <button class='btn btn-success btn-block' onClick={(e) => handleSave(e)}>Guardar</button>
                  <a href={`/Office_Information/${officeid}`}>
-                     <button class='btn btn-danger btn-block'>Cancel</button>
+                     <button class='btn btn-danger btn-block'>Cancelar</button>
                  </a>
                  {updateDeleteModalOpen && <UpdateDeleteModal type="EDIT" setOpenModal={setUpdateDeleteModalOpen} routeid={officeid} navigation={navigate} route="/Office_Information/" information={editedOffice} adminJustification={justification}/>}
                  {errorModalOpen && <ErrorHandlingModal text={userErrors} setOpenModal={setErrorModalOpen}/>}
