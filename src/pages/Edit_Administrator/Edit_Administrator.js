@@ -66,7 +66,6 @@ const Edit_Administrator = () => {
                         navigate(`/Admin_Information/${adminid}`, { replace: true });
                     }
                 });
-                //navigate(`/Admin_Information/${adminid}`, { replace: true });
             }
         });
     }
