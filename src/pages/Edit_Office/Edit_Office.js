@@ -454,7 +454,7 @@ const Edit_Office = () => {
                  <a href={`/Office_Information/${officeid}`}>
                      <button class='btn btn-danger btn-block'>Cancelar</button>
                  </a>
-                 {updateDeleteModalOpen && <UpdateDeleteModal type="EDIT" setOpenModal={setUpdateDeleteModalOpen} routeid={officeid} navigation={navigate} route="/Office_Information/" information={editedOffice} adminJustification={justification} selectedCategories={selectedCategories} newCategories={newCategories} use="OFFICE"/>}
+                 {updateDeleteModalOpen && <UpdateDeleteModal type="EDIT" setOpenModal={setUpdateDeleteModalOpen} routeid={officeid} navigation={navigate} route="/Office_Information/" information={editedOffice} adminJustification={justification} selectedCategories={selectedCategories} newCategories={newCategories} use="OFFICE" activeAdminId={context.getUserId()}/>}
                  {errorModalOpen && <ErrorHandlingModal text={userErrors} setOpenModal={setErrorModalOpen}/>}
             </div></>
         )
