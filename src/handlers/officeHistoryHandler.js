@@ -27,6 +27,9 @@ export const addOfficeUpdateHandler = (office_update) => {
     return axios
     .post(`${apiRoute}/offices/updates`, { office_update })
     .then((response) => {
+        if(response.status === 201){
+            alert("Office has been updated succesfully")
+        }
         return response;
     })
     .then((err) => {

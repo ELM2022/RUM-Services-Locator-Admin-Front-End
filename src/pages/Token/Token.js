@@ -7,7 +7,7 @@ import AuthContext from '../../contexts/AuthContext'
 import { validateAdministratorLoginHandler, resendValidateAdministratorLoginHandler } from '../../handlers/administratorAuthenticationHandler'
 
 const Token = () => {
-    const { auth, setAuth } = useContext(AuthContext);
+    const { setAuth } = useContext(AuthContext);
     const navigate = useNavigate();
     const [token, setToken] = useState("");
 
@@ -16,14 +16,17 @@ const Token = () => {
 
         try {
             const login_token = {token};
-            console.log(login_token);
+            // console.log(login_token);
             validateAdministratorLoginHandler(login_token).then((res) => {
                 console.log(res);
                 if (res.status === 200) {
-                    setAuth(res.data);
+                    // setAuth(res.data);
                     navigate('/Home', { replace: true });
+                    // window.location.href = '/Home';
                 }
-            });
+            })
+            .catch(error => console.log(error));
+
         } catch (error) {
             console.log(error);
         }

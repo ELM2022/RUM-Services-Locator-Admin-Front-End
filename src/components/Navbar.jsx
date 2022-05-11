@@ -1,6 +1,7 @@
 import React from "react";
 import './Navbar.css';
 import {Nav} from 'react-bootstrap';
+import elmLogo from '../resources/elmLogo.jpeg'
 
 export default function Navbar() {
 
@@ -10,7 +11,7 @@ export default function Navbar() {
             <body>
                 <div className="menu">
                     <a href="/Home">
-                        <img src='elmLogo.jpeg' alt='logo' className="Logo"/>
+                        <img src={require('../resources/elmLogo.jpeg')} alt='logo' className="Logo"/>
                     </a>
                 <div className="button-list">
                     <Nav.Link className="Navbar-button" href="/Active_Directory">

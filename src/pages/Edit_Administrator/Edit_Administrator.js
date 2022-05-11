@@ -3,8 +3,18 @@ import { useParams, useNavigate } from 'react-router-dom'
 import '../Table_Format.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import { administratorGetHandler, administratorUpdateHandler } from '../../handlers/administratorHandler'
+import { addAdministratorUpdateHandler } from '../../handlers/administratorHistoryHandler'
 import UpdateDeleteModal from '../../components/updateDeleteModal'
 import ErrorHandlingModal from '../../components/errorHandlingModal'
+
+const getDatetime = () => {
+    const timeElapsed = Date.now();
+    const today = new Date(timeElapsed).toISOString();
+    const hour = new Date(timeElapsed).toString();
+    const datetime = today.slice(0,10) + " " + hour.slice(16,24);
+
+    return datetime;
+}
 
 const Edit_Administrator = () => {
 
@@ -14,6 +24,8 @@ const Edit_Administrator = () => {
     const [errorModalOpen, setErrorModalOpen] = useState(false);
     const [updateDeleteModalOpen, setUpdateDeleteModalOpen] = useState(false);
     const [userErrors, setUserErrors] = useState([]);
+    const [formInvalid, setFormInvalid] = useState(false);
+    const [editedAdministrator, setEditedAdministrator] = useState({});
 
     const [administratorEmail, setAdministratorEmail] = useState("");
     const [administratorName, setAdministratorName] = useState("");
@@ -34,26 +46,78 @@ const Edit_Administrator = () => {
 
     const handleSave = (e) => {
         e.preventDefault();
-        const new_admin = {
-            admin_id: adminid,
-            admin_email: administratorEmail,
-            admin_name: administratorName,
-            admin_last_name: administratorLastName
+
+        setUserErrors([]);
+
+        compileErrors();
+
+        if(formInvalid) {
+            setFormInvalid(false);
+            setErrorModalOpen(true);
         }
-        administratorUpdateHandler(new_admin).then((res) => {
-            if (res.status === 200) {
-                setUpdateDeleteModalOpen(true)
-                //navigate(`/Admin_Information/${adminid}`, { replace: true });
+        else{
+            const new_admin = {
+                admin_id: adminid,
+                admin_email: administratorEmail,
+                admin_name: administratorName,
+                admin_last_name: administratorLastName
             }
-        });
+            setEditedAdministrator(new_admin);
+
+            setUpdateDeleteModalOpen(true);
+        }
+        setFormInvalid(false);
+
+        
     }
+
+    const compileErrors = () => {
+        fieldValidator('administratorEmail', administratorEmail)
+        fieldValidator('administratorName', administratorName)
+        fieldValidator('administratorLastName', administratorLastName)
+    }
+
+    function fieldValidator(fieldName, value) {
+        switch(fieldName) {
+            case 'administratorEmail':
+                if(!typeof value === 'string') {
+                        setFormInvalid(true);
+                        setUserErrors(prevState => [...prevState, "El correo electronico del administrador debe de contener letras."])
+                }
+                break;
+            case 'administratorName':
+                if(!typeof value === 'string') {
+                    setUserErrors(prevState => [...prevState, "El nombre del administrador debe de contener letras y no numeros."])
+                    setFormInvalid(true);
+                }
+                else if(typeof value === 'string'){
+                    if(/[0-9]/.test(value)){
+                        setUserErrors(prevState => [...prevState, "El nombre del administrador debe de contener letras y no numeros."])
+                        setFormInvalid(true);
+                    }
+                }
+                break;
+            case 'administratorLastName':
+                if(!typeof value === 'string') {
+                    setUserErrors(prevState => [...prevState, "El apellido del administrador debe de contener letras y no numeros."])
+                    setFormInvalid(true);
+                }
+                else if(typeof value === 'string'){
+                    if(/[0-9]/.test(value)){
+                        setUserErrors(prevState => [...prevState, "El apellido del administrador debe de contener letras y no numeros."])
+                        setFormInvalid(true);
+                    }
+                }
+                break;
+    }
+}
 
     function renderTableHeader() {
         return(
             <tr>
-            <th>Administrator Email</th>
-            <th>Administrator Name</th>
-            <th>Administrator Last Name</th>
+            <th>Correo Electrónico de Administrador</th>
+            <th>Nombre de Administrador</th>
+            <th>Apellido de Administrador</th>
         </tr>
         )
     }
@@ -61,9 +125,18 @@ const Edit_Administrator = () => {
     function renderEditableTableData() {
                 return (
                     <tr>
-                        <td><input type='text' value={administratorEmail} onChange={(e) => setAdministratorEmail(e.target.value)}></input></td>
-                        <td><input type='text' value={administratorName} onChange={(e) => setAdministratorName(e.target.value)}></input></td>
-                        <td><input type='text' value={administratorLastName} onChange={(e) => setAdministratorLastName(e.target.value)}></input></td>
+                        <td><input type='text' value={administratorEmail} onChange={(e) => {
+                            setAdministratorEmail(e.target.value)
+                            fieldValidator('administratorEmail', e.target.value)
+                        }}></input></td>
+                        <td><input type='text' value={administratorName} onChange={(e) => {
+                            setAdministratorName(e.target.value)
+                            fieldValidator('administratorName', e.target.value)
+                            }}></input></td>
+                        <td><input type='text' value={administratorLastName} onChange={(e) => {
+                            setAdministratorLastName(e.target.value)
+                            fieldValidator('administratorLastName', e.target.value)
+                            }}></input></td>
                     </tr>
                 )
             }
@@ -84,11 +157,11 @@ const Edit_Administrator = () => {
                         <label for='textArea' id='title'>Por favor escribir justificación de cambio</label>
                         <textarea class='form-control' id='textArea' onChange={(e) => setJustification(e.target.value)}></textarea>
                     </div>
-                     <button class='btn btn-success btn-block' onClick={(e) => handleSave(e)}>Save</button>
+                     <button class='btn btn-success btn-block' onClick={(e) => handleSave(e)}>Guardar</button>
                  <a href={`/Admin_Information/${adminid}`}>
-                     <button class='btn btn-danger btn-block'>Cancel</button>
+                     <button class='btn btn-danger btn-block'>Cancelar</button>
                  </a>
-                 {updateDeleteModalOpen && <UpdateDeleteModal type="EDIT" setOpenModal={setUpdateDeleteModalOpen} routeid={adminid} navigation={navigate} route="/Admin_Information/"/>}
+                 {updateDeleteModalOpen && <UpdateDeleteModal type="EDIT" setOpenModal={setUpdateDeleteModalOpen} routeid={adminid} navigation={navigate} route="/Admin_Information/" information={editedAdministrator} adminJustification={justification} use="ADMIN"/>}
                  {errorModalOpen && <ErrorHandlingModal text={userErrors} setOpenModal={setErrorModalOpen}/>}
         </div>
         )
