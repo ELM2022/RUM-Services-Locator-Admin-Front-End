@@ -8,6 +8,8 @@ import { registerAdministratorHandler } from '../../handlers/administratorAuthen
 import { getPendingAdminByEmail, 
         deletePendingAdministrator } 
 from '../../handlers/pendingAdministratorHandler'
+import Navbar from "../../components/Navbar";
+import Home from "../../Home";
 
 const Create_Account = () => {
 
@@ -76,7 +78,12 @@ const Create_Account = () => {
 
     const render = () => {
         return (
-            <div class='container'>
+            <div class='container-fluid'>
+                <div class='row' id='Header'>
+                    <div class='col'>
+                        <h1>RUM Services Locator</h1>
+                    </div>
+                </div>
                 <h1 id="font-type">Crear Cuenta</h1>
                 <div class='row'>
                     <div class='col'>
@@ -104,7 +111,9 @@ const Create_Account = () => {
                         </div>
                         <div class='w-100'></div>
                         <div class='row'>
-                            <button type='button' class="btn btn-primary btn-lg btn-success" id="button-font" onClick={(e) => handleSubmit(e)}>Crear Cuenta</button>
+                            <a>
+                                <button type='button' class="btn btn-primary btn-lg btn-success" id="button-font" onClick={(e) => handleSubmit(e)}>Crear Cuenta</button>
+                            </a>
                             <a href="/Login_Screen">
                                 <button type='button' class="btn btn-primary btn-lg btn-danger" id="button-font">Regresar</button>
                             </a>

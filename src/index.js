@@ -9,10 +9,13 @@ import Home from './Home';
 import Navbar from './components/Navbar';
 import Active_Administrator from './pages/Active_Administrator/Active_Administrator';
 import {BrowserRouter as Routes, Route} from 'react-router-dom'; 
+import { AuthProvider } from './contexts/AuthContext'
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <AuthProvider>
+      <App />
+    </AuthProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

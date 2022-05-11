@@ -6,21 +6,10 @@ import 'bootstrap/dist/css/bootstrap.css'
 import AuthContext from '../../contexts/AuthContext'
 import { loginAdministratorHandler } from '../../handlers/administratorAuthenticationHandler'
 
-// async function loginUser(credentials) {
-//     return fetch('http://localhost:8080/Login_Screen', {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json'
-//       },
-//       body: JSON.stringify(credentials)
-//     })
-//       .then(data => data.json())
-//    }
-
 export default function Login_Screen() {
 
     const navigate = useNavigate();
-    const { setAuth } = useContext(AuthContext);
+    const context = useContext(AuthContext);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
@@ -28,11 +17,10 @@ export default function Login_Screen() {
         e.preventDefault();
         try {
             const login = {username, password}
-            // console.log(login);
             loginAdministratorHandler(login).then((res) => {
                 if (res.status === 200) {
-                    navigate('/Token', { replace: true }); 
-                    // window.location.href = '/Token';
+                    context.setCurrentUser(res.data);
+                    navigate('/Token', { replace: true });
                 } else {
                     console.log(res);
                 }
@@ -48,7 +36,7 @@ export default function Login_Screen() {
             <div class='row' id='Header'>
                 <div class='col'>
                     <h1>RUM Services Locator</h1>
-            </div>
+                </div>
             </div>
                 <h1 id='font-type' className="Center-text">Iniciar Sesión</h1>
                 <div class='row'>
@@ -66,9 +54,7 @@ export default function Login_Screen() {
                             </div>
                             <div class='w-100' id="button_padding"></div>
                             <div class="col d-flex justify-content-center">
-                                {/* <a href="/Token"> */}
                                     <button  class="btn btn-primary btn-success" id="button-font" type="button" onClick={(e) => handleSubmit(e)}>Iniciar Sesión</button>
-                                {/* </a> */}
                             </div>
                         </form>
                         <div class='row'>

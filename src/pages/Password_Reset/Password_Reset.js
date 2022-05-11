@@ -35,7 +35,12 @@ const Password_Reset = () => {
 
     const render = () => {
         return (
-            <div class='container'>
+            <div class='container-fluid'>
+                <div class='row' id='Header'>
+                    <div class='col'>
+                        <h1>RUM Services Locator</h1>
+                    </div>
+                </div>
                 <div id="font-type">
                     <h1>Restablecer Contraseña</h1>
                 </div>
@@ -56,9 +61,9 @@ const Password_Reset = () => {
                     </div>
                 </div>
                 <div class='row'>
-                    {/* <a href="/Login_Screen"> */}
-                    <button class='btn btn-primary btn-large btn-success' id="button-font" onClick={(e) => handleSubmit(e)}>Restablecer Contraseña </button>
-                    {/* </a> */}
+                    <a>
+                        <button class='btn btn-primary btn-large btn-success' id="button-font" onClick={(e) => handleSubmit(e)}>Restablecer Contraseña </button>
+                    </a>
                 </div>
             </div>
         )

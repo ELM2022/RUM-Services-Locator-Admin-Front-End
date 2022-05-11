@@ -1,20 +1,23 @@
+import { useContext } from 'react'
 import './Home.css'
-// import { useNavigate } from 'react-router-dom'
+import AuthContext from './contexts/AuthContext'
 import { logoutAdministratorHandler } from './handlers/administratorAuthenticationHandler'
 
 const Home = () => {
 
-    // const navigate = useNavigate();
+    const context = useContext(AuthContext);
 
     const handleLogout = (e) => {
         e.preventDefault();
         try {
             logoutAdministratorHandler().then((res) => {
-                // if (res.status === 200) {
-                //     navigate('/Login_Screen', { replace: true }); // Cannot use navigate hook because Home is not in a Route component
-                // }
-
-                // Handle navigation to Login Screen from the backend??
+                if (res.status === 200) {
+                    context.handleLogout();
+                    window.location.href = '/';
+                } else {
+                    console.log(res);
+                    alert("An error occurred.");
+                }
             });
         } catch (error) {
             console.log(error);
@@ -28,9 +31,7 @@ const Home = () => {
                     <h1 id='Home-header'>RUM Services Locator</h1>
                 </div>
                 <div class='col d-flex justify-content-end' id='Home-button'>
-                    <a href='/Login_Screen'>
-                        <button class='btn btn-primary btn-success' /*onClick={(e) => handleLogout(e)}*/>Cerrar Sesión</button>
-                    </a>
+                        <button class='btn btn-primary btn-success' onClick={(e) => handleLogout(e)}>Cerrar Sesión</button>
                 </div>
             </div>
         </div>

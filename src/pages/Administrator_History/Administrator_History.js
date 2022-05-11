@@ -2,6 +2,8 @@ import '../Table_Format.css'
 import React, { Component } from 'react'
 import { getAllAdministratorUpdateHistoryHandler } from '../../handlers/administratorHistoryHandler'
 import { administratorGetHandler } from '../../handlers/administratorHandler'
+import Navbar from "../../components/Navbar";
+import Home from "../../Home";
 
 class Administrator_History extends Component {
     constructor(props) {
@@ -56,19 +58,25 @@ class Administrator_History extends Component {
 
     render() {
         return(
-            <div id="office_table_padding">
-                <h1 id='title'>
-                    Historial de Administradores
-                </h1>
-                <div>
-                    <table id='table_information' align='center'>
-                        <tbody>
-                            {this.renderTableHeader()}
-                            {this.renderTableData()}
-                        </tbody>
-                    </table>
-                </div>
+            <><div>
+                <Home />
             </div>
+            <div>
+                <Navbar />
+            </div>
+            <div id="office_table_padding">
+                    <h1 id='title'>
+                        Historial de Administradores
+                    </h1>
+                    <div>
+                        <table id='table_information' align='center'>
+                            <tbody>
+                                {this.renderTableHeader()}
+                                {this.renderTableData()}
+                            </tbody>
+                        </table>
+                    </div>
+                </div></>
         )
     }
 }

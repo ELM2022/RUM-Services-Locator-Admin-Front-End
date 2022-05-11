@@ -1,18 +1,15 @@
 import './Active_Administrator.css'
 import React, { Component } from 'react';
 import { allAdministratorsHandler } from '../../handlers/administratorHandler'
-
+import Navbar from "../../components/Navbar";
+import Home from "../../Home";
 
 class Active_Administrator extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            administrators: [
-                // {name: 'Magaly'},
-                // {name: 'Luis Miguel'},
-                // {name: 'Lola Mento'}
-            ]
+            administrators: []
         }
     }
 
@@ -43,19 +40,25 @@ class Active_Administrator extends Component {
 
     render() {
         return(
+            <><div>
+                <Home />
+            </div>
+            <div>
+                <Navbar />
+            </div>
             <div id="office_table_padding">
-            <h1 id='title'>Directorio de Administradores</h1>
-            <table id='menu_information' align='center' class='table'>
-                <tbody>
-                    {this.renderTableData()}
-                </tbody>
-            </table>
-            <a href="/Create_Administrator">
-                <button align='center' class='btn btn-primary btn-success' id='menu_button'>
-                    Añadir Administrador
-                </button>
-            </a>
-        </div>
+                    <h1 id='title'>Directorio de Administradores</h1>
+                    <table id='menu_information' align='center' class='table'>
+                        <tbody>
+                            {this.renderTableData()}
+                        </tbody>
+                    </table>
+                    <a href="/Create_Administrator">
+                        <button align='center' class='btn btn-primary btn-success' id='menu_button'>
+                            Añadir Administrador
+                        </button>
+                    </a>
+                </div></>
         );
     }
 }

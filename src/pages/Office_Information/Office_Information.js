@@ -4,6 +4,8 @@ import '../Table_Format.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import { officeGetHandler, officeDeleteHandler } from '../../handlers/officeHandler';
 import UpdateDeleteModal from '../../components/updateDeleteModal'
+import Navbar from "../../components/Navbar";
+import Home from "../../Home";
 
 const Office_Information = () => {
 
@@ -82,24 +84,28 @@ const Office_Information = () => {
 
     function render() {
         return (
-            <div id="office_table_padding">
-                <h1 id='title'>Información de Oficina</h1>
-                <div class="table-responsive">
-                    <table id='table_information'>
-                        <tbody>
-                            {renderTableHeader()}
-                            {renderTableData()}
-                        </tbody>
-                    </table>
-                </div>
-                <a href={`/Edit_Office/${officeid}`}>
-                    <button class='btn btn-success btn-block'>Edit</button>
-                </a>
-                {/* <a href="/Active_Directory"> */}
-                    <button class='btn btn-danger btn-block' onClick={(e) => handleDelete(e)}>Delete</button>
-                {/* </a> */}
-                {updateDeleteModalOpen && <UpdateDeleteModal type="DELETE" setOpenModal={setUpdateDeleteModalOpen} navigation={navigate} route="/Active_Directory"/>}
+            <><div>
+                <Home />
             </div>
+            <div>
+                <Navbar />
+            </div>
+            <div id="office_table_padding">
+                    <h1 id='title'>Información de Oficina</h1>
+                    <div class="table-responsive">
+                        <table id='table_information'>
+                            <tbody>
+                                {renderTableHeader()}
+                                {renderTableData()}
+                            </tbody>
+                        </table>
+                    </div>
+                    <a href={`/Edit_Office/${officeid}`}>
+                        <button class='btn btn-success btn-block'>Edit</button>
+                    </a>
+                    <button class='btn btn-danger btn-block' onClick={(e) => handleDelete(e)}>Delete</button>
+                    {updateDeleteModalOpen && <UpdateDeleteModal type="DELETE" setOpenModal={setUpdateDeleteModalOpen} navigation={navigate} route="/Active_Directory" />}
+                </div></>
         )
     }
 

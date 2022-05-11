@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import '../Table_Format.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import { administratorGetHandler, administratorUpdateHandler } from '../../handlers/administratorHandler'
 import { addAdministratorUpdateHandler } from '../../handlers/administratorHistoryHandler'
+import AuthContext from '../../contexts/AuthContext'
 import UpdateDeleteModal from '../../components/updateDeleteModal'
 import ErrorHandlingModal from '../../components/errorHandlingModal'
+import Navbar from "../../components/Navbar";
+import Home from "../../Home";
 
 const genDatetime = () => {
     const timeElapsed = Date.now();
@@ -20,6 +23,7 @@ const Edit_Administrator = () => {
 
     const { adminid } = useParams();
     const navigate = useNavigate();
+    const context = useContext(AuthContext);
 
     const [errorModalOpen, setErrorModalOpen] = useState(false);
     const [updateDeleteModalOpen, setUpdateDeleteModalOpen] = useState(false);
@@ -53,7 +57,7 @@ const Edit_Administrator = () => {
         administratorUpdateHandler(new_admin).then((res) => {
             if (res.status === 200) {
                 const admin_update = {
-                    editor_admin_id: 1,
+                    editor_admin_id: context.getUserId(),
                     updated_admin_id: adminid,
                     update_datetime: genDatetime(),
                     update_justification: justification
@@ -92,27 +96,33 @@ const Edit_Administrator = () => {
     
     function render() {
         return (
+            <><div>
+                <Home />
+            </div>
+            <div>
+                <Navbar />
+            </div>
             <div id="office_table_padding">
-                 <h1 id='title'>Editar Información del Administrador</h1>
-                     <table id='table_information' align="center">
-                         <tbody>
-                             {renderTableHeader()}
-                             {renderEditableTableData()}
-                         </tbody>
-                     </table>
+                    <h1 id='title'>Editar Información del Administrador</h1>
+                    <table id='table_information' align="center">
+                        <tbody>
+                            {renderTableHeader()}
+                            {renderEditableTableData()}
+                        </tbody>
+                    </table>
 
                     <div class='form-group'>
                         <h2 id='title'>Justificación</h2>
                         <label for='textArea' id='title'>Por favor escribir justificación de cambio</label>
                         <textarea class='form-control' id='textArea' onChange={(e) => setJustification(e.target.value)}></textarea>
                     </div>
-                     <button class='btn btn-success btn-block' onClick={(e) => handleSave(e)}>Save</button>
-                 <a href={`/Admin_Information/${adminid}`}>
-                     <button class='btn btn-danger btn-block'>Cancel</button>
-                 </a>
-                 {updateDeleteModalOpen && <UpdateDeleteModal type="EDIT" setOpenModal={setUpdateDeleteModalOpen} routeid={adminid} navigation={navigate} route="/Admin_Information/"/>}
-                 {errorModalOpen && <ErrorHandlingModal text={userErrors} setOpenModal={setErrorModalOpen}/>}
-        </div>
+                    <button class='btn btn-success btn-block' onClick={(e) => handleSave(e)}>Save</button>
+                    <a href={`/Admin_Information/${adminid}`}>
+                        <button class='btn btn-danger btn-block'>Cancel</button>
+                    </a>
+                    {updateDeleteModalOpen && <UpdateDeleteModal type="EDIT" setOpenModal={setUpdateDeleteModalOpen} routeid={adminid} navigation={navigate} route="/Admin_Information/" />}
+                    {errorModalOpen && <ErrorHandlingModal text={userErrors} setOpenModal={setErrorModalOpen} />}
+                </div></>
         )
     }
 

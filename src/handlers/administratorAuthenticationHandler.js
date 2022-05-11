@@ -1,23 +1,7 @@
 import axios from "axios";
 import { apiRoute } from './apiRoute'
-// import { wrapper } from 'axios-cookiejar-support';
-// import { CookieJar } from 'tough-cookie';
-
-// axios.defaults.withCredentials = true;
-// const jar = new CookieJar();
-// const client = wrapper(axios.create({ jar }));
 
 export const loginAdministratorHandler = async (credentials) => {
-    // console.log(JSON.stringify(credentials));
-    // return axios
-    // .post(`${apiRoute}/login`, JSON.stringify(credentials), 
-    // {
-    //     headers: {"Content-Type": "application/json"},
-    //     // jar: cookieJar,
-    //     withCredentials: true,
-    //     // credentials: 'include'
-    // }
-    // )
     return axios({
         url: `${apiRoute}/login`,
         method: 'POST',
@@ -25,7 +9,6 @@ export const loginAdministratorHandler = async (credentials) => {
         withCredentials: true,
     })
     .then((response) => {
-        console.log(response);
         return response;
     })
     .catch((err) => {
@@ -34,25 +17,13 @@ export const loginAdministratorHandler = async (credentials) => {
 }
 
 export const validateAdministratorLoginHandler = (token) => {
-    // console.log(JSON.stringify(token));
-    // const {token} = auth_token;
-    // console.log(token);
-    // return axios
-    // .get(`${apiRoute}/login/validate/?token=${token}`, 
-    // {
-    //     headers: {"Content-Type": "application/json"},
-    //     // jar: jar,
-    //     withCredentials: true,
-    //     // credentials: 'include'
-    // }
-    // )
     return axios({
-        url: `${apiRoute}/login/validate/?token=${token}`,
-        method: 'GET',
+        url: `${apiRoute}/login/validate`,
+        method: 'POST',
+        data: token,
         withCredentials: true
     })
     .then((response) => {
-        console.log(response);
         return response;
     })
     .catch((err) => {
@@ -71,9 +42,9 @@ export const registerAdministratorHandler = (administrator) => {
     })
 }
 
-export const resendValidateAdministratorLoginHandler = () => {
+export const resendValidateAdministratorLoginHandler = (admin) => {
     return axios
-    .get(`${apiRoute}/login/validate/resend`)
+    .post(`${apiRoute}/login/validate/resend`, admin)
     .then((response) => {
         return response;
     })
@@ -117,7 +88,7 @@ export const validateAdministratorPasswordReset = (token) => {
 
 export const logoutAdministratorHandler = () => {
     return axios
-    .get(`${apiRoute}/logout`)
+    .post(`${apiRoute}/logout`)
     .then((response) => {
         return response;
     })

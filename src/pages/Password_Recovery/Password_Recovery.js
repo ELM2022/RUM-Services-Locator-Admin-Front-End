@@ -1,6 +1,5 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-// import AuthContext from '../../contexts/AuthContext'
 import './Password_Recovery.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import '../Input_Format.css'
@@ -8,7 +7,6 @@ import { recoverAdministratorPasswordHandler } from '../../handlers/administrato
 
 const Password_Recovery = () => {
 
-    // const { auth } = useContext(AuthContext);
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
 
@@ -29,10 +27,15 @@ const Password_Recovery = () => {
 
     const render = () => {
         return (
-            <div class='container'>
-                <div id='font-type'>
-                    <h1>Restablecer Contraseña</h1>
-                    <h2>Introduzca su correo electronico para recibir instrucciones para restablecer su cuenta.</h2>
+            <div class='container-fluid'>
+                <div class='row' id='Header'>
+                    <div class='col'>
+                        <h1>RUM Services Locator</h1>
+                    </div>
+                </div>
+                <div id='font-type' className="Center-text">
+                    <h1 id='font-type' className="Center-text">Restablecer Contraseña</h1>
+                    <h3>Introduzca su correo electronico para recibir instrucciones para restablecer su cuenta.</h3>
                 </div>
                 <div class='row'>
                     <div class="form-outline">
@@ -40,7 +43,12 @@ const Password_Recovery = () => {
                     </div>
                 </div>
                 <div class='row'>
+                    <a>
                     <button class="btn btn-primary btn-lg btn-success" id='button-font' onClick={(e) => handleSubmit(e)}>Enviar Correo Electronico</button>
+                    </a>
+                    <a href='/'>
+                        <button class="btn btn-primary btn-lg btn-danger" id='button-font'>Regresar</button>
+                    </a>
                 </div>
             </div>
         )

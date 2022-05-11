@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import '../Table_Format.css'
 import 'bootstrap/dist/css/bootstrap.css'
@@ -7,10 +7,13 @@ import { addOfficeUpdateHandler } from '../../handlers/officeHistoryHandler'
 import { getAllCategoriesHandler, getOfficeCategoriesHandler, addCategoryHandler, 
         addCategoryMembershipHandler, deleteOfficeCategoriesHandler } 
 from '../../handlers/categoriesHandler'
+import AuthContext from '../../contexts/AuthContext'
 import UpdateDeleteModal from '../../components/updateDeleteModal'
 import ErrorHandlingModal from '../../components/errorHandlingModal'
 import CreatableSelect from 'react-select/creatable';
 import makeAnimated from 'react-select/animated';
+import Navbar from "../../components/Navbar";
+import Home from "../../Home";
 
 const genDatetime = () => {
     const timeElapsed = Date.now();
@@ -25,6 +28,7 @@ const Edit_Office = () => {
 
     const {officeid} = useParams();
     const navigate = useNavigate();
+    const context = useContext(AuthContext);
     const animatedComponents = makeAnimated();
 
     const [errorModalOpen, setErrorModalOpen] = useState(false);
@@ -161,7 +165,7 @@ const Edit_Office = () => {
                 if (res.status === 200) {
                     const office_update = {
                         office_id: officeid,
-                        admin_id: 1,
+                        admin_id: context.getUserId(),
                         update_datetime: genDatetime(),
                         update_justification: justification
                     }
@@ -285,30 +289,36 @@ const Edit_Office = () => {
     
     function render() {
         return (
+            <><div>
+                <Home />
+            </div>
+            <div>
+                <Navbar />
+            </div>
             <div id="office_table_padding">
-                 <h1 id='title'>Editar Información de Oficina</h1>
-                 <div class="table-responsive">
-                     <table id='table_information'>
-                         <tbody>
-                             {renderTableHeader()}
-                             {renderEditableTableData()}
-                         </tbody>
-                     </table>
-                 </div>
-                 <h3 id='title'>Categorías</h3>
-                 {renderDropdown()}
-                 <div class='form-group'>
+                    <h1 id='title'>Editar Información de Oficina</h1>
+                    <div class="table-responsive">
+                        <table id='table_information'>
+                            <tbody>
+                                {renderTableHeader()}
+                                {renderEditableTableData()}
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3 id='title'>Categorías</h3>
+                    {renderDropdown()}
+                    <div class='form-group'>
                         <h2 id='title'>Justificación</h2>
                         <label for='textArea' id='title'>Por favor escribir justificación de cambio</label>
                         <textarea class='form-control' id='textArea' onChange={(e) => setJustification(e.target.value)}></textarea>
-                </div>
-                     <button class='btn btn-success btn-block' onClick={(e) => handleSave(e)}>Save</button>
-                 <a href={`/Office_Information/${officeid}`}>
-                     <button class='btn btn-danger btn-block'>Cancel</button>
-                 </a>
-                 {updateDeleteModalOpen && <UpdateDeleteModal type="EDIT" setOpenModal={setUpdateDeleteModalOpen} routeid={officeid} navigation={navigate} route="/Office_Information/"/>}
-                 {errorModalOpen && <ErrorHandlingModal text={userErrors} setOpenModal={setErrorModalOpen}/>}
-        </div>
+                    </div>
+                    <button class='btn btn-success btn-block' onClick={(e) => handleSave(e)}>Save</button>
+                    <a href={`/Office_Information/${officeid}`}>
+                        <button class='btn btn-danger btn-block'>Cancel</button>
+                    </a>
+                    {updateDeleteModalOpen && <UpdateDeleteModal type="EDIT" setOpenModal={setUpdateDeleteModalOpen} routeid={officeid} navigation={navigate} route="/Office_Information/" />}
+                    {errorModalOpen && <ErrorHandlingModal text={userErrors} setOpenModal={setErrorModalOpen} />}
+                </div></>
         )
     }
 

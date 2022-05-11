@@ -6,6 +6,8 @@ import { officeCreateHandler } from '../../handlers/officeHandler';
 import { getAllCategoriesHandler, addCategoryHandler, addCategoryMembershipHandler } from '../../handlers/categoriesHandler';
 import CreatableSelect from 'react-select/creatable';
 import makeAnimated from 'react-select/animated';
+import Navbar from "../../components/Navbar";
+import Home from "../../Home";
 
 const Create_Office = () => {
 
@@ -189,22 +191,28 @@ const Create_Office = () => {
     
     function render() {
         return(
-            <div>
-                <h1 id='title'>Crear Oficina</h1>
-                <div id="office_table_padding" class="table-responsive">
-                    <table id='table_information'>
-                        <tbody>
-                            {renderTableHeader()}
-                            {renderEditableTableData()}
-                        </tbody>
-                    </table>
-                </div>
-                {renderDropdown()}
-                    <button class='btn btn-success btn-block' onClick={(e) => handleSave(e)}>Save</button>
-                <a href="/Active_Directory">
-                    <button class='btn btn-danger btn-block'>Cancel</button>
-                </a>
+            <><div>
+                <Home />
             </div>
+            <div>
+                <Navbar />
+            </div>
+            <div>
+                    <h1 id='title'>Crear Oficina</h1>
+                    <div id="office_table_padding" class="table-responsive">
+                        <table id='table_information'>
+                            <tbody>
+                                {renderTableHeader()}
+                                {renderEditableTableData()}
+                            </tbody>
+                        </table>
+                    </div>
+                    {renderDropdown()}
+                    <button class='btn btn-success btn-block' onClick={(e) => handleSave(e)}>Save</button>
+                    <a href="/Active_Directory">
+                        <button class='btn btn-danger btn-block'>Cancel</button>
+                    </a>
+                </div></>
         )
     }
 

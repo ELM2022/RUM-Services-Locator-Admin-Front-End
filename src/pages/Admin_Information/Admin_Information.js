@@ -4,6 +4,8 @@ import '../Table_Format.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import { administratorGetHandler, administratorDeleteHandler } from '../../handlers/administratorHandler'
 import UpdateDeleteModal from '../../components/updateDeleteModal'
+import Navbar from "../../components/Navbar";
+import Home from "../../Home";
 
 const Admin_Information = () => {
 
@@ -57,20 +59,26 @@ const Admin_Information = () => {
 
     const render = () => {
         return (
-            <div id="office_table_padding">
-                <h1 id='title'>Información del Administrador</h1>
-                <table id='table_information' align='center'>
-                    <tbody>
-                        {renderTableHeader()}
-                        {renderTableData()}
-                    </tbody>
-                </table>
-                <a href={`/Edit_Administrator/${adminid}`}>
-                    <button class='btn btn-success btn-block'>Edit</button>
-                </a>
-                    <button class='btn btn-danger btn-block' onClick={(e) => handleDelete(e)}>Delete</button>
-                    {updateDeleteModalOpen && <UpdateDeleteModal type="DELETE" setOpenModal={setUpdateDeleteModalOpen} navigation={navigate} route="/Active_Administrator"/>}
+            <><div>
+                <Home />
             </div>
+            <div>
+                <Navbar />
+            </div>
+            <div id="office_table_padding">
+                    <h1 id='title'>Información del Administrador</h1>
+                    <table id='table_information' align='center'>
+                        <tbody>
+                            {renderTableHeader()}
+                            {renderTableData()}
+                        </tbody>
+                    </table>
+                    <a href={`/Edit_Administrator/${adminid}`}>
+                        <button class='btn btn-success btn-block'>Edit</button>
+                    </a>
+                    <button class='btn btn-danger btn-block' onClick={(e) => handleDelete(e)}>Delete</button>
+                    {updateDeleteModalOpen && <UpdateDeleteModal type="DELETE" setOpenModal={setUpdateDeleteModalOpen} navigation={navigate} route="/Active_Administrator" />}
+                </div></>
         )
     }
 
