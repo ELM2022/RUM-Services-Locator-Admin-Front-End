@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './Active_Directory.css'
 import '../Menu_Format.css'
 import { allOfficesHandler } from '../../handlers/officeHandler'
+import Navbar from "../../components/Navbar";
+import Home from "../../Home";
 
 class Active_Directory extends Component{
 
@@ -14,6 +16,10 @@ class Active_Directory extends Component{
 
 
     componentDidMount() {
+        const timeElapsed = Date.now();
+        const today = new Date(timeElapsed).toISOString();
+        const hour = new Date(timeElapsed).toString();
+        const datetime = today.slice(0,10) + " " +hour.slice(16,24);
         allOfficesHandler().then(res => {
             if (res.status === 200) {
                 this.setState({offices: res.data.data.offices});
@@ -35,19 +41,25 @@ class Active_Directory extends Component{
 
     render() {
         return (
-            <div className='Active_Directory' id="office_table_padding">
-                <h1 id='title'>Directorio de Oficinas</h1>
-                <table id='menu_information' align='center' class='table'>
-                    <tbody>
-                        {this.renderTableData()}
-                    </tbody>
-                </table>
-                <a href="/Create_Office">
-                <button class='btn btn-primary btn-success' id='menu_button'>
-                Añadir Oficina
-                </button>
-                </a>
+            <><div>
+                <Home />
             </div>
+            <div>
+                <Navbar />
+            </div>
+            <div className='Active_Directory' id="office_table_padding">
+                    <h1 id='title'>Directorio de Oficinas</h1>
+                    <table id='menu_information' align='center' class='table'>
+                        <tbody>
+                            {this.renderTableData()}
+                        </tbody>
+                    </table>
+                    <a href="/Create_Office">
+                        <button class='btn btn-primary btn-success' id='menu_button'>
+                            Añadir Oficina
+                        </button>
+                    </a>
+                </div></>
         );
     }
 }

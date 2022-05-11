@@ -7,7 +7,7 @@ import { resetAdministratorPasswordHandler } from '../../handlers/administratorA
 
 const Password_Reset = () => {
 
-    const token = useParams();
+    const {token} = useParams();
     const navigate = useNavigate();
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -21,6 +21,7 @@ const Password_Reset = () => {
                 admin_password: password,
                 confirm_password: confirmPassword
             }
+            console.log(admin);
             resetAdministratorPasswordHandler(admin).then((res) => {
                 if (res.status === 200) {
                     alert("Su contraseña ha sido actualizada. Por favor vuelva a iniciar su sesión.");
@@ -34,7 +35,12 @@ const Password_Reset = () => {
 
     const render = () => {
         return (
-            <div class='container'>
+            <div class='container-fluid'>
+                <div class='row' id='Header'>
+                    <div class='col'>
+                        <h1>RUM Services Locator</h1>
+                    </div>
+                </div>
                 <div id="font-type">
                     <h1>Restablecer Contraseña</h1>
                 </div>
@@ -55,9 +61,9 @@ const Password_Reset = () => {
                     </div>
                 </div>
                 <div class='row'>
-                    {/* <a href="/Login_Screen"> */}
-                    <button class='btn btn-primary btn-large btn-success' id="button-font" onClick={(e) => handleSubmit(e)}>Restablecer Contraseña </button>
-                    {/* </a> */}
+                    <a>
+                        <button class='btn btn-primary btn-large btn-success' id="button-font" onClick={(e) => handleSubmit(e)}>Restablecer Contraseña </button>
+                    </a>
                 </div>
             </div>
         )

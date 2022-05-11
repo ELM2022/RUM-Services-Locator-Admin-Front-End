@@ -1,9 +1,9 @@
 import axios from "axios";
 import { apiRoute } from './apiRoute'
 
-export const getUnresolvedPendingAdminsHandler = () => {
+export const getAllCategoriesHandler = () => {
     return axios
-    .get(`${apiRoute}/admin/pending/unresolved`)
+    .get(`${apiRoute}/category`)
     .then((response) => {
         return response;
     })
@@ -12,9 +12,9 @@ export const getUnresolvedPendingAdminsHandler = () => {
     })
 }
 
-export const getSpecificPendingAdministrator = (pending_admin) => {
+export const getOfficeCategoriesHandler = (office_id) => {
     return axios
-    .get(`${apiRoute}/admin/pending/${pending_admin.pending_admin_id}`)
+    .get(`${apiRoute}/offices/${office_id}/category`)
     .then((response) => {
         return response;
     })
@@ -23,9 +23,9 @@ export const getSpecificPendingAdministrator = (pending_admin) => {
     })
 }
 
-export const getPendingAdminByEmail = (pending_email) => {
+export const addCategoryHandler = (category) => {
     return axios
-    .get(`${apiRoute}/admin/pending/${pending_email}`)
+    .post(`${apiRoute}/category`, category)
     .then((response) => {
         return response;
     })
@@ -34,9 +34,10 @@ export const getPendingAdminByEmail = (pending_email) => {
     })
 }
 
-export const createPendingAdministrator = (pending_admin) => {
+export const addCategoryMembershipHandler = (membership) => {
+    const categories = membership.categories;
     return axios
-    .post(`${apiRoute}/admin/pending`, { pending_admin })
+    .post(`${apiRoute}/offices/${membership.office_id}/category`, {categories})
     .then((response) => {
         return response;
     })
@@ -45,9 +46,9 @@ export const createPendingAdministrator = (pending_admin) => {
     })
 }
 
-export const deletePendingAdministrator = (pending_id) => {
+export const deleteOfficeCategoriesHandler = (office_id) => {
     return axios
-    .put(`${apiRoute}/admin/pending/${pending_id}/delete`)
+    .delete(`${apiRoute}/offices/${office_id}/category`)
     .then((response) => {
         return response;
     })

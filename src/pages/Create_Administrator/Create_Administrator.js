@@ -1,90 +1,77 @@
-import React, { Component } from 'react'
+import React, { useState, useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
 import './Create_Administrator.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import '../Table_Format.css'
 import '../Input_Format.css'
+import AuthContext from '../../contexts/AuthContext'
 import { createPendingAdministrator } from '../../handlers/pendingAdministratorHandler'
+import Navbar from "../../components/Navbar";
+import Home from "../../Home";
+import UpdateDeleteModal from '../../components/updateDeleteModal'
 
-class Create_Administrator extends Component {
+const Create_Administrator = () => {
 
-    constructor(props){
-        super(props)
-        this.state = {
-            admin_information: [
-                {id:1, email:'lolaMento@gmail.com', admin_name: 'Lola', admin_last_name: 'Mento', admin_password: '********', admin_active_status: true}
-            ]
+    const navigate = useNavigate();
+    const context = useContext(AuthContext);
+    const [pending_email, setPendingEmail] = useState("");
+    const [pendingAdmin, setPendingAdmin] = useState({});
+    const [updateDeleteModalOpen, setUpdateDeleteModalOpen] = useState(false);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        try {
+            const pending_admin = {
+                admin_id: context.getUserId(),
+                pending_email: pending_email
+            }
+
+            setPendingAdmin(pending_admin);
+
+        } catch (error) {
+            console.log(error);
         }
     }
 
-    
-
-    renderTableData() {
-        return this.state.admin_information.map((admin_information, index) => {
-            const {id, email, admin_name, admin_last_name, admin_password, admin_active_status} = admin_information 
-            return (
-                <tr key={id}>
-                    <td>{id}</td>
-                    <td>{email}</td>
-                    <td>{admin_name}</td>
-                    <td>{admin_last_name}</td>
-                    <td>{admin_password}</td>
-                    <td>{admin_active_status}</td>
-                </tr>
-            )
-        })
-    }
-
-    renderEditableTableData () {
-        return this.state.admin_information.map((admin_information, index) => {
-            const {id, email, admin_password, admin_name, admin_last_name, admin_active_status} = admin_information 
-            return (
-                <tr key={id}>
-                    <td><input type='text'></input></td>
-                    <td><input type='text'></input></td>
-                    <td><input type='text'></input></td>
-                    <td><input type='text'></input></td>
-                    <td><input type='text'></input></td>
-                    <td><input type='text'></input></td>
-                </tr>
-            )
-        })
-    }
-
-    renderTableHeader() {
-       let header = Object.keys(this.state.admin_information[0])
-       return header.map((key, index) => {
-           return <th key={index}>{key.replace(/_/g, " ").toUpperCase()}</th>
-       })
-    }
-
-    render() {
+    const render = () => {
         return (
-            <div class='container' id="office_table_padding">
-                <div id='font-type'>
-                    <h1 id='title'>Crear Administrador</h1>
-                    <h2>Introduzca el correo electrónico del administrador a ser creado</h2>
-                </div>
-                <div class='row'>
-                    <div class='form-outline'>
-                        <input type='text' class='form-control' placeholder='correo electronico'></input>
-                    </div>
-                </div>
-                <div class='row'>
-                    <div class='col'>
-                        <a href="/Active_Administrator">
-                            <button class="btn btn-primary btn-lg btn-success" id='button-font'>Save</button>
-                        </a>
-                    </div>
-                    <div class='col'>
-                        <a href="/Active_Administrator">
-                            <button class="btn btn-primary btn-lg btn-danger" id='button-font'>Cancel</button>
-                        </a>
-                    </div>
-                </div>
+            <><div>
+                <Home />
             </div>
-            
+            <div>
+                <Navbar />
+            </div>
+            <div class='container'>
+                    <div id='font-type'>
+                        <h1>Añadir Nuevo Administrador</h1>
+                        <h2>Introduzca el correo electronico del nuevo administrador que desea añadir al sistema.</h2>
+                    </div>
+                    <div class='row'>
+                        <div class="form-outline">
+                            <input type='text' class="form-control" placeholder="Correo Electrónico" id="input_information" value={pending_email} onChange={(e) => setPendingEmail(e.target.value)}></input>
+                        </div>
+                    </div>
+                <div class='row'>
+                    <button class="btn btn-primary btn-lg btn-success" id='button-font' onClick={(e) => {
+                        handleSubmit(e)
+                        setUpdateDeleteModalOpen(true)
+                        }}>Registrar Nuevo Administrador</button>
+                </div>
+                <div class='row'>
+                    <a href="/Active_Administrator">
+                        <button class="btn btn-primary btn-lg btn-danger" id='button-font'>Cancelar Registro</button>
+                    </a>
+                </div>
+                {updateDeleteModalOpen && <UpdateDeleteModal type="CREATE" setOpenModal={setUpdateDeleteModalOpen} navigation={navigate} route="/Active_Administrator" information={pendingAdmin} use="ADMIN"/>}
+            </div></>
         )
     }
+
+    return (
+        render()
+    )
+
 }
 
-export default Create_Administrator
+export default Create_Administrator;
