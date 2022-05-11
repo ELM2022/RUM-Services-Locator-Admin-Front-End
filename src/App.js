@@ -40,6 +40,7 @@ function App() {
           />
           <Route 
             path="/Create_Account"
+            element={<Create_Account />}
           />
           <Route 
             path="/Admin_Information/:adminid"
