@@ -103,7 +103,7 @@ const Create_Account = () => {
                         </div>
                         <div class='w-100'></div>
                         <div class="form-outline">
-                            <input type="text" placeholder="Introducir Contraseña" class="form-control" value={password} onChange={(e) => setPassword(e.target.value)}/>
+                            <input type="password" placeholder="Introducir Contraseña" class="form-control" value={password} onChange={(e) => setPassword(e.target.value)}/>
                         </div>
                         <div class='w-100'></div>
                         <div class="form-outline">

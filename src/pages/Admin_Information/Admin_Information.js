@@ -24,24 +24,24 @@ const Admin_Information = () => {
         });
     }, [adminid]);
 
-    const handleDelete = (e) => {
-        e.preventDefault();
-        alert("This administrator will be deactivated.");
-        administratorDeleteHandler(adminid).then((res) => {
-            if (res.status === 200) {
-                //alert("Administrator deactivated successfully.");
-                //alertnavigate('/Active_Administrator', { replace: true });
-                setUpdateDeleteModalOpen(true);
-            }
-        });
-    }
+    // const handleDelete = (e) => {
+    //     e.preventDefault();
+    //     alert("This administrator will be deactivated.");
+    //     administratorDeleteHandler(adminid).then((res) => {
+    //         if (res.status === 200) {
+    //             //alert("Administrator deactivated successfully.");
+    //             //alertnavigate('/Active_Administrator', { replace: true });
+    //             setUpdateDeleteModalOpen(true);
+    //         }
+    //     });
+    // }
 
     const renderTableHeader = () => {
         return(
             <tr>
-                <th>Administrator Email</th>
-                <th>Administrator Name</th>
-                <th>Administrator Last Name</th>
+                <th>Correo Electrónico de Administrador</th>
+                <th>Nombre de Administrador</th>
+                <th>Apellido de Administrador</th>
             </tr>
         )
     }
@@ -66,19 +66,19 @@ const Admin_Information = () => {
                 <Navbar />
             </div>
             <div id="office_table_padding">
-                    <h1 id='title'>Información del Administrador</h1>
-                    <table id='table_information' align='center'>
-                        <tbody>
-                            {renderTableHeader()}
-                            {renderTableData()}
-                        </tbody>
-                    </table>
-                    <a href={`/Edit_Administrator/${adminid}`}>
-                        <button class='btn btn-success btn-block'>Edit</button>
-                    </a>
-                    <button class='btn btn-danger btn-block' onClick={(e) => handleDelete(e)}>Delete</button>
-                    {updateDeleteModalOpen && <UpdateDeleteModal type="DELETE" setOpenModal={setUpdateDeleteModalOpen} navigation={navigate} route="/Active_Administrator" />}
-                </div></>
+                <h1 id='title'>Información del Administrador</h1>
+                <table id='table_information' align='center'>
+                    <tbody>
+                        {renderTableHeader()}
+                        {renderTableData()}
+                    </tbody>
+                </table>
+                <a href={`/Edit_Administrator/${adminid}`}>
+                    <button class='btn btn-success btn-block'>Editar</button>
+                </a>
+                    <button class='btn btn-danger btn-block' onClick={(e) => setUpdateDeleteModalOpen(true)}>Borrar</button>
+                    {updateDeleteModalOpen && <UpdateDeleteModal type="DELETE" setOpenModal={setUpdateDeleteModalOpen} navigation={navigate} route="/Active_Administrator" information={admin_information} use="ADMIN"/>}
+            </div></>
         )
     }
 

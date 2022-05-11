@@ -1,3 +1,4 @@
+import e from 'cors';
 import React, {useState} from 'react';
 import './Modal.css'
 
@@ -6,11 +7,16 @@ function ErrorHandlingModal({text, setOpenModal}) {
     const [error, setError] = useState(text);
 
     const message = () => {
-        return (error.map(userError => {
-            return(
-                <h3>{Object.values(userError)}</h3>
-            )
-        }))
+        if(error.length == 0){
+            return <h3>No tiene errores. Presione guardar nuevamente para guardar la entrada</h3>
+        }
+        else{
+            return (error.map(userError => {
+                return(
+                    <h3>{Object.values(userError)}</h3>
+                )
+            }))
+        }
     }
 
     return (

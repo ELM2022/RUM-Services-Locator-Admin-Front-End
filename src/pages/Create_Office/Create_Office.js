@@ -8,6 +8,8 @@ import CreatableSelect from 'react-select/creatable';
 import makeAnimated from 'react-select/animated';
 import Navbar from "../../components/Navbar";
 import Home from "../../Home";
+import UpdateDeleteModal from '../../components/updateDeleteModal'
+import ErrorHandlingModal from '../../components/errorHandlingModal'
 
 const Create_Office = () => {
 
@@ -15,6 +17,14 @@ const Create_Office = () => {
 
     const animatedComponents = makeAnimated();
 
+    const [userErrors, setUserErrors] = useState([]);
+    const [formInvalid, setFormInvalid] = useState(false);
+    const [createdOffice, setCreatedOffice] = useState({});
+
+    const [errorModalOpen, setErrorModalOpen] = useState(false);
+    const [updateDeleteModalOpen, setUpdateDeleteModalOpen] = useState(false);
+
+    // const history = useHistory();
     const [officeName, setOfficeName] = useState("");
     const [officeDescription, setOfficeDescription] = useState("");
     const [officeSchedule, setOfficeSchedule] = useState("");
@@ -38,7 +48,15 @@ const Create_Office = () => {
     const handleSave = (e) => {
         e.preventDefault();
 
-        try {
+        setUserErrors([]);
+
+        compileErrors();
+
+        if(formInvalid) {
+            setFormInvalid(false);
+            setErrorModalOpen(true);
+        }
+        else{
             const new_office = {
                 office_name: officeName,
                 office_description: officeDescription,
@@ -56,45 +74,7 @@ const Create_Office = () => {
                 office_extension_number: officeExtensionNumber,
                 office_website: officeWebsite
             }
-
-            if (newCategories.length > 0) {
-                newCategories.map((category_name) => {
-                    const category = {category_name};
-                    addCategoryHandler(category).then((res) => {
-                        if (res.status === 201) {
-                            selectedCategories.push(res.data.result.insertId);
-                        }
-                        else {
-                            console.log(res);
-                        }
-                    });
-                });
-            }
-    
-            officeCreateHandler(new_office).then((res) => {
-                if (res.status === 201) {
-                    const new_office_id = res.data.result.insertId;
-                    const membership = {
-                        office_id: new_office_id,
-                        categories: selectedCategories
-                    }
-
-                    addCategoryMembershipHandler(membership).then((response) => {
-                        if (response.status === 201) {
-                            navigate(`/Active_Directory`, { replace: true });
-                        }
-                        else {
-                            console.log(res);
-                        }
-                    });
-                }
-                else {
-                    console.log(res);
-                }
-            });
-
-        } catch (error) {
-            console.log(error);
+            setCreatedOffice(new_office);
         }
     }
 
@@ -110,6 +90,158 @@ const Create_Office = () => {
             setCategories(result);
         });
     },[]);
+
+    const compileErrors = () => {
+        fieldValidator('officeName', officeName)
+        fieldValidator('officeDescription', officeDescription)
+        fieldValidator('officeSchedule', officeSchedule)
+        fieldValidator('officeLatitude', officeLatitude)
+        fieldValidator('officeLongitude', officeLongitude)
+        fieldValidator('officeEntranceLatitude', officeEntranceLatitude)
+        fieldValidator('officeEntranceLongitude', officeEntranceLongitude)
+        fieldValidator('officeRouteInstructions', officeRouteInstructions)
+        fieldValidator('officeSearchDescription', officeSearchDescription)
+        fieldValidator('officeFloorNumber', officeFloorNumber)
+        fieldValidator('officeRoomCode', officeRoomCode)
+        fieldValidator('officeEmail', officeEmail)
+        fieldValidator('officePhoneNumber', officePhoneNumber)
+        fieldValidator('officeExtensionNumber', officeExtensionNumber)
+        fieldValidator('officeWebsite', officeWebsite)
+    }
+
+    function fieldValidator(fieldName, value) {
+        switch(fieldName) {
+            case 'officeName':
+                if(typeof value === 'string') {
+                    if(/[0-9]/.test(value)){
+                        setFormInvalid(true);
+                        setUserErrors(prevState => [...prevState, "El nombre de la oficina debe de contener solamente letras."])
+                    }
+                }
+                else{
+                    setFormInvalid(true);
+                    setUserErrors(prevState => [...prevState, "El nombre de la oficina debe de contener solamente letras."])
+                }
+                break;
+            case 'officeDescription':
+                if(!typeof value === 'string') {
+                    setUserErrors(prevState => [...prevState, "La descripción de la oficina debe de contener palabras."])
+                    setFormInvalid(true);
+                }
+                break;
+            case 'OfficeSearchDescription':
+                if(!typeof value === 'string') {
+                    setUserErrors(prevState => [...prevState, "La descripción de busqueda de la oficina debe de contener palabras."])
+                    setFormInvalid(true);
+                }
+                break;
+            case 'officePhoneNumber':
+                if(!typeof value === 'string' && value !== '') {
+                    if(!/^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/.test(value)){
+                    setUserErrors(prevState => [...prevState, "El numero de telefono de la oficina debe contener numeros y seguir la siguiente secuencia XXX-XXX-XXXX."])
+                    setFormInvalid(true);
+                    }
+                }
+                break;
+            case 'officeLatitude':
+                if(!isNaN(value)){
+                    if(Number.isInteger(Number(value))){
+                        setUserErrors(prevState => [...prevState, "Latitud de Oficina debe de ser un numero decimal."])
+                        setFormInvalid(true);
+                    }
+                }
+                else{
+                    setUserErrors(prevState => [...prevState, "Latitud de Oficina debe de ser un numero decimal."])
+                    setFormInvalid(true);
+                }
+                break;
+            case 'officeLongitude':
+                if(!Number.isNaN(value)){
+                    if(Number.isInteger(Number(value))){
+                        setUserErrors(prevState => [...prevState, "Longitud de Oficina debe de ser un numero decimal."])
+                        setFormInvalid(true);
+                    }
+                }
+                else{
+                    setUserErrors(prevState => [...prevState, "Longitud de Oficina debe de ser un numero decimal."])
+                    setFormInvalid(true);
+                }
+                break;
+            case 'officeEntranceLatitude':
+                if(!Number.isNaN(value)){
+                    if(Number.isInteger(Number(value))){
+                        setUserErrors(prevState => [...prevState, "Latitud de la entrada de oficina debe de ser un numero decimal."])
+                        setFormInvalid(true);
+                    }
+                }
+                else{
+                    setUserErrors(prevState => [...prevState, "Latitud de la entrada de oficina debe de ser un numero decimal."])
+                    setFormInvalid(true);
+                }
+                break;
+            case 'officeEntranceLongitude':
+                if(!Number.isNaN(value)){
+                    if(Number.isInteger(Number(value))){
+                        setUserErrors(prevState => [...prevState, "Longitud de la entrada de oficina debe de ser un numero decimal."])
+                        setFormInvalid(true);
+                    }
+                }
+                else{
+                    setUserErrors(prevState => [...prevState, "Longitud de la entrada de oficina debe de ser un numero decimal."])
+                    setFormInvalid(true);
+                }
+                break;
+            case 'officeFloorNumber':
+                if(!isNaN(value)){
+                    if(!Number.isInteger(Number(value))){
+                        setUserErrors(prevState => [...prevState, "Piso de Oficina debe ser un numero entero."])
+                        setFormInvalid(true);
+                    }
+                }
+                else{
+                    setUserErrors(prevState => [...prevState, "Piso de Oficina debe ser un numero entero."])
+                    setFormInvalid(true);
+                }
+                break;
+            case 'OfficeRouteInstructions':
+                if(!typeof value === 'string') {
+                    setUserErrors(prevState => [...prevState, "Las instrucciones de la oficina debe de contener palabras."])
+                    setFormInvalid(true);
+                }
+                break;
+            case 'OfficeRoomCode':
+                if(!typeof value === 'string') {
+                    setUserErrors(prevState => [...prevState, "El codigo de salon de la oficina debe de contener palabras."])
+                    setFormInvalid(true);
+                }
+                break;
+            case 'officeExtensionNumber':
+                if(!typeof value === 'string') {
+                    setUserErrors(prevState => [...prevState, "El numero de extension de la oficina debe de contener numeros."])
+                    setFormInvalid(true);
+                }
+                break;
+            case 'officeEmail':
+                if(!typeof value === 'string') {
+                    setUserErrors(prevState => [...prevState, "El correo electronico de la oficina debe de contener letras."])
+                    setFormInvalid(true);
+                }
+                break;
+            case 'officeSchedule':
+                if(!typeof value === 'string') {
+                    setUserErrors(prevState => [...prevState, "El horario de la oficina debe de contener letras y numeros."])
+                    setFormInvalid(true);
+                }
+                break;
+            case 'officeWebsite':
+                if(!typeof value === 'string') {
+                    setUserErrors(prevState => [...prevState, "El enlace de la oficina debe de ser el enlace de internet a su respectiva pagina."])
+                    setFormInvalid(true);
+                }
+                break;
+        }
+
+    }
 
     function categorySelection(e) {
         const selection = [];
@@ -153,21 +285,66 @@ const Create_Office = () => {
     function renderEditableTableData() {
         return (
             <tr>
-                <td><input type='text' value={officeName} onChange={(e) => setOfficeName(e.target.value)}></input></td>
-                <td><input type='text' value={officeDescription} onChange={(e) => setOfficeDescription(e.target.value)}></input></td>
-                <td><input type='text' value={officeSchedule} onChange={(e) => setOfficeSchedule(e.target.value)}></input></td>
-                <td><input type='text' value={officeLatitude} onChange={(e) => setOfficeLatitude(e.target.value)}></input></td>
-                <td><input type='text' value={officeLongitude} onChange={(e) => setOfficeLongitude(e.target.value)}></input></td>
-                <td><input type='text' value={officeEntranceLatitude} onChange={(e) => setOfficeEntranceLatitude(e.target.value)}></input></td>
-                <td><input type='text' value={officeEntranceLongitude} onChange={(e) => setOfficeEntranceLongitude(e.target.value)}></input></td>
-                <td><input type='text' value={officeRouteInstructions} onChange={(e) => setOfficeRouteInstructions(e.target.value)}></input></td>
-                <td><input type='text' value={officeSearchDescription} onChange={(e) => setOfficeSearchDescription(e.target.value)}></input></td>
-                <td><input type='text' value={officeFloorNumber} onChange={(e) => setOfficeFloorNumber(e.target.value)}></input></td>
-                <td><input type='text' value={officeRoomCode} onChange={(e) => setOfficeRoomCode(e.target.value)}></input></td>
-                <td><input type='text' value={officeEmail} onChange={(e) => setOfficeEmail(e.target.value)}></input></td>
-                <td><input type='text' value={officePhoneNumber} onChange={(e) => setOfficePhoneNumber(e.target.value)}></input></td>
-                <td><input type='text' value={officeExtensionNumber} onChange={(e) => setOfficeExtensionNumber(e.target.value)}></input></td>
-                <td><input type='text' value={officeWebsite} onChange={(e) => setOfficeWebsite(e.target.value)}></input></td>
+                <td><input type='text' value={officeName} onChange={(e) => {
+                    setOfficeName(e.target.value)
+                    fieldValidator('officeName', e.target.value)
+                    }}></input></td>
+                <td><input type='text' value={officeDescription} onChange={(e) => {
+                    setOfficeDescription(e.target.value)
+                    fieldValidator('officeDescription', e.target.value)
+                    }}></input></td>
+                <td><input type='text' value={officeSchedule} onChange={(e) => {
+                    setOfficeSchedule(e.target.value)
+                    fieldValidator('officeSchedule', e.target.value)
+                    }}></input></td>
+                <td><input type='text' value={officeLatitude} onChange={(e) => {
+                    setOfficeLatitude(e.target.value)
+                    fieldValidator('officeLatitude', e.target.value)
+                    }}></input></td>
+                <td><input type='text' value={officeLongitude} onChange={(e) => {
+                    setOfficeLongitude(e.target.value)
+                    fieldValidator('officeLongitude', e.target.value)
+                    }}></input></td>
+                <td><input type='text' value={officeEntranceLatitude} onChange={(e) => {
+                    setOfficeEntranceLatitude(e.target.value)
+                    fieldValidator('officeEntranceLatitude', e.target.value)
+                    }}></input></td>
+                <td><input type='text' value={officeEntranceLongitude} onChange={(e) => {
+                    setOfficeEntranceLongitude(e.target.value)
+                    fieldValidator('officeEntranceLongitude', e.target.value)
+                    }}></input></td>
+                <td><input type='text' value={officeRouteInstructions} onChange={(e) => {
+                    setOfficeRouteInstructions(e.target.value)
+                    fieldValidator('officeRouteInstructions', e.target.value)
+                    }}></input></td>
+                <td><input type='text' value={officeSearchDescription} onChange={(e) => {
+                    setOfficeSearchDescription(e.target.value)
+                    fieldValidator('officeSearchDescription', e.target.value)
+                    }}></input></td>
+                <td><input type='text' value={officeFloorNumber} onChange={(e) => {
+                    setOfficeFloorNumber(e.target.value)
+                    fieldValidator('officeFloorNumber', e.target.value)
+                    }}></input></td>
+                <td><input type='text' value={officeRoomCode} onChange={(e) => {
+                    setOfficeRoomCode(e.target.value)
+                    fieldValidator('officeRoomCode', e.target.value)
+                    }}></input></td>
+                <td><input type='text' value={officeEmail} onChange={(e) => {
+                    setOfficeEmail(e.target.value)
+                    fieldValidator('officeEmail', e.target.value)
+                    }}></input></td>
+                <td><input type='text' value={officePhoneNumber} onChange={(e) => {
+                    setOfficePhoneNumber(e.target.value)
+                    fieldValidator('officePhoneNumber', e.target.value)
+                    }}></input></td>
+                <td><input type='text' value={officeExtensionNumber} onChange={(e) => {
+                    setOfficeExtensionNumber(e.target.value)
+                    fieldValidator('officeExtensionNumber', e.target.value)
+                    }}></input></td>
+                <td><input type='text' value={officeWebsite} onChange={(e) => {
+                    setOfficeWebsite(e.target.value)
+                    fieldValidator('officeWebsite', e.target.value)
+                    }}></input></td>
             </tr>
         )
     }
@@ -196,23 +373,26 @@ const Create_Office = () => {
             </div>
             <div>
                 <Navbar />
-            </div>
-            <div>
-                    <h1 id='title'>Crear Oficina</h1>
-                    <div id="office_table_padding" class="table-responsive">
-                        <table id='table_information'>
-                            <tbody>
-                                {renderTableHeader()}
-                                {renderEditableTableData()}
-                            </tbody>
-                        </table>
-                    </div>
-                    {renderDropdown()}
-                    <button class='btn btn-success btn-block' onClick={(e) => handleSave(e)}>Save</button>
-                    <a href="/Active_Directory">
-                        <button class='btn btn-danger btn-block'>Cancel</button>
-                    </a>
-                </div></>
+                <h1 id='title'>Crear Oficina</h1>
+                <div id="office_table_padding" class="table-responsive">
+                    <table id='table_information'>
+                        <tbody>
+                            {renderTableHeader()}
+                            {renderEditableTableData()}
+                        </tbody>
+                    </table>
+                </div>
+                {renderDropdown()}
+                    <button class='btn btn-success btn-block' onClick={(e) => {
+                        setUpdateDeleteModalOpen(true)
+                        handleSave(e)}
+                        }>Save</button>
+                <a href="/Active_Directory">
+                    <button class='btn btn-danger btn-block'>Cancel</button>
+                </a>
+                {updateDeleteModalOpen && <UpdateDeleteModal type="CREATE" setOpenModal={setUpdateDeleteModalOpen} navigation={navigate} route="/Active_Directory" information={createdOffice} selectedCategories={selectedCategories} newCategories={newCategories} use="OFFICE"/>}
+                {errorModalOpen && <ErrorHandlingModal text={userErrors} setOpenModal={setErrorModalOpen}/>}
+            </div></>
         )
     }
 
