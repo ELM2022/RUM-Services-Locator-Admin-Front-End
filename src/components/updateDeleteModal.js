@@ -6,6 +6,7 @@ import {administratorUpdateHandler, administratorDeleteHandler} from '../handler
 import {addAdministratorUpdateHandler} from '../handlers/administratorHistoryHandler'
 import {addCategoryHandler, addCategoryMembershipHandler, deleteOfficeCategoriesHandler } 
 from '../handlers/categoriesHandler'
+import { createPendingAdministrator } from '../handlers/pendingAdministratorHandler'
 
 
 function UpdateDeleteModal({type, setOpenModal, navigation, routeid, route, information, adminJustification, use, selectedCategories, newCategories}) {
@@ -15,6 +16,7 @@ function UpdateDeleteModal({type, setOpenModal, navigation, routeid, route, info
     const [selectedOfficeCategories, setSelectedOfficeCategories] = useState(selectedCategories);
     const [newOfficeCategories, setNewOfficeCategories] = useState(newCategories);
     const [administrator, setAdministrator] = useState(information);
+    const [pendingAdministrator, setPendingAdministrator] = useState(information);
 
     const message = () => {
         if(modalUse === "DELETE"){
@@ -174,6 +176,24 @@ function UpdateDeleteModal({type, setOpenModal, navigation, routeid, route, info
 
     const handleAdminCreate = () => {
 
+        try {
+            createPendingAdministrator(pendingAdministrator).then((res) => {
+                if (res.status === 201) {
+                    alert("La cuenta del nuevo administrador ha quedado pendiente.\nLa misma se oficializará cuando se complete el proceso de registro.");
+                    //navigate('/Active_Administrator', { replace: true });
+                }
+                if (res.status === 400) {
+                    alert("La cuenta de administrador ya está pendiente o ha sido registrada anteriormente.");
+                    window.location.reload();
+                }
+                else {
+                    console.log(res);
+                }
+            });
+        } catch (error) {
+            console.log(error);
+        }
+
     }
 
     const handleAdminDelete = () => {
@@ -252,7 +272,7 @@ function UpdateDeleteModal({type, setOpenModal, navigation, routeid, route, info
             </div>
             <div className="footer">
                 {yesButton()}
-                <button onClick={() => setOpenModal(false)}>
+                <button id='noButton' onClick={() => setOpenModal(false)}>
                     No
                 </button>
             </div>

@@ -15,9 +15,9 @@ const Token = () => {
         e.preventDefault();
 
         try {
-            // const login_token = {token};
+            const login_token = {token};
             // console.log(login_token);
-            validateAdministratorLoginHandler(token).then((res) => {
+            validateAdministratorLoginHandler(login_token).then((res) => {
                 console.log(res);
                 if (res.status === 200) {
                     // setAuth(res.data);

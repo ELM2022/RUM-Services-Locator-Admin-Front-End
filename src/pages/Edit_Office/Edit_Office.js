@@ -12,15 +12,6 @@ import ErrorHandlingModal from '../../components/errorHandlingModal'
 import CreatableSelect from 'react-select/creatable';
 import makeAnimated from 'react-select/animated';
 
-const genDatetime = () => {
-    const timeElapsed = Date.now();
-    const today = new Date(timeElapsed).toISOString();
-    const hour = new Date(timeElapsed).toString();
-    const datetime = today.slice(0,10) + " " + hour.slice(16,24);
-
-    return datetime;
-}
-
 const Edit_Office = () => {
 
     const {officeid} = useParams();
@@ -180,30 +171,30 @@ const Edit_Office = () => {
                 if(typeof value === 'string') {
                     if(/[0-9]/.test(value)){
                         setFormInvalid(true);
-                        setUserErrors(prevState => [...prevState, "Office Name must be a string with only letters."])
+                        setUserErrors(prevState => [...prevState, "El nombre de la oficina debe de contener solamente letras."])
                     }
                 }
                 else{
                     setFormInvalid(true);
-                    setUserErrors(prevState => [...prevState, "Office Name must be a string with only letters."])
+                    setUserErrors(prevState => [...prevState, "El nombre de la oficina debe de contener solamente letras."])
                 }
                 break;
             case 'officeDescription':
                 if(!typeof value === 'string') {
-                    setUserErrors(prevState => [...prevState, "Office Description must be a string."])
+                    setUserErrors(prevState => [...prevState, "La descripción de la oficina debe de contener palabras."])
                     setFormInvalid(true);
                 }
                 break;
             case 'OfficeSearchDescription':
                 if(!typeof value === 'string') {
-                    setUserErrors(prevState => [...prevState, "Office Search Description must be a string."])
+                    setUserErrors(prevState => [...prevState, "La descripción de busqueda de la oficina debe de contener palabras."])
                     setFormInvalid(true);
                 }
                 break;
             case 'officePhoneNumber':
                 if(!typeof value === 'string' && value !== '') {
                     if(!/^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/.test(value)){
-                    setUserErrors(prevState => [...prevState, "Office Phone Number must not contain letters and follow the sequence of XXX-XXX-XXXX."])
+                    setUserErrors(prevState => [...prevState, "El numero de telefono de la oficina debe contener numeros y seguir la siguiente secuencia XXX-XXX-XXXX."])
                     setFormInvalid(true);
                     }
                 }
@@ -211,96 +202,96 @@ const Edit_Office = () => {
             case 'officeLatitude':
                 if(!isNaN(value)){
                     if(Number.isInteger(Number(value))){
-                        setUserErrors(prevState => [...prevState, "Office Latitude must be a float number."])
+                        setUserErrors(prevState => [...prevState, "Latitud de Oficina debe de ser un numero decimal."])
                         setFormInvalid(true);
                     }
                 }
                 else{
-                    setUserErrors(prevState => [...prevState, "Office Latitude must be a float number."])
+                    setUserErrors(prevState => [...prevState, "Latitud de oficina debe de ser un numero decimal."])
                     setFormInvalid(true);
                 }
                 break;
             case 'officeLongitude':
                 if(!Number.isNaN(value)){
                     if(Number.isInteger(Number(value))){
-                        setUserErrors(prevState => [...prevState, "Office Longitude must be a float number."])
+                        setUserErrors(prevState => [...prevState, "Longitud de Oficina debe de ser un numero decimal."])
                         setFormInvalid(true);
                     }
                 }
                 else{
-                    setUserErrors(prevState => [...prevState, "Office Longitude must be a float number."])
+                    setUserErrors(prevState => [...prevState, "Longitud de Oficina debe de ser un numero decimal."])
                     setFormInvalid(true);
                 }
                 break;
             case 'officeEntranceLatitude':
                 if(!Number.isNaN(value)){
                     if(Number.isInteger(Number(value))){
-                        setUserErrors(prevState => [...prevState, "Office Entrance Latitude must be a float number."])
+                        setUserErrors(prevState => [...prevState, "Latitud de la entrada de oficina debe de ser un numero decimal."])
                         setFormInvalid(true);
                     }
                 }
                 else{
-                    setUserErrors(prevState => [...prevState, "Office Entrance Latitude must be a float number."])
+                    setUserErrors(prevState => [...prevState, "Latitud de la entrada de oficina debe de ser un numero decimal."])
                     setFormInvalid(true);
                 }
                 break;
             case 'officeEntranceLongitude':
                 if(!Number.isNaN(value)){
                     if(Number.isInteger(Number(value))){
-                        setUserErrors(prevState => [...prevState, "Office Entrance Longitude must be a float number."])
+                        setUserErrors(prevState => [...prevState, "Longitud de la entrada de oficina debe de ser un numero decimal."])
                         setFormInvalid(true);
                     }
                 }
                 else{
-                    setUserErrors(prevState => [...prevState, "Office Entrance Longitude must be a float number."])
+                    setUserErrors(prevState => [...prevState, "Longitud de la entrada de oficina debe de ser un numero decimal."])
                     setFormInvalid(true);
                 }
                 break;
             case 'officeFloorNumber':
                 if(!isNaN(value)){
                     if(!Number.isInteger(Number(value))){
-                        setUserErrors(prevState => [...prevState, "Office floor number must be an integer."])
+                        setUserErrors(prevState => [...prevState, "Piso de Oficina debe ser un numero entero."])
                         setFormInvalid(true);
                     }
                 }
                 else{
-                    setUserErrors(prevState => [...prevState, "Office floor number must be an integer number."])
+                    setUserErrors(prevState => [...prevState, "Piso de Oficina debe ser un numero entero."])
                     setFormInvalid(true);
                 }
                 break;
             case 'OfficeRouteInstructions':
                 if(!typeof value === 'string') {
-                    setUserErrors(prevState => [...prevState, "Office Route Instructions must be a string."])
+                    setUserErrors(prevState => [...prevState, "Las instrucciones de la oficina debe de contener palabras."])
                     setFormInvalid(true);
                 }
                 break;
             case 'OfficeRoomCode':
                 if(!typeof value === 'string') {
-                    setUserErrors(prevState => [...prevState, "Office Room Code must be a string."])
+                    setUserErrors(prevState => [...prevState, "El codigo de salon de la oficina debe de contener palabras."])
                     setFormInvalid(true);
                 }
                 break;
             case 'officeExtensionNumber':
                 if(!typeof value === 'string') {
-                    setUserErrors(prevState => [...prevState, "Office Extension Number must be a string."])
+                    setUserErrors(prevState => [...prevState, "El numero de extension de la oficina debe de contener numeros."])
                     setFormInvalid(true);
                 }
                 break;
             case 'officeEmail':
                 if(!typeof value === 'string') {
-                    setUserErrors(prevState => [...prevState, "Office Email must be a string."])
+                    setUserErrors(prevState => [...prevState, "El correo electronico de la oficina debe de contener letras."])
                     setFormInvalid(true);
                 }
                 break;
             case 'officeSchedule':
                 if(!typeof value === 'string') {
-                    setUserErrors(prevState => [...prevState, "Office Schedule must be a string."])
+                    setUserErrors(prevState => [...prevState, "El horario de la oficina debe de contener letras y numeros."])
                     setFormInvalid(true);
                 }
                 break;
             case 'officeWebsite':
                 if(!typeof value === 'string') {
-                    setUserErrors(prevState => [...prevState, "Office Room Code must be a string."])
+                    setUserErrors(prevState => [...prevState, "El enlace de la oficina debe de ser el enlace de internet a su respectiva pagina."])
                     setFormInvalid(true);
                 }
                 break;
@@ -326,21 +317,21 @@ const Edit_Office = () => {
     function renderTableHeader() {
         return(
             <tr>
-            <th>Office Name</th>
-            <th>Office Description</th>
-            <th>Office Schedule</th>
-            <th>Office Latitude</th>
-            <th>Office Longitude</th>
-            <th>Office Entrance Latitude</th>
-            <th>Office Entrance Longitude</th>
-            <th>Office Route Instructions</th>
-            <th>Office Search Description</th>
-            <th>Office Floor Number</th>
-            <th>Office Room Code</th>
-            <th>Office Email</th>
-            <th>Office Phone Number</th>
-            <th>Office Extension Number</th>
-            <th>Office Website</th>
+            <th>Nombre de Oficina</th>
+            <th>Descripción de Oficina</th>
+            <th>Horario de Oficina</th>
+            <th>Latitud de Oficina</th>
+            <th>Longitud de Oficina</th>
+            <th>Latitude de Entrada de Oficina</th>
+            <th>Longitud de Entrada de Oficina</th>
+            <th>Instrucciones de Ruta de Oficina</th>
+            <th>Descripción de Busqueda de Oficina</th>
+            <th>Numero de Piso de Oficina</th>
+            <th>Codigo de Salón de Oficina</th>
+            <th>Correo Electrónico de Oficina</th>
+            <th>Numero de Teléfono</th>
+            <th>Numero de Extensión de Oficina</th>
+            <th>Pagina de Internet de Oficina</th>
         </tr>
         )
     }

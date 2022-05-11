@@ -82,19 +82,31 @@ const Edit_Administrator = () => {
             case 'administratorEmail':
                 if(!typeof value === 'string') {
                         setFormInvalid(true);
-                        setUserErrors(prevState => [...prevState, "Administrator Email must be a string."])
+                        setUserErrors(prevState => [...prevState, "El correo electronico del administrador debe de contener letras."])
                 }
                 break;
             case 'administratorName':
                 if(!typeof value === 'string') {
-                    setUserErrors(prevState => [...prevState, "Administrator Name must be a string."])
+                    setUserErrors(prevState => [...prevState, "El nombre del administrador debe de contener letras y no numeros."])
                     setFormInvalid(true);
+                }
+                else if(typeof value === 'string'){
+                    if(/[0-9]/.test(value)){
+                        setUserErrors(prevState => [...prevState, "El nombre del administrador debe de contener letras y no numeros."])
+                        setFormInvalid(true);
+                    }
                 }
                 break;
             case 'administratorLastName':
                 if(!typeof value === 'string') {
-                    setUserErrors(prevState => [...prevState, "Administrator Last Name must be a string."])
+                    setUserErrors(prevState => [...prevState, "El apellido del administrador debe de contener letras y no numeros."])
                     setFormInvalid(true);
+                }
+                else if(typeof value === 'string'){
+                    if(/[0-9]/.test(value)){
+                        setUserErrors(prevState => [...prevState, "El apellido del administrador debe de contener letras y no numeros."])
+                        setFormInvalid(true);
+                    }
                 }
                 break;
     }
@@ -103,9 +115,9 @@ const Edit_Administrator = () => {
     function renderTableHeader() {
         return(
             <tr>
-            <th>Administrator Email</th>
-            <th>Administrator Name</th>
-            <th>Administrator Last Name</th>
+            <th>Correo Electrónico de Administrador</th>
+            <th>Nombre de Administrador</th>
+            <th>Apellido de Administrador</th>
         </tr>
         )
     }
@@ -113,9 +125,18 @@ const Edit_Administrator = () => {
     function renderEditableTableData() {
                 return (
                     <tr>
-                        <td><input type='text' value={administratorEmail} onChange={(e) => setAdministratorEmail(e.target.value)}></input></td>
-                        <td><input type='text' value={administratorName} onChange={(e) => setAdministratorName(e.target.value)}></input></td>
-                        <td><input type='text' value={administratorLastName} onChange={(e) => setAdministratorLastName(e.target.value)}></input></td>
+                        <td><input type='text' value={administratorEmail} onChange={(e) => {
+                            setAdministratorEmail(e.target.value)
+                            fieldValidator('administratorEmail', e.target.value)
+                        }}></input></td>
+                        <td><input type='text' value={administratorName} onChange={(e) => {
+                            setAdministratorName(e.target.value)
+                            fieldValidator('administratorName', e.target.value)
+                            }}></input></td>
+                        <td><input type='text' value={administratorLastName} onChange={(e) => {
+                            setAdministratorLastName(e.target.value)
+                            fieldValidator('administratorLastName', e.target.value)
+                            }}></input></td>
                     </tr>
                 )
             }
@@ -136,9 +157,9 @@ const Edit_Administrator = () => {
                         <label for='textArea' id='title'>Por favor escribir justificación de cambio</label>
                         <textarea class='form-control' id='textArea' onChange={(e) => setJustification(e.target.value)}></textarea>
                     </div>
-                     <button class='btn btn-success btn-block' onClick={(e) => handleSave(e)}>Save</button>
+                     <button class='btn btn-success btn-block' onClick={(e) => handleSave(e)}>Guardar</button>
                  <a href={`/Admin_Information/${adminid}`}>
-                     <button class='btn btn-danger btn-block'>Cancel</button>
+                     <button class='btn btn-danger btn-block'>Cancelar</button>
                  </a>
                  {updateDeleteModalOpen && <UpdateDeleteModal type="EDIT" setOpenModal={setUpdateDeleteModalOpen} routeid={adminid} navigation={navigate} route="/Admin_Information/" information={editedAdministrator} adminJustification={justification} use="ADMIN"/>}
                  {errorModalOpen && <ErrorHandlingModal text={userErrors} setOpenModal={setErrorModalOpen}/>}

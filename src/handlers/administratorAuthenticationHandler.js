@@ -46,9 +46,24 @@ export const validateAdministratorLoginHandler = (token) => {
     //     // credentials: 'include'
     // }
     // )
+
+    // return axios({
+    //     url: `${apiRoute}/login/validate/?token=${token}`,
+    //     method: 'GET',
+    //     withCredentials: true
+    // })
+    // .then((response) => {
+    //     console.log(response);
+    //     return response;
+    // })
+    // .catch((err) => {
+    //     return err.response;
+    // })
+
     return axios({
-        url: `${apiRoute}/login/validate/?token=${token}`,
-        method: 'GET',
+        url: `${apiRoute}/login/validate`,
+        method: 'POST',
+        data: token,
         withCredentials: true
     })
     .then((response) => {

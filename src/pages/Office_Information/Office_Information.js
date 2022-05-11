@@ -3,14 +3,20 @@ import { useParams, useNavigate } from 'react-router-dom'
 import '../Table_Format.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import { officeGetHandler, officeDeleteHandler } from '../../handlers/officeHandler';
+import {getOfficeCategoriesHandler} from '../../handlers/categoriesHandler'
 import UpdateDeleteModal from '../../components/updateDeleteModal'
+import Select from 'react-select';
+import makeAnimated from 'react-select/animated';
 
 const Office_Information = () => {
 
     const { officeid } = useParams();
     const navigate = useNavigate();
+
+    const animatedComponents = makeAnimated();
     
     const [office_information, setOfficeInformation] = useState({});
+    const [officeCategories, setOfficeCategories] = useState({})
 
     const [updateDeleteModalOpen, setUpdateDeleteModalOpen] = useState(false);
 
@@ -20,6 +26,23 @@ const Office_Information = () => {
                 setOfficeInformation(res.data.data.office);
             }
         });
+    }, [officeid]);
+
+    useEffect(() => {getOfficeCategoriesHandler(officeid).then((res) => {
+        if(res.status === 200){
+            const preselection = [];
+                res.data.data.categories.map((category) => {
+                    const temp = {
+                        label: category.category_name,
+                        value: category.category_id
+                    }
+
+                    preselection.push(temp);
+                });
+
+                setOfficeCategories(preselection);
+        }
+    });
     }, [officeid]);
 
     // const handleDelete = (e) => {
@@ -38,21 +61,21 @@ const Office_Information = () => {
     function renderTableHeader() {
         return(
             <tr>
-                <th>Office Name</th>
-                <th>Office Description</th>
-                <th>Office Schedule</th>
-                <th>Office Latitude</th>
-                <th>Office Longitude</th>
-                <th>Office Entrance Latitude</th>
-                <th>Office Entrance Longitude</th>
-                <th>Office Route Instructions</th>
-                <th>Office Search Description</th>
-                <th>Office Floor Number</th>
-                <th>Office Room Code</th>
-                <th>Office Email</th>
-                <th>Office Phone Number</th>
-                <th>Office Extension Number</th>
-                <th>Office Website</th>
+                <th>Nombre de Oficina</th>
+                <th>Descripción de Oficina</th>
+                <th>Horario de Oficina</th>
+                <th>Latitud de Oficina</th>
+                <th>Longitud de Oficina</th>
+                <th>Latitude de Entrada de Oficina</th>
+                <th>Longitud de Entrada de Oficina</th>
+                <th>Instrucciones de Ruta de Oficina</th>
+                <th>Descripción de Busqueda de Oficina</th>
+                <th>Numero de Piso de Oficina</th>
+                <th>Codigo de Salón de Oficina</th>
+                <th>Correo Electrónico de Oficina</th>
+                <th>Numero de Teléfono</th>
+                <th>Numero de Extensión de Oficina</th>
+                <th>Pagina de Internet de Oficina</th>
             </tr>
         )
     }
@@ -80,7 +103,24 @@ const Office_Information = () => {
         )
     }
 
+    function renderDropdown() {
+        return(
+            <div class='container'>
+                <div class='row'>
+                    <Select
+                    value={officeCategories}
+                    components={animatedComponents}
+                    isMulti
+                    isDisabled={true}>
+                    </Select>
+                </div>
+            </div>
+        )
+
+    }
+
     function render() {
+        console.log(officeCategories);
         return (
             <div id="office_table_padding">
                 <h1 id='title'>Información de Oficina</h1>
@@ -92,11 +132,13 @@ const Office_Information = () => {
                         </tbody>
                     </table>
                 </div>
+                <h3 id='title'>Categorias</h3>
+                {renderDropdown()}
                 <a href={`/Edit_Office/${officeid}`}>
-                    <button class='btn btn-success btn-block'>Edit</button>
+                    <button class='btn btn-success btn-block'>Editar</button>
                 </a>
                 {/* <a href="/Active_Directory"> */}
-                    <button class='btn btn-danger btn-block' onClick={(e) => setUpdateDeleteModalOpen(true)}>Delete</button>
+                    <button class='btn btn-danger btn-block' onClick={(e) => setUpdateDeleteModalOpen(true)}>Borrar</button>
                 {/* </a> */}
                 {updateDeleteModalOpen && <UpdateDeleteModal type="DELETE" setOpenModal={setUpdateDeleteModalOpen} navigation={navigate} route="/Active_Directory" information={office_information} use="OFFICE"/>}
             </div>

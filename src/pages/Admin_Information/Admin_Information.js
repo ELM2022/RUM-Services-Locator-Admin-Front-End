@@ -37,9 +37,9 @@ const Admin_Information = () => {
     const renderTableHeader = () => {
         return(
             <tr>
-                <th>Administrator Email</th>
-                <th>Administrator Name</th>
-                <th>Administrator Last Name</th>
+                <th>Correo Electrónico de Administrador</th>
+                <th>Nombre de Administrador</th>
+                <th>Apellido de Administrador</th>
             </tr>
         )
     }
@@ -66,9 +66,9 @@ const Admin_Information = () => {
                     </tbody>
                 </table>
                 <a href={`/Edit_Administrator/${adminid}`}>
-                    <button class='btn btn-success btn-block'>Edit</button>
+                    <button class='btn btn-success btn-block'>Editar</button>
                 </a>
-                    <button class='btn btn-danger btn-block' onClick={(e) => setUpdateDeleteModalOpen(true)}>Delete</button>
+                    <button class='btn btn-danger btn-block' onClick={(e) => setUpdateDeleteModalOpen(true)}>Borrar</button>
                     {updateDeleteModalOpen && <UpdateDeleteModal type="DELETE" setOpenModal={setUpdateDeleteModalOpen} navigation={navigate} route="/Active_Administrator" information={admin_information} use="ADMIN"/>}
             </div>
         )
