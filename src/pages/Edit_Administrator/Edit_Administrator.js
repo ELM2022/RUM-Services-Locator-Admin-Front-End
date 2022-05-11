@@ -3,8 +3,18 @@ import { useParams, useNavigate } from 'react-router-dom'
 import '../Table_Format.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import { administratorGetHandler, administratorUpdateHandler } from '../../handlers/administratorHandler'
+import { addAdministratorUpdateHandler } from '../../handlers/administratorHistoryHandler'
 import UpdateDeleteModal from '../../components/updateDeleteModal'
 import ErrorHandlingModal from '../../components/errorHandlingModal'
+
+const getDatetime = () => {
+    const timeElapsed = Date.now();
+    const today = new Date(timeElapsed).toISOString();
+    const hour = new Date(timeElapsed).toString();
+    const datetime = today.slice(0,10) + " " + hour.slice(16,24);
+
+    return datetime;
+}
 
 const Edit_Administrator = () => {
 
@@ -130,7 +140,7 @@ const Edit_Administrator = () => {
                  <a href={`/Admin_Information/${adminid}`}>
                      <button class='btn btn-danger btn-block'>Cancel</button>
                  </a>
-                 {updateDeleteModalOpen && <UpdateDeleteModal type="EDIT" setOpenModal={setUpdateDeleteModalOpen} routeid={adminid} navigation={navigate} route="/Admin_Information/" information={editedAdministrator} adminJustification={justification} use="OFFICE"/>}
+                 {updateDeleteModalOpen && <UpdateDeleteModal type="EDIT" setOpenModal={setUpdateDeleteModalOpen} routeid={adminid} navigation={navigate} route="/Admin_Information/" information={editedAdministrator} adminJustification={justification} use="ADMIN"/>}
                  {errorModalOpen && <ErrorHandlingModal text={userErrors} setOpenModal={setErrorModalOpen}/>}
         </div>
         )

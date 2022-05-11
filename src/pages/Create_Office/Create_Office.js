@@ -1,9 +1,9 @@
-import React, { Component, useEffect, useState } from 'react'
-import { useNavigate, useHistory } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import '../Table_Format.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import { officeCreateHandler } from '../../handlers/officeHandler';
-import {getAllCategoriesHandler} from '../../handlers/categoriesHandler';
+import { getAllCategoriesHandler, addCategoryHandler, addCategoryMembershipHandler } from '../../handlers/categoriesHandler';
 import CreatableSelect from 'react-select/creatable';
 import makeAnimated from 'react-select/animated';
 import UpdateDeleteModal from '../../components/updateDeleteModal'
@@ -43,8 +43,6 @@ const Create_Office = () => {
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [newCategories, setNewCategories] = useState([]);
 
-    // {id:1, building_id:1, office_name: 'Actividades Sociales y Culturales', office_description: 'Test Description', office_schedule: 'L-V 7:45AM-4:30PM', office_latitude: 18.2101382977879, office_longitude: -67.1411936055247, office_floor_number: 3, office_room_code: 'CE-306', office_email: 'actividadessociales@uprm.edu', office_phone_number: '(787)-832-4040', office_extension_number: 'Ext. 3366,3370', office_website: 'https://www.uprm.edu/p/actividades-sociales', office_active_status: true}
-
     const handleSave = (e) => {
         e.preventDefault();
 
@@ -56,8 +54,7 @@ const Create_Office = () => {
             setFormInvalid(false);
             setErrorModalOpen(true);
         }
-
-        try {
+        else{
             const new_office = {
                 office_name: officeName,
                 office_description: officeDescription,
@@ -75,22 +72,7 @@ const Create_Office = () => {
                 office_extension_number: officeExtensionNumber,
                 office_website: officeWebsite
             }
-
             setCreatedOffice(new_office);
-    
-            officeCreateHandler(new_office).then((res) => {
-                if (res.status === 200) {
-                    navigate(`/Active_Directory`, { replace: true });
-                    // history.push('/Active_Directory');
-                }
-                else {
-                    console.log(res);
-
-                    
-                }
-            });
-        } catch (error) {
-            console.log(error);
         }
     }
 
@@ -104,7 +86,6 @@ const Create_Office = () => {
                 });
             });
             setCategories(result);
-            // console.log(res.data.data.categories);
         });
     },[]);
 
@@ -367,11 +348,17 @@ const Create_Office = () => {
     }
 
     function renderDropdown() {
-        // console.log(categories);
         return(
             <div class="container">
                 <div class="row">
-                    <CreatableSelect options={categories} components={animatedComponents} isMulti isSearchable closeMenuOnSelect={false} onChange={(e) => categorySelection(e)}/>
+                    <CreatableSelect 
+                        options={categories} 
+                        components={animatedComponents} 
+                        isMulti 
+                        isSearchable 
+                        closeMenuOnSelect={false} 
+                        onChange={(e) => categorySelection(e)}
+                    />
                 </div>
             </div>
         )
@@ -397,7 +384,7 @@ const Create_Office = () => {
                 <a href="/Active_Directory">
                     <button class='btn btn-danger btn-block'>Cancel</button>
                 </a>
-                {updateDeleteModalOpen && <UpdateDeleteModal type="CREATE" setOpenModal={setUpdateDeleteModalOpen} navigation={navigate} route="/Active_Directory" information={createdOffice}/>}
+                {updateDeleteModalOpen && <UpdateDeleteModal type="CREATE" setOpenModal={setUpdateDeleteModalOpen} navigation={navigate} route="/Active_Directory" information={createdOffice} selectedCategories={selectedCategories} newCategories={newCategories} use="OFFICE"/>}
                 {errorModalOpen && <ErrorHandlingModal text={userErrors} setOpenModal={setErrorModalOpen}/>}
             </div>
         )

@@ -4,13 +4,28 @@ import '../Table_Format.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import { officeGetHandler, officeUpdateHandler } from '../../handlers/officeHandler';
 import { addOfficeUpdateHandler } from '../../handlers/officeHistoryHandler'
+import { getAllCategoriesHandler, getOfficeCategoriesHandler, addCategoryHandler, 
+        addCategoryMembershipHandler, deleteOfficeCategoriesHandler } 
+from '../../handlers/categoriesHandler'
 import UpdateDeleteModal from '../../components/updateDeleteModal'
 import ErrorHandlingModal from '../../components/errorHandlingModal'
+import CreatableSelect from 'react-select/creatable';
+import makeAnimated from 'react-select/animated';
+
+const genDatetime = () => {
+    const timeElapsed = Date.now();
+    const today = new Date(timeElapsed).toISOString();
+    const hour = new Date(timeElapsed).toString();
+    const datetime = today.slice(0,10) + " " + hour.slice(16,24);
+
+    return datetime;
+}
 
 const Edit_Office = () => {
 
     const {officeid} = useParams();
     const navigate = useNavigate();
+    const animatedComponents = makeAnimated();
 
     const [errorModalOpen, setErrorModalOpen] = useState(false);
     const [updateDeleteModalOpen, setUpdateDeleteModalOpen] = useState(false);
@@ -37,6 +52,10 @@ const Edit_Office = () => {
     const [officeActiveStatus, setOfficeActiveStatus] = useState();
     const [justification, setJustification] = useState("");
 
+    const [allCategories, setAllCategories] = useState([]);
+    const [selectedCategories, setSelectedCategories] = useState([]);
+    const [newCategories, setNewCategories] = useState([]);
+
     useEffect(() => {
         officeGetHandler(officeid).then((res) => {
             if (res.status === 200) {
@@ -61,6 +80,40 @@ const Edit_Office = () => {
             }
         });
     }, [officeid])
+
+    useEffect(() => {
+        getAllCategoriesHandler().then((res) => {
+            if (res.status === 200) {
+                const result = [];
+                res.data.data.categories.map((category) => {
+                    result.push({
+                        label: category.category_name,
+                        value: category.category_id
+                    });
+                });
+
+                setAllCategories(result);
+            }
+        });
+    }, [officeid]);
+
+    useEffect(() => {
+        getOfficeCategoriesHandler(officeid).then((res) => {
+            if (res.status === 200) {
+                const preselection = [];
+                res.data.data.categories.map((category) => {
+                    const temp = {
+                        label: category.category_name,
+                        value: category.category_id
+                    }
+
+                    preselection.push(temp);
+                });
+
+                setSelectedCategories(preselection);
+            }
+        });
+    }, [officeid]);
 
     const handleSave = (e) => {
         e.preventDefault();
@@ -93,38 +146,14 @@ const Edit_Office = () => {
                 office_website: officeWebsite,
                 office_active_status: officeActiveStatus
             }
+
+
             setEditedOffice(new_office);
     
             setUpdateDeleteModalOpen(true);
         }
         setFormInvalid(false);
 
-        // officeUpdateHandler(new_office).then((res) => {
-        //     if (res.status === 200) {
-        //         const timeElapsed = Date.now();
-        //         const today = new Date(timeElapsed).toISOString();
-        //         const hour = new Date(timeElapsed).toString();
-        //         const datetime = today.slice(0,10) + " " +hour.slice(16,24);
-        //         const office_update = {
-        //             office_id: officeid,
-        //             admin_id: 1,
-        //             update_datetime: datetime,
-        //             update_justification: justification
-        //         }
-        //         setUpdateDeleteModalOpen(true);
-        //         addOfficeUpdateHandler(office_update).then((response) => {
-        //             // console.log(response);
-        //             // if (response.status === 201) {
-        //                 // navigate(`/Office_Information/${officeid}`, { replace: true });
-        //             // }
-        //         });
-        //         //navigate(`/Office_Information/${officeid}`, { replace: true });
-        //     }
-        //     else {
-        //         setUserErrors(res.data.errors);
-        //         setErrorModalOpen(true);
-        //     }
-        // });
     }
 
     const compileErrors = () => {
@@ -276,7 +305,22 @@ const Edit_Office = () => {
                 }
                 break;
         }
+    }
 
+    function categorySelection(e) {
+        const selection = [];
+        const created = [];
+        e.map((option) => {
+            selection.push(option);
+            if (typeof option.value === 'string') {
+                created.push(option.value);
+            } 
+        });
+        setSelectedCategories(selection);
+
+        if (created.length > 0) {
+            setNewCategories(created);
+        }
     }
 
     function renderTableHeader() {
@@ -367,6 +411,24 @@ const Edit_Office = () => {
             </tr>
         )
     }
+
+    function renderDropdown() {
+        return(
+            <div class="container">
+                <div class="row">
+                    <CreatableSelect 
+                        options={allCategories} 
+                        components={animatedComponents} 
+                        value={selectedCategories} 
+                        isMulti 
+                        isSearchable
+                        closeMenuOnSelect={false} 
+                        onChange={(e) => categorySelection(e)}
+                    />
+                </div>
+            </div>
+        )
+    }
     
     function render() {
         return (
@@ -380,6 +442,8 @@ const Edit_Office = () => {
                          </tbody>
                      </table>
                  </div>
+                 <h3 id='title'>Categorías</h3>
+                 {renderDropdown()}
                  <div class='form-group'>
                         <h2 id='title'>Justificación</h2>
                         <label for='textArea' id='title'>Por favor escribir justificación de cambio</label>
@@ -389,7 +453,7 @@ const Edit_Office = () => {
                  <a href={`/Office_Information/${officeid}`}>
                      <button class='btn btn-danger btn-block'>Cancelar</button>
                  </a>
-                 {updateDeleteModalOpen && <UpdateDeleteModal type="EDIT" setOpenModal={setUpdateDeleteModalOpen} routeid={officeid} navigation={navigate} route="/Office_Information/" information={editedOffice} adminJustification={justification}/>}
+                 {updateDeleteModalOpen && <UpdateDeleteModal type="EDIT" setOpenModal={setUpdateDeleteModalOpen} routeid={officeid} navigation={navigate} route="/Office_Information/" information={editedOffice} adminJustification={justification} selectedCategories={selectedCategories} newCategories={newCategories} use="OFFICE"/>}
                  {errorModalOpen && <ErrorHandlingModal text={userErrors} setOpenModal={setErrorModalOpen}/>}
         </div>
         )

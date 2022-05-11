@@ -7,7 +7,7 @@ import { resetAdministratorPasswordHandler } from '../../handlers/administratorA
 
 const Password_Reset = () => {
 
-    const token = useParams();
+    const {token} = useParams();
     const navigate = useNavigate();
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -21,6 +21,7 @@ const Password_Reset = () => {
                 admin_password: password,
                 confirm_password: confirmPassword
             }
+            console.log(admin);
             resetAdministratorPasswordHandler(admin).then((res) => {
                 if (res.status === 200) {
                     alert("Su contraseña ha sido actualizada. Por favor vuelva a iniciar su sesión.");

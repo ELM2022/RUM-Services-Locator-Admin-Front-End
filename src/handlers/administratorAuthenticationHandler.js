@@ -9,12 +9,20 @@ import { apiRoute } from './apiRoute'
 
 export const loginAdministratorHandler = async (credentials) => {
     // console.log(JSON.stringify(credentials));
-    return axios
-    .post(`${apiRoute}/login`, JSON.stringify(credentials), {
-        headers: {"Content-Type": "application/json"},
-        // jar: cookieJar,
+    // return axios
+    // .post(`${apiRoute}/login`, JSON.stringify(credentials), 
+    // {
+    //     headers: {"Content-Type": "application/json"},
+    //     // jar: cookieJar,
+    //     withCredentials: true,
+    //     // credentials: 'include'
+    // }
+    // )
+    return axios({
+        url: `${apiRoute}/login`,
+        method: 'POST',
+        data: credentials,
         withCredentials: true,
-        credentials: 'include'
     })
     .then((response) => {
         console.log(response);
@@ -25,14 +33,23 @@ export const loginAdministratorHandler = async (credentials) => {
     })
 }
 
-export const validateAdministratorLoginHandler = async (token) => {
+export const validateAdministratorLoginHandler = (token) => {
     // console.log(JSON.stringify(token));
-    return axios
-    .post(`${apiRoute}/login/validate`, JSON.stringify(token), {
-        headers: {"Content-Type": "application/json"},
-        // jar: jar,
-        withCredentials: true,
-        credentials: 'include'
+    // const {token} = auth_token;
+    // console.log(token);
+    // return axios
+    // .get(`${apiRoute}/login/validate/?token=${token}`, 
+    // {
+    //     headers: {"Content-Type": "application/json"},
+    //     // jar: jar,
+    //     withCredentials: true,
+    //     // credentials: 'include'
+    // }
+    // )
+    return axios({
+        url: `${apiRoute}/login/validate/?token=${token}`,
+        method: 'GET',
+        withCredentials: true
     })
     .then((response) => {
         console.log(response);
@@ -43,9 +60,9 @@ export const validateAdministratorLoginHandler = async (token) => {
     })
 }
 
-export const registerAdministratorHandler = (account) => {
+export const registerAdministratorHandler = (administrator) => {
     return axios
-    .post(`${apiRoute}/register`, { account })
+    .post(`${apiRoute}/register`, { administrator })
     .then((response) => {
         return response;
     })
@@ -67,7 +84,7 @@ export const resendValidateAdministratorLoginHandler = () => {
 
 export const recoverAdministratorPasswordHandler = (admin_email) => {
     return axios
-    .post(`${apiRoute}/recover`, JSON.stringify(admin_email))
+    .post(`${apiRoute}/recover`, {admin_email})
     .then((response) => {
         return response;
     })
@@ -78,7 +95,7 @@ export const recoverAdministratorPasswordHandler = (admin_email) => {
 
 export const resetAdministratorPasswordHandler = (administrator) => {
     return axios
-    .post(`${apiRoute}/reset/${administrator.reset_passwd_token}`, { administrator })
+    .post(`${apiRoute}/reset/${administrator.reset_passw_token}`, { administrator })
     .then((response) => {
         return response;
     })

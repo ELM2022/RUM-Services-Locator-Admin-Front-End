@@ -4,12 +4,16 @@ import {officeUpdateHandler, officeDeleteHandler, officeCreateHandler} from '../
 import { addOfficeUpdateHandler } from '../handlers/officeHistoryHandler'
 import {administratorUpdateHandler, administratorDeleteHandler} from '../handlers/administratorHandler'
 import {addAdministratorUpdateHandler} from '../handlers/administratorHistoryHandler'
+import {addCategoryHandler, addCategoryMembershipHandler, deleteOfficeCategoriesHandler } 
+from '../handlers/categoriesHandler'
 
 
-function UpdateDeleteModal({type, setOpenModal, navigation, routeid, route, information, adminJustification, use}) {
+function UpdateDeleteModal({type, setOpenModal, navigation, routeid, route, information, adminJustification, use, selectedCategories, newCategories}) {
 
     const [modalUse, setModalUse] = useState(type);
     const [office, setOffice] = useState(information);
+    const [selectedOfficeCategories, setSelectedOfficeCategories] = useState(selectedCategories);
+    const [newOfficeCategories, setNewOfficeCategories] = useState(newCategories);
     const [administrator, setAdministrator] = useState(information);
 
     const message = () => {
@@ -37,18 +41,56 @@ function UpdateDeleteModal({type, setOpenModal, navigation, routeid, route, info
     }
 
     const handleUpdate = () => {
+
+        if (newOfficeCategories.length > 0) {
+            newOfficeCategories.map((category_name) => {
+                const category = {category_name};
+                addCategoryHandler(category).then((res) => {
+                    if (res.status === 201) {
+                        selectedOfficeCategories.map((category) => {
+                            console.log(category_name);
+                            console.log(category.label);
+                            if (category_name === category.label) {
+                                category.value = res.data.result.insertId;
+                            }
+                        });
+                    }
+                    else {
+                        console.log(res);
+                    }
+                });
+            });
+        }
+
         officeUpdateHandler(office).then((res) => {
             if (res.status === 200) {
-                const timeElapsed = Date.now();
-                const today = new Date(timeElapsed).toISOString();
-                const hour = new Date(timeElapsed).toString();
-                const datetime = today.slice(0,10) + " " +hour.slice(16,24);
                 const office_update = {
                     office_id: office.office_id,
                     admin_id: 1,
-                    update_datetime: datetime,
+                    update_datetime: getDateTime(),
                     update_justification: adminJustification
                 }
+
+                const selected_ids = [];
+                    selectedOfficeCategories.map((category) => {
+                        if (typeof category.value !== 'string') {
+                            selected_ids.push(category.value);
+                        }
+                    });
+
+                    const membership = {
+                        office_id: office.office_id,
+                        categories: selected_ids
+                    }
+
+                    deleteOfficeCategoriesHandler(office.office_id).then((res) => {
+                        if (res.status === 200) {
+                            addCategoryMembershipHandler(membership).then((response) => {
+
+                            });
+                        }
+                    });
+
                 addOfficeUpdateHandler(office_update).then((response) => {
                     //console.log(response)
                 });
@@ -71,16 +113,38 @@ function UpdateDeleteModal({type, setOpenModal, navigation, routeid, route, info
     }
 
     const handleCreate = () => {
+        if (newCategories.length > 0) {
+            newCategories.map((category_name) => {
+                const category = {category_name};
+                addCategoryHandler(category).then((res) => {
+                    if (res.status === 201) {
+                        selectedCategories.push(res.data.result.insertId);
+                    }
+                    else {
+                        console.log(res);
+                    }
+                });
+            });
+        }
         officeCreateHandler(office).then((res) => {
-            if (res.status === 200) {
-                alert("Entry has been created successfully.")
-                //navigate(`/Active_Directory`, { replace: true });
-                // history.push('/Active_Directory');
+            if (res.status === 201) {
+                const new_office_id = res.data.result.insertId;
+                const membership = {
+                    office_id: new_office_id,
+                    categories: selectedOfficeCategories
+                }
+
+                addCategoryMembershipHandler(membership).then((response) => {
+                    if (response.status === 201) {
+                        //navigate(`/Active_Directory`, { replace: true });
+                    }
+                    else {
+                        console.log(res);
+                    }
+                });
             }
             else {
-                alert(`Entry was not created. Due to the following error: ${res.error}`)
-
-                
+                console.log(res);
             }
         });
     }

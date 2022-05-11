@@ -40,9 +40,7 @@ const Password_Recovery = () => {
                     </div>
                 </div>
                 <div class='row'>
-                    {/* <a href="/Password_Reset"> */}
                     <button class="btn btn-primary btn-lg btn-success" id='button-font' onClick={(e) => handleSubmit(e)}>Enviar Correo Electronico</button>
-                    {/* </a> */}
                 </div>
             </div>
         )
