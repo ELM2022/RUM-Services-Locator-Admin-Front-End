@@ -9,7 +9,7 @@ from '../handlers/categoriesHandler'
 import { createPendingAdministrator } from '../handlers/pendingAdministratorHandler'
 
 
-function UpdateDeleteModal({type, setOpenModal, navigation, routeid, route, information, adminJustification, use, selectedCategories, newCategories}) {
+function UpdateDeleteModal({type, setOpenModal, navigation, routeid, route, information, adminJustification, use, selectedCategories, newCategories, activeAdminId}) {
 
     const [modalUse, setModalUse] = useState(type);
     const [office, setOffice] = useState(information);
@@ -17,6 +17,7 @@ function UpdateDeleteModal({type, setOpenModal, navigation, routeid, route, info
     const [newOfficeCategories, setNewOfficeCategories] = useState(newCategories);
     const [administrator, setAdministrator] = useState(information);
     const [pendingAdministrator, setPendingAdministrator] = useState(information);
+    const [administratorId, setAdministratorId] = useState(activeAdminId);
 
     const message = () => {
         if(modalUse === "DELETE"){
@@ -68,7 +69,7 @@ function UpdateDeleteModal({type, setOpenModal, navigation, routeid, route, info
             if (res.status === 200) {
                 const office_update = {
                     office_id: office.office_id,
-                    admin_id: 1,
+                    admin_id: administratorId,
                     update_datetime: getDateTime(),
                     update_justification: adminJustification
                 }
@@ -155,7 +156,7 @@ function UpdateDeleteModal({type, setOpenModal, navigation, routeid, route, info
         administratorUpdateHandler(administrator).then((res) => {
             if (res.status === 200) {
                 const admin_update = {
-                    editor_admin_id: 1,
+                    editor_admin_id: administratorId,
                     updated_admin_id: administrator.admin_id,
                     update_datetime: getDateTime(),
                     update_justification: adminJustification

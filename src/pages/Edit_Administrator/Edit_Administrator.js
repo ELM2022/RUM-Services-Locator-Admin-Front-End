@@ -171,7 +171,7 @@ const Edit_Administrator = () => {
                  <a href={`/Admin_Information/${adminid}`}>
                      <button class='btn btn-danger btn-block'>Cancelar</button>
                  </a>
-                 {updateDeleteModalOpen && <UpdateDeleteModal type="EDIT" setOpenModal={setUpdateDeleteModalOpen} routeid={adminid} navigation={navigate} route="/Admin_Information/" information={editedAdministrator} adminJustification={justification} use="ADMIN"/>}
+                 {updateDeleteModalOpen && <UpdateDeleteModal type="EDIT" setOpenModal={setUpdateDeleteModalOpen} routeid={adminid} navigation={navigate} route="/Admin_Information/" information={editedAdministrator} adminJustification={justification} use="ADMIN" activeAdminId={context.getUserId()}/>}
                  {errorModalOpen && <ErrorHandlingModal text={userErrors} setOpenModal={setErrorModalOpen}/>}
             </div></>
         )
