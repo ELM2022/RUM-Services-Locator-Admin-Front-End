@@ -40,7 +40,6 @@ function App() {
           />
           <Route 
             path="/Create_Account"
-            element={context.isUserAuthenticated() ? <Create_Account/> : <Navigate to='/' replace/>}
           />
           <Route 
             path="/Admin_Information/:adminid"
