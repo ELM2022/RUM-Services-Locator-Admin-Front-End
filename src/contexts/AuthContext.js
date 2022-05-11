@@ -1,26 +1,39 @@
-import { useState, createContext } from "react";
+import { createContext } from "react";
 
 const AuthContext = createContext({});
 
 export const AuthProvider = ({children}) => {
-    const [currentUser, setCurrentUser] = useState(null);
+
+    const authenticateUser = (admin) => {
+        localStorage.setItem('auth_token', admin.token);
+        localStorage.setItem('user_id', admin.admin_id);
+        localStorage.setItem('user_email', admin.admin_email);
+    }
 
     const isUserAuthenticated = () => {
-        return (currentUser !== null && currentUser.token !== undefined);
+        return (localStorage.getItem('user_id') !== null);
+    }
+
+    const isUserHome = () => {
+        return (localStorage.getItem('token') !== null);
     }
 
     const getUserId = () => {
-        if (isUserAuthenticated) {
-            return currentUser.admin_id;
-        }
+        return localStorage.getItem('user_id');
+    }
+
+    const getUserEmail = () => {
+        return localStorage.getItem('user_email');
     }
 
     const handleLogout = () => {
-        setCurrentUser(null);
+        localStorage.removeItem('auth_token');
+        localStorage.removeItem('user_id');
+        localStorage.removeItem('user_email');
     }
     
     return (
-    <AuthContext.Provider value={{currentUser, setCurrentUser, isUserAuthenticated, getUserId, handleLogout}}>
+    <AuthContext.Provider value={{authenticateUser, isUserAuthenticated, isUserHome, getUserId, getUserEmail, handleLogout}}>
         {children}
     </AuthContext.Provider>
     )

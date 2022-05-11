@@ -18,7 +18,7 @@ const Token = () => {
             const login_token = {token};
             validateAdministratorLoginHandler(login_token).then((res) => {
                 if (res.status === 200) {
-                    context.setCurrentUser(res.data);
+                    context.authenticateUser(res.data);
                     navigate('/Home', { replace: true });
                 }
             })
@@ -33,8 +33,8 @@ const Token = () => {
         e.preventDefault();
 
         try {
-            const admin_id = context.currentUser.admin_id;
-            const admin_email = context.currentUser.admin_email;
+            const admin_id = context.getUserId();
+            const admin_email = context.getUserEmail();
             const admin = {admin_id, admin_email};
             resendValidateAdministratorLoginHandler(admin).then((res) => {
                 if (res.status === 200) {

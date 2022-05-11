@@ -19,7 +19,7 @@ export default function Login_Screen() {
             const login = {username, password}
             loginAdministratorHandler(login).then((res) => {
                 if (res.status === 200) {
-                    context.setCurrentUser(res.data);
+                    context.authenticateUser(res.data);
                     navigate('/Token', { replace: true });
                 } else {
                     console.log(res);

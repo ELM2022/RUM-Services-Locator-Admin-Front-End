@@ -35,16 +35,16 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Login_Screen/>}/>
           <Route 
-            path="/Home" 
-            element={<Home_Screen/>}
+            path="/Home"
+            element={context.isUserAuthenticated() ? <Home_Screen/> : <Navigate to='/' replace/>}
           />
           <Route 
-            path="/Create_Account" 
-            element={<Create_Account/>}
+            path="/Create_Account"
+            element={context.isUserAuthenticated() ? <Create_Account/> : <Navigate to='/' replace/>}
           />
           <Route 
-            path="/Admin_Information/:adminid" 
-            element={<Admin_Information />}
+            path="/Admin_Information/:adminid"
+            element={context.isUserAuthenticated() ? <Admin_Information /> : <Navigate to='/' replace/>}
           />
           <Route 
             path="/Password_Recovery" 
@@ -55,16 +55,16 @@ function App() {
             element={<Password_Reset/>}
           />
           <Route 
-            path="/Create_Office" 
-            element={<Create_Office/>}
+            path="/Create_Office"
+            element={context.isUserAuthenticated() ? <Create_Office/> : <Navigate to='/' replace/>}
           />
           <Route 
-            path="/Edit_Office/:officeid" 
-            element={<Edit_Office />}
+            path="/Edit_Office/:officeid"
+            element={context.isUserAuthenticated() ? <Edit_Office /> : <Navigate to='/' replace/>}
           />
           <Route 
-            path="/Create_Administrator" 
-            element={<Create_Administrator/>}
+            path="/Create_Administrator"
+            element={context.isUserAuthenticated() ? <Create_Administrator/> : <Navigate to='/' replace/>}
           />
           <Route 
             path="/Login_Screen" 
@@ -75,28 +75,28 @@ function App() {
             element={<Token/>}
           />
           <Route 
-            path='/Edit_Administrator/:adminid' 
-            element={<Edit_Administrator />}
+            path='/Edit_Administrator/:adminid'
+            element={context.isUserAuthenticated() ? <Edit_Administrator /> : <Navigate to='/' replace/>}
           />
           <Route 
-            path="/Office_Information/:officeid" 
-            element={<Office_Information />}
+            path="/Office_Information/:officeid"
+            element={context.isUserAuthenticated() ? <Office_Information /> : <Navigate to='/' replace/>}
           />
           <Route 
-            path="/Active_Directory" 
-            element={<Active_Directory/>}
+            path="/Active_Directory"
+            element={context.isUserAuthenticated() ? <Active_Directory/> : <Navigate to='/' replace/>}
           />
           <Route 
-            path="/Active_Administrator" 
-            element={<Active_Administrator/>}
+            path="/Active_Administrator"
+            element={context.isUserAuthenticated() ? <Active_Administrator/> : <Navigate to='/' replace/>}
           />
           <Route 
-            path="/Administrator_History" 
-            element={<Administrator_History/>}
+            path="/Administrator_History"
+            element={context.isUserAuthenticated() ? <Administrator_History/> : <Navigate to='/' replace/>}
           />
           <Route 
-            path="/Directory_History" 
-            element={<Directory_History/>}
+            path="/Directory_History"
+            element={context.isUserAuthenticated() ? <Directory_History/> : <Navigate to='/' replace/>}
           /> 
         </Routes>
       </BrowserRouter>
