@@ -8,6 +8,7 @@ import { validateAdministratorLoginHandler, resendValidateAdministratorLoginHand
 
 const Token = () => {
     const context = useContext(AuthContext);
+    console.log(context.getUserId());
     const navigate = useNavigate();
     const [token, setToken] = useState("");
 

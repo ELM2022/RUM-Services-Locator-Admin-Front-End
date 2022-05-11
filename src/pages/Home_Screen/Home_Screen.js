@@ -7,7 +7,7 @@ import AuthContext from '../../contexts/AuthContext'
 
 function Home_Screen(){
     const context = useContext(AuthContext);
-    console.log(context);
+    console.log(context.getUserId());
     return(
         <><div>
             <Home />
