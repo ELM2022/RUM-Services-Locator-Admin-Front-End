@@ -1,15 +1,16 @@
 {
   "files": {
-    "main.css": "/static/css/main.5435c77f.css",
-    "main.js": "/static/js/main.1a09b041.js",
+    "main.css": "/static/css/main.0cead452.css",
+    "main.js": "/static/js/main.0372203f.js",
     "static/js/787.7d192930.chunk.js": "/static/js/787.7d192930.chunk.js",
+    "static/media/elmLogo.jpeg": "/static/media/elmLogo.4da663c1e98663aa99a5.jpeg",
     "index.html": "/index.html",
-    "main.5435c77f.css.map": "/static/css/main.5435c77f.css.map",
-    "main.1a09b041.js.map": "/static/js/main.1a09b041.js.map",
+    "main.0cead452.css.map": "/static/css/main.0cead452.css.map",
+    "main.0372203f.js.map": "/static/js/main.0372203f.js.map",
     "787.7d192930.chunk.js.map": "/static/js/787.7d192930.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.5435c77f.css",
-    "static/js/main.1a09b041.js"
+    "static/css/main.0cead452.css",
+    "static/js/main.0372203f.js"
   ]
 }
