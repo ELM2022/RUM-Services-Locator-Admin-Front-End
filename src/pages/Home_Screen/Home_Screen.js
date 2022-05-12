@@ -3,11 +3,8 @@ import '../Input_Format.css'
 import './Home_Screen.css'
 import Navbar from "../../components/Navbar";
 import Home from "../../Home";
-import AuthContext from '../../contexts/AuthContext'
 
 function Home_Screen(){
-    const context = useContext(AuthContext);
-    console.log(context);
     return(
         <><div>
             <Home />
