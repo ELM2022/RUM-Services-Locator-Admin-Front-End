@@ -1,5 +1,4 @@
 import React, { useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
 import './Token.css'
 import '../Input_Format.css'
 import 'bootstrap/dist/css/bootstrap.css'
@@ -8,7 +7,6 @@ import { validateAdministratorLoginHandler, resendValidateAdministratorLoginHand
 
 const Token = () => {
     const context = useContext(AuthContext);
-    const navigate = useNavigate();
     const [token, setToken] = useState("");
 
     const handleSubmit = (e) => {
@@ -19,7 +17,7 @@ const Token = () => {
             validateAdministratorLoginHandler(login_token).then((res) => {
                 if (res.status === 200) {
                     context.authenticateUser(res.data);
-                    navigate('/Home', { replace: true });
+                    window.location.href = '/Home';
                 }
             })
             .catch(error => console.log(error));
