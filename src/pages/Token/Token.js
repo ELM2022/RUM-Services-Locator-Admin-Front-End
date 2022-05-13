@@ -21,6 +21,12 @@ const Token = () => {
                     context.authenticateUser(res.data);
                     navigate('/Home', { replace: true });
                 }
+                else if(res.status === 400){
+                    alert("Su código de acceso es incorrecto o ha expirado. \nFavor de intentar nuevamente o presionar 'Reenviar' para recibir un código nuevo.")
+                }
+                else{
+                    alert("Ha ocurrido un error.")
+                }
             })
             .catch(error => console.log(error));
 

@@ -45,7 +45,12 @@ const Create_Office = () => {
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [newCategories, setNewCategories] = useState([]);
 
-    const handleSave = (e) => {
+    useEffect(() => {
+        compileErrors()
+        console.log("Executed")
+    }, [officeName, officeDescription, officeSchedule, officeLatitude, officeLongitude, officeEntranceLatitude, officeEntranceLongitude, officeSearchDescription, officeFloorNumber, officeFloorNumber, officeRoomCode, officeRoomCode, officeEmail, officePhoneNumber, officeExtensionNumber, officeWebsite])
+
+    const handleSave = async (e) => {
         e.preventDefault();
 
         setUserErrors([]);
@@ -75,6 +80,7 @@ const Create_Office = () => {
                 office_website: officeWebsite
             }
             setCreatedOffice(new_office);
+            setUpdateDeleteModalOpen(true);
         }
     }
 
@@ -91,31 +97,35 @@ const Create_Office = () => {
         });
     },[]);
 
-    const compileErrors = () => {
+    const compileErrors = async () => {
         fieldValidator('officeName', officeName)
         fieldValidator('officeDescription', officeDescription)
         fieldValidator('officeSchedule', officeSchedule)
         fieldValidator('officeLatitude', officeLatitude)
         fieldValidator('officeLongitude', officeLongitude)
-        fieldValidator('officeEntranceLatitude', officeEntranceLatitude)
-        fieldValidator('officeEntranceLongitude', officeEntranceLongitude)
-        fieldValidator('officeRouteInstructions', officeRouteInstructions)
-        fieldValidator('officeSearchDescription', officeSearchDescription)
-        fieldValidator('officeFloorNumber', officeFloorNumber)
-        fieldValidator('officeRoomCode', officeRoomCode)
-        fieldValidator('officeEmail', officeEmail)
-        fieldValidator('officePhoneNumber', officePhoneNumber)
-        fieldValidator('officeExtensionNumber', officeExtensionNumber)
-        fieldValidator('officeWebsite', officeWebsite)
+         fieldValidator('officeEntranceLatitude', officeEntranceLatitude)
+         fieldValidator('officeEntranceLongitude', officeEntranceLongitude)
+         fieldValidator('officeRouteInstructions', officeRouteInstructions)
+         fieldValidator('officeSearchDescription', officeSearchDescription)
+         fieldValidator('officeFloorNumber', officeFloorNumber)
+         fieldValidator('officeRoomCode', officeRoomCode)
+         fieldValidator('officeEmail', officeEmail)
+         fieldValidator('officePhoneNumber', officePhoneNumber)
+         fieldValidator('officeExtensionNumber', officeExtensionNumber)
+        await fieldValidator('officeWebsite', officeWebsite)
     }
 
-    function fieldValidator(fieldName, value) {
+    async function fieldValidator(fieldName, value) {
         switch(fieldName) {
             case 'officeName':
                 if(typeof value === 'string') {
                     if(/[0-9]/.test(value)){
                         setFormInvalid(true);
                         setUserErrors(prevState => [...prevState, "El nombre de la oficina debe de contener solamente letras."])
+                    }
+                    else if(value === ''){
+                        setFormInvalid(true);
+                        setUserErrors(prevState => [...prevState, "El nombre de la oficina no debe de estar vacío."])
                     }
                 }
                 else{
@@ -128,10 +138,18 @@ const Create_Office = () => {
                     setUserErrors(prevState => [...prevState, "La descripción de la oficina debe de contener palabras."])
                     setFormInvalid(true);
                 }
+                else if(value === '') {
+                    setUserErrors(prevState => [...prevState, "La descripción de la oficina no debe de estar vacía."])
+                    setFormInvalid(true);
+                }
                 break;
-            case 'OfficeSearchDescription':
+            case 'officeSearchDescription':
                 if(!typeof value === 'string') {
                     setUserErrors(prevState => [...prevState, "La descripción de busqueda de la oficina debe de contener palabras."])
+                    setFormInvalid(true);
+                }
+                else if(value === '') {
+                    setUserErrors(prevState => [...prevState, "La descripción de busqueda de la oficina no debe de estar vacía."])
                     setFormInvalid(true);
                 }
                 break;
@@ -203,13 +221,17 @@ const Create_Office = () => {
                     setFormInvalid(true);
                 }
                 break;
-            case 'OfficeRouteInstructions':
+            case 'officeRouteInstructions':
                 if(!typeof value === 'string') {
                     setUserErrors(prevState => [...prevState, "Las instrucciones de la oficina debe de contener palabras."])
                     setFormInvalid(true);
                 }
+                else if(value === '') {
+                    setUserErrors(prevState => [...prevState, "Las instrucciones de ruta la oficina no debe de estar vacía."])
+                    setFormInvalid(true);
+                }
                 break;
-            case 'OfficeRoomCode':
+            case 'officeRoomCode':
                 if(!typeof value === 'string') {
                     setUserErrors(prevState => [...prevState, "El codigo de salon de la oficina debe de contener palabras."])
                     setFormInvalid(true);
@@ -230,6 +252,10 @@ const Create_Office = () => {
             case 'officeSchedule':
                 if(!typeof value === 'string') {
                     setUserErrors(prevState => [...prevState, "El horario de la oficina debe de contener letras y numeros."])
+                    setFormInvalid(true);
+                }
+                else if(value === ''){
+                    setUserErrors(prevState => [...prevState, "El horario de la oficina no debe de estar vacío."])
                     setFormInvalid(true);
                 }
                 break;
@@ -384,8 +410,7 @@ const Create_Office = () => {
                 </div>
                 {renderDropdown()}
                     <button class='btn btn-success btn-block' onClick={(e) => {
-                        setUpdateDeleteModalOpen(true)
-                        handleSave(e)}
+                        handleSave(e);}
                         }>Save</button>
                 <a href="/Active_Directory">
                     <button class='btn btn-danger btn-block'>Cancel</button>

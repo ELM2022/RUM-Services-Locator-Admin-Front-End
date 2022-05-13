@@ -12,6 +12,17 @@ export const allAdministratorsHandler = () => {
     })
 }
 
+export const getAllInactiveAdministrators = () => {
+    return axios
+    .get(`${apiRoute}/admin/inactive`)
+    .then((response) => {
+        return response;
+    })
+    .catch((err) => {
+        return err.response;
+    })
+}
+
 export const administratorGetHandler = (admin_id) => {
     return axios
     .get(`${apiRoute}/admin/${admin_id}`)

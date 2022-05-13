@@ -15,6 +15,9 @@ import Create_Office from './pages/Create_Office/Create_Office'
 import Admin_Information from './pages/Admin_Information/Admin_Information'
 import Create_Administrator from './pages/Create_Administrator/Create_Administrator'
 import Edit_Administrator from './pages/Edit_Administrator/Edit_Administrator'
+import Categories_Directory from './pages/Categories_Directory/Categories_Directory'
+import Category_Edit from './pages/Category_Information/Category_Edit'
+import Create_Category from './pages/Create_Category/Create_Category'
 
 import Active_Directory from "./pages/Active_Directory/Active_Directory";
 import Active_Administrator from "./pages/Active_Administrator/Active_Administrator"
@@ -98,6 +101,17 @@ function App() {
             path="/Directory_History"
             element={context.isUserAuthenticated() ? <Directory_History/> : <Navigate to='/' replace/>}
           /> 
+          <Route
+          path="/Categories_Directory"
+          element={context.isUserAuthenticated() ? <Categories_Directory/> : <Navigate to='/' replace/>}>
+          </Route>
+          <Route
+          path='/Category_Information/:categoryid'
+          element={<Category_Edit/>}
+          />
+          <Route
+          path='Create_Category'
+          element={<Create_Category/>}/>
         </Routes>
       </BrowserRouter>
       </div>

@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 import './Modal.css'
-import {officeUpdateHandler, officeDeleteHandler, officeCreateHandler} from '../handlers/officeHandler';
+import {officeUpdateHandler, officeDeleteHandler, officeCreateHandler, deleteAllOfficeCategoriesByCategoryID} from '../handlers/officeHandler';
 import { addOfficeUpdateHandler } from '../handlers/officeHistoryHandler'
 import {administratorUpdateHandler, administratorDeleteHandler} from '../handlers/administratorHandler'
 import {addAdministratorUpdateHandler} from '../handlers/administratorHistoryHandler'
-import {addCategoryHandler, addCategoryMembershipHandler, deleteOfficeCategoriesHandler } 
+import {addCategoryHandler, addCategoryMembershipHandler, deleteCategoryHandler, editCategoryHandler, deleteOfficeCategoriesHandler } 
 from '../handlers/categoriesHandler'
 import { createPendingAdministrator } from '../handlers/pendingAdministratorHandler'
 
@@ -18,6 +18,7 @@ function UpdateDeleteModal({type, setOpenModal, navigation, routeid, route, info
     const [administrator, setAdministrator] = useState(information);
     const [pendingAdministrator, setPendingAdministrator] = useState(information);
     const [administratorId, setAdministratorId] = useState(activeAdminId);
+    const [category, setCategory] = useState(information)
 
     const message = () => {
         if(modalUse === "DELETE"){
@@ -208,6 +209,48 @@ function UpdateDeleteModal({type, setOpenModal, navigation, routeid, route, info
         });
     }
 
+    const handleCategoryCreate = () => {
+        const cat = {
+            category_name: category
+        }
+        addCategoryHandler(cat).then((res) => {
+            if (res.status === 201) {
+                alert("Categoria creada satisfactoriamente!")
+            }
+            else{
+                alert("Ha ocurrido un error durante la generación de la categoria")
+            }
+        })
+    }
+
+    const handleCategoryDelete = () => {
+        console.log(category);
+        deleteAllOfficeCategoriesByCategoryID(category).then((res) => {
+            if(res.status === 200){
+                deleteCategoryHandler(category).then((res => {
+                    if(res.status === 200){
+                        alert("La categoria ha sido borrada exitosamente")
+                    }
+                }))
+            }
+            else{
+                alert("Ha ocurrido un error al momento de borrar la categoria.\n La misma no ha sido borrada.")
+            }
+        })
+
+    }
+
+    const handleCategoryUpdate = () => {
+        editCategoryHandler(category).then((res) => {
+            if(res.status === 200){
+                alert("Categoria editada satisfactoriamente.")
+            }
+            else{
+                alert("Ha ocurrido un error al editar la categoria")
+            }
+        })
+    }
+
     const yesButton = () => {
         if(use === "OFFICE"){
             if(modalUse === "EDIT"){
@@ -251,6 +294,32 @@ function UpdateDeleteModal({type, setOpenModal, navigation, routeid, route, info
             else if(modalUse === "CREATE") {
                 return(<button onClick={() => {
                     handleAdminCreate();
+                    navigation(`${route}`, {replace: true})
+                }}>
+                    Si
+                </button>)
+            }
+        }
+        else if(use === "CATEGORY"){
+            if(modalUse === "EDIT"){
+                return(<button onClick={() => {
+                    handleCategoryUpdate()
+                    navigation(`${route}`, { replace: true })}}>
+                        Si
+                    </button>)     
+            }
+            else if(modalUse === "DELETE"){
+                return(<button onClick={() => {
+                    handleCategoryDelete();
+                    window.location.reload();
+                    // navigation(`${route}`, {replace: true})
+                    }}>
+                        Si
+                    </button>)
+            }
+            else if(modalUse === "CREATE") {
+                return(<button onClick={() => {
+                    handleCategoryCreate();
                     navigation(`${route}`, {replace: true})
                 }}>
                     Si
