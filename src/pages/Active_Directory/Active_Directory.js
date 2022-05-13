@@ -56,7 +56,7 @@ class Active_Directory extends Component{
                     </table>
                     <a href="/Create_Office">
                         <button class='btn btn-primary btn-success' id='menu_button'>
-                            Añadir Oficina
+                            Añadir Servicio
                         </button>
                     </a>
                 </div></>
