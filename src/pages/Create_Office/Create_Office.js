@@ -289,22 +289,22 @@ const Create_Office = () => {
     function renderTableHeader() {
         return(
             <tr>
-                <th>Office Name</th>
-                <th>Office Description</th>
-                <th>Office Schedule</th>
-                <th>Office Latitude</th>
-                <th>Office Longitude</th>
-                <th>Office Entrance Latitude</th>
-                <th>Office Entrance Longitude</th>
-                <th>Office Route Instructions</th>
-                <th>Office Search Description</th>
-                <th>Office Floor Number</th>
-                <th>Office Room Code</th>
-                <th>Office Email</th>
-                <th>Office Phone Number</th>
-                <th>Office Extension Number</th>
-                <th>Office Website</th>
-            </tr>
+            <th>Nombre de Oficina</th>
+            <th>Descripción de Oficina</th>
+            <th>Horario de Oficina</th>
+            <th>Latitud de Oficina</th>
+            <th>Longitud de Oficina</th>
+            <th>Latitude de Entrada de Oficina</th>
+            <th>Longitud de Entrada de Oficina</th>
+            <th>Instrucciones de Ruta de Oficina</th>
+            <th>Descripción de Busqueda de Oficina</th>
+            <th>Numero de Piso de Oficina</th>
+            <th>Codigo de Salón de Oficina</th>
+            <th>Correo Electrónico de Oficina</th>
+            <th>Numero de Teléfono</th>
+            <th>Numero de Extensión de Oficina</th>
+            <th>Pagina de Internet de Oficina</th>
+        </tr>
         )
     }
 
