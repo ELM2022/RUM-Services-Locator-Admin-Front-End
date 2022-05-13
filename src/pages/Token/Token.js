@@ -1,5 +1,4 @@
 import React, { useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
 import './Token.css'
 import '../Input_Format.css'
 import 'bootstrap/dist/css/bootstrap.css'
@@ -8,8 +7,6 @@ import { validateAdministratorLoginHandler, resendValidateAdministratorLoginHand
 
 const Token = () => {
     const context = useContext(AuthContext);
-    console.log(context.getUserId());
-    const navigate = useNavigate();
     const [token, setToken] = useState("");
 
     const handleSubmit = (e) => {
@@ -20,10 +17,13 @@ const Token = () => {
             validateAdministratorLoginHandler(login_token).then((res) => {
                 if (res.status === 200) {
                     context.authenticateUser(res.data);
-                    navigate('/Home', { replace: true });
-                } else {
-                    console.log(res);
-                    alert("An error occurred.");
+                    window.location.href = '/Home';
+                }
+                else if(res.status === 400){
+                    alert("Su código de acceso es incorrecto o ha expirado. \nFavor de intentar nuevamente o presionar 'Reenviar' para recibir un código nuevo.")
+                }
+                else{
+                    alert("Ha ocurrido un error.")
                 }
             })
             .catch(error => console.log(error));

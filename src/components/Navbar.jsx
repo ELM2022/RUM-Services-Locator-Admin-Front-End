@@ -16,7 +16,7 @@ export default function Navbar() {
                 <div className="button-list">
                     <Nav.Link className="Navbar-button" href="/Active_Directory">
                         <text>
-                            Ver Directorio Activo
+                            Ver Directorio de Servicios Activos
                         </text>
                     </Nav.Link>
                     <div className="Navbar-padding"/>
@@ -37,6 +37,12 @@ export default function Navbar() {
                             Ver Historial de Administradores
                         </text>
                     </Nav.Link>
+                    <div className="Navbar-padding"/>
+                        <Nav.Link className="Navbar-button" href="/Categories_Directory">
+                            <text>
+                                Ver Directorio de Categorias
+                            </text>
+                        </Nav.Link>
                 </div>
                 </div>
             </body>

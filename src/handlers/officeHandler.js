@@ -55,3 +55,26 @@ export const officeDeleteHandler = (office_id) => {
         return err.response;
     })
 }
+
+export const deleteAllOfficeCategoriesByCategoryID = (category_id) => {
+    console.log(category_id);
+    return axios
+    .delete(`${apiRoute}/offices/category/${category_id}`)
+    .then((response) => {
+        return response;
+    })
+    .catch((err) => {
+        return err.response;
+    })
+}
+
+export const getAllInactiveOffices = () => {
+    return axios
+    .get(`${apiRoute}/offices/inactive`)
+    .then((response) => {
+        return response;
+    })
+    .catch((err) => {
+        return err.response;
+    })
+}

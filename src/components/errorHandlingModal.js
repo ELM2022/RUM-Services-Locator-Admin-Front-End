@@ -1,6 +1,6 @@
 import e from 'cors';
 import React, {useState} from 'react';
-import './Modal.css'
+import './updateDeleteModal.css'
 
 function ErrorHandlingModal({text, setOpenModal}) {
 
@@ -13,7 +13,9 @@ function ErrorHandlingModal({text, setOpenModal}) {
         else{
             return (error.map(userError => {
                 return(
-                    <h3>{Object.values(userError)}</h3>
+                    <div class='row'>
+                        <h3>{userError}</h3>
+                    </div>
                 )
             }))
         }
