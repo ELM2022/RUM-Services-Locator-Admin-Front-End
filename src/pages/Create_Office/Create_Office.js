@@ -399,21 +399,22 @@ const Create_Office = () => {
             </div>
             <div>
                 <Navbar />
-                <h1 id='title'>Crear Oficina</h1>
-                <div id="office_table_padding" class="table-responsive">
-                    <table id='table_information'>
-                        <tbody>
-                            {renderTableHeader()}
-                            {renderEditableTableData()}
-                        </tbody>
-                    </table>
-                </div>
-                {renderDropdown()}
-                    <button class='btn btn-success btn-block' onClick={(e) => {
-                        handleSave(e);}
-                        }>Save</button>
+            </div>
+            <div id="office_table_padding">
+                    <h1 id='title'>Crear Servicio</h1>
+                    <div class="table-responsive">
+                        <table id='table_information'>
+                            <tbody>
+                                {renderTableHeader()}
+                                {renderEditableTableData()}
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3 id='title'>Categorías</h3>
+                    {renderDropdown()}
+                <button class='btn btn-success btn-block' onClick={(e) => {handleSave(e)}}>Guardar</button>
                 <a href="/Active_Directory">
-                    <button class='btn btn-danger btn-block'>Cancel</button>
+                    <button class='btn btn-danger btn-block'>Cancelar</button>
                 </a>
                 {updateDeleteModalOpen && <UpdateDeleteModal type="CREATE" setOpenModal={setUpdateDeleteModalOpen} navigation={navigate} route="/Active_Directory" information={createdOffice} selectedCategories={selectedCategories} newCategories={newCategories} use="OFFICE"/>}
                 {errorModalOpen && <ErrorHandlingModal text={userErrors} setOpenModal={setErrorModalOpen}/>}

@@ -51,7 +51,7 @@ const Categories_Directory = ({useNavigate}) => {
                 <Navbar />
             </div>
             <div className='Active_Directory' id="office_table_padding">
-                    <h1 id='title'>Directorio de Categorias</h1>
+                    <h1 id='title'>Directorio de Categorías Activas</h1>
                     <table id='menu_information' align='center' class='table'>
                         <tbody>
                             {renderTableData()}

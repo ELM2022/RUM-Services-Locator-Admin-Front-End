@@ -48,7 +48,7 @@ class Active_Directory extends Component{
                 <Navbar />
             </div>
             <div className='Active_Directory' id="office_table_padding">
-                    <h1 id='title'>Directorio de Oficinas</h1>
+                    <h1 id='title'>Directorio de Servicios Activos</h1>
                     <table id='menu_information' align='center' class='table'>
                         <tbody>
                             {this.renderTableData()}

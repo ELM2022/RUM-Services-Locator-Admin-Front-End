@@ -434,7 +434,7 @@ const Edit_Office = () => {
                 <Navbar />
             </div>
             <div id="office_table_padding">
-                    <h1 id='title'>Editar Información de Oficina</h1>
+                    <h1 id='title'>Editar Información de Servicio</h1>
                     <div class="table-responsive">
                         <table id='table_information'>
                             <tbody>

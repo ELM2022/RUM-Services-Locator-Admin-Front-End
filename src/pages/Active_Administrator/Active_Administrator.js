@@ -47,7 +47,7 @@ class Active_Administrator extends Component {
                 <Navbar />
             </div>
             <div id="office_table_padding">
-                    <h1 id='title'>Directorio de Administradores</h1>
+                    <h1 id='title'>Directorio de Administradores Activos</h1>
                     <table id='menu_information' align='center' class='table'>
                         <tbody>
                             {this.renderTableData()}
