@@ -15,6 +15,14 @@ const Password_Reset = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        if(password === "" || confirmPassword === ""){
+            alert("Por favor introduzca una contraseña.")
+        }
+        else if(password !== confirmPassword){
+            alert("Las contraseñas ingresadas no coinciden, favor de verificar e intentar nuevamente.")
+        }
+        else{
+
         try {
             const admin = {
                 reset_passw_token: token,
@@ -31,6 +39,7 @@ const Password_Reset = () => {
         } catch (error) {
             console.log(error);
         }
+    }
     }
 
     const render = () => {

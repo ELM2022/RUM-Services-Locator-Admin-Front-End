@@ -27,7 +27,7 @@ const Create_Account = () => {
             alert("No se puede crear una cuenta que contenga una o más de las siguientes entradas en blanco:\n\n Correo Electrónico\n Nombre\n Apellido\n Contraseña\n\n Favor intentar de nuevo.")
         }
         else if( password !== confirmPassword){
-            alert("Las contraseñas ingresadas no coinciden, favor de verificar e intentar nuevamente");
+            alert("Las contraseñas ingresadas no coinciden, favor de verificar e intentar nuevamente.");
         }
         else{
 
