@@ -1,6 +1,6 @@
 import e from 'cors';
 import React, {useState} from 'react';
-import './updateDeleteModal.css'
+import './Modal.css'
 
 function ErrorHandlingModal({text, setOpenModal}) {
 
@@ -24,7 +24,7 @@ function ErrorHandlingModal({text, setOpenModal}) {
     return (
         <div className="modalContainer">
             <div className="title">
-                <h1>Error</h1>
+                <h1>Alerta</h1>
             </div>
             <div className="body">
                 {message()}

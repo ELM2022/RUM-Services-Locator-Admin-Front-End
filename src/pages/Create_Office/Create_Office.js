@@ -168,6 +168,10 @@ const Create_Office = () => {
                         setFormInvalid(true);
                     }
                 }
+                else if(value === ''){
+                    setUserErrors(prevState => [...prevState, "Latitud de Oficina no debe de estar vacía."])
+                    setFormInvalid(true);
+                }
                 else{
                     setUserErrors(prevState => [...prevState, "Latitud de Oficina debe de ser un numero decimal."])
                     setFormInvalid(true);
@@ -179,6 +183,10 @@ const Create_Office = () => {
                         setUserErrors(prevState => [...prevState, "Longitud de Oficina debe de ser un numero decimal."])
                         setFormInvalid(true);
                     }
+                }
+                else if(value === ''){
+                    setUserErrors(prevState => [...prevState, "Longitud de Oficina no debe de estar vacía."])
+                    setFormInvalid(true);
                 }
                 else{
                     setUserErrors(prevState => [...prevState, "Longitud de Oficina debe de ser un numero decimal."])
@@ -192,6 +200,10 @@ const Create_Office = () => {
                         setFormInvalid(true);
                     }
                 }
+                else if(value === ''){
+                    setUserErrors(prevState => [...prevState, "Latitud de la entrada de oficina no debe de estar vacia."])
+                    setFormInvalid(true);
+                }
                 else{
                     setUserErrors(prevState => [...prevState, "Latitud de la entrada de oficina debe de ser un numero decimal."])
                     setFormInvalid(true);
@@ -203,6 +215,10 @@ const Create_Office = () => {
                         setUserErrors(prevState => [...prevState, "Longitud de la entrada de oficina debe de ser un numero decimal."])
                         setFormInvalid(true);
                     }
+                }
+                else if(value === ''){
+                    setUserErrors(prevState => [...prevState, "Longitud de la entrada de oficina no debe de estar vacia."])
+                    setFormInvalid(true);
                 }
                 else{
                     setUserErrors(prevState => [...prevState, "Longitud de la entrada de oficina debe de ser un numero decimal."])
