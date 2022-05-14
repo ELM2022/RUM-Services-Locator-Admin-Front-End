@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import '../Table_Format.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import { officeCreateHandler } from '../../handlers/officeHandler';
-import { getAllCategoriesHandler, addCategoryHandler, addCategoryMembershipHandler } from '../../handlers/categoriesHandler';
+import { getAllCategoriesHandler, getAllActiveCategories, addCategoryHandler, addCategoryMembershipHandler } from '../../handlers/categoriesHandler';
 import CreatableSelect from 'react-select/creatable';
 import makeAnimated from 'react-select/animated';
 import Navbar from "../../components/Navbar";
@@ -85,7 +85,7 @@ const Create_Office = () => {
     }
 
     useEffect(() => {
-        getAllCategoriesHandler().then((res) => {
+        getAllActiveCategories().then((res) => {
             const result = [];
             res.data.data.categories.map((category) => {
                 result.push({
