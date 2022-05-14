@@ -23,10 +23,13 @@ export default function Login_Screen() {
                     navigate('/Token', { replace: true });
                 }
                 else if(res.status === 401){
-                    alert("Contraseña Incorrecta. Favor de intentar nuevamente.")
+                    alert("Su correo electrónico o contraseña es incorrecta, o ha perdido acceso al sistema. Favor de intentar nuevamente, o contacte a un administrador para validar que su cuenta esté activa.");
                 } 
+                else if (res.status === 400) {
+                    alert("Su cuenta está desactivada del sistema. Favor de contactar a un administrador para solicitar acceso.");
+                }
                 else {
-                    console.log(res);
+                    alert('Ha ocurrido un error. Favor de intentar nuevamente.');
                 }
             });
 
