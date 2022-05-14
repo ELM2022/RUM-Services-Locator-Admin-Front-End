@@ -22,10 +22,13 @@ const Token = () => {
                     window.location.href = '/Home';
                 }
                 else if(res.status === 400){
-                    alert("Su código de acceso es incorrecto o ha expirado. \nFavor de intentar nuevamente o presionar 'Reenviar' para recibir un código nuevo.")
+                    alert("Su código de acceso es incorrecto. \nFavor de intentar nuevamente o presionar 'Reenviar' para recibir un código nuevo.")
+                }
+                else if (res.status === 401) {
+                    alert("Su código de acceso ha expirado. \nFavor de presionar 'Reenviar' para recibir un código nuevo.")
                 }
                 else{
-                    alert("Ha ocurrido un error.")
+                    alert("El código de acceso debe ser de 6 caracteres y contener solo letras mayúsculas y números.")
                 }
             })
             .catch(error => console.log(error));

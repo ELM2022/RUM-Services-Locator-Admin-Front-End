@@ -49,7 +49,7 @@ const Password_Reset = () => {
                 </div>
                 <div class='row'>
                     <div class="form-outline">
-                        <input type='text' class="form-control" placeholder='Contraseña' value={password} onChange={(e) => setPassword(e.target.value)}></input>
+                        <input type='password' class="form-control" placeholder='Contraseña' value={password} onChange={(e) => setPassword(e.target.value)}></input>
                     </div>
                 </div>
                 <div class='row'>
@@ -57,7 +57,7 @@ const Password_Reset = () => {
                 </div>
                 <div class='row'>
                     <div class="form-outline">
-                        <input type='text' class="form-control" placeholder='Confirmar contraseña' value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}></input>   
+                        <input type='password' class="form-control" placeholder='Confirmar contraseña' value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}></input>   
                     </div>
                 </div>
                 <div class='row'>
