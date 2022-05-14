@@ -24,18 +24,6 @@ const Admin_Information = () => {
         });
     }, [adminid]);
 
-    // const handleDelete = (e) => {
-    //     e.preventDefault();
-    //     alert("This administrator will be deactivated.");
-    //     administratorDeleteHandler(adminid).then((res) => {
-    //         if (res.status === 200) {
-    //             //alert("Administrator deactivated successfully.");
-    //             //alertnavigate('/Active_Administrator', { replace: true });
-    //             setUpdateDeleteModalOpen(true);
-    //         }
-    //     });
-    // }
-
     const renderTableHeader = () => {
         return(
             <tr>
@@ -73,6 +61,7 @@ const Admin_Information = () => {
                         {renderTableData()}
                     </tbody>
                 </table>
+                <h3></h3>
                 <a href={`/Edit_Administrator/${adminid}`}>
                     <button class='btn btn-success btn-block'>Editar</button>
                 </a>

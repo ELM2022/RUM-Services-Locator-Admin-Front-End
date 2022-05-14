@@ -94,8 +94,8 @@ class Administrator_History extends Component {
                 <th>Nombre de Administrador Actualizado</th>
                 <th>Apellido de Administrador Actualizado</th>
                 <th>Correo Electronico de Administrador Actualizado</th>
-                <th>Tiempo de Actualizacion</th>
-                <th>Justificacion</th>
+                <th>Tiempo de Actualización</th>
+                <th>Justificación</th>
             </tr>
         )
     }

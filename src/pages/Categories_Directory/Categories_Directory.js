@@ -1,9 +1,10 @@
-import React, { Component, useState, useEffect} from 'react';
+import React, { useContext ,Component, useState, useEffect} from 'react';
 import '../Menu_Format.css'
 import { getAllCategoriesHandler, getAllActiveCategories} from '../../handlers/categoriesHandler'
 import UpdateDeleteModal from '../../components/updateDeleteModal'
 import Navbar from "../../components/Navbar";
 import Home from "../../Home";
+
 
 const Categories_Directory = ({useNavigate}) => {
 
@@ -35,7 +36,7 @@ const Categories_Directory = ({useNavigate}) => {
                         <td>{categoryName}</td>
                         <td><a href={`Category_Information/${categoryID}`}><button class="btn btn-primary btn-success" id='menu_button'>Editar</button></a></td>
                         <td><button class="btn btn-primary btn-danger" id='menu_button' onClick={(e) => setUpdateDeleteModalOpen(true)}>Borrar</button></td>
-                        {updateDeleteModalOpen && <UpdateDeleteModal type="DELETE" setOpenModal={setUpdateDeleteModalOpen} navigate={useNavigate} information={categoryID} use="CATEGORY"/>}
+                        {updateDeleteModalOpen && <UpdateDeleteModal type="DELETE" setOpenModal={setUpdateDeleteModalOpen} navigate={useNavigate} route='/Categories_Directory' information={category} use="CATEGORY"/>}
                     </tr>
                 )
             })

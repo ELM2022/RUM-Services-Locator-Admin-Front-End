@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import './Modal.css'
+import './updateDeleteModal.css'
 import {officeUpdateHandler, officeDeleteHandler, officeCreateHandler, deleteAllOfficeCategoriesByCategoryID} from '../handlers/officeHandler';
 import { addOfficeUpdateHandler } from '../handlers/officeHistoryHandler'
 import {administratorUpdateHandler, administratorDeleteHandler} from '../handlers/administratorHandler'
@@ -96,11 +96,13 @@ function UpdateDeleteModal({type, setOpenModal, navigation, routeid, route, info
                     });
 
                 addOfficeUpdateHandler(office_update).then((response) => {
-                    //console.log(response)
+                    if(response.status === 200){
+                        alert("La entrada de oficina ha sido actualizada satisfactoriamente.")
+                    }
                 });
             }
             else {
-                alert(`Update did not occur due to ${res.data.errors}. Fix this and try again.`)
+                alert(`La entrada de oficina no ha podido ser actualizada.`)
             }
         });
     }
@@ -108,10 +110,7 @@ function UpdateDeleteModal({type, setOpenModal, navigation, routeid, route, info
     const handleDelete = () => {
         officeDeleteHandler(office.office_id).then((res) => {
                     if (res.status === 200) {
-                        //alert("Office deactivated successfully.");
-                        alert("Entry has been deleted successfully.");
-                        //navigate('/Active_Directory', { replace: true });
-                        // window.location.reload(false);
+                        alert("La entrada de oficina ha sido desactivada satisfactoriamente.");
                     }
                 });
     }
@@ -140,15 +139,18 @@ function UpdateDeleteModal({type, setOpenModal, navigation, routeid, route, info
 
                 addCategoryMembershipHandler(membership).then((response) => {
                     if (response.status === 201) {
-                        //navigate(`/Active_Directory`, { replace: true });
+                        alert("La oficina ha sido creada satisfactoriamente.");
                     }
                     else {
                         console.log(res);
                     }
                 });
             }
-            else {
-                console.log(res);
+            else if(res.status === 422) {
+                alert("No se puede generar un servicio que contenga uno o mas de las siguientes entradas en blanco:\n\n Nombre de Oficina\n Descripción de Oficina\n Latitud de Oficina\n Longitud de Oficina\n Latitud de Entrada de Oficina\n Longitud de Entrada de Oficina\n Horario de Oficina\n Codigo de Salón de Oficina\n\n Favor de intentar de nuevo.")
+            }
+            else{
+                console.log(res)
             }
         });
     }
@@ -164,14 +166,13 @@ function UpdateDeleteModal({type, setOpenModal, navigation, routeid, route, info
                 }
                 addAdministratorUpdateHandler(admin_update).then((res) => {
                     if(res.status === 201) {
+                        alert("La entrada de administrador ha sido actualizada satisfactoriamente.")
             
                     }
                     else{
-                        alert(`Update did not occurr due to ${res.data.errors}. Fix this and try again.`)
+                        alert(`La entrada de administrador no ha sido actualizada. Favor de intentarlo nuevamente.`)
                     }
                 })
-                //setUpdateDeleteModalOpen(true)
-                //navigate(`/Admin_Information/${adminid}`, { replace: true });
             }
         });
     }
@@ -182,7 +183,6 @@ function UpdateDeleteModal({type, setOpenModal, navigation, routeid, route, info
             createPendingAdministrator(pendingAdministrator).then((res) => {
                 if (res.status === 201) {
                     alert("La cuenta del nuevo administrador ha quedado pendiente.\nLa misma se oficializará cuando se complete el proceso de registro.");
-                    //navigate('/Active_Administrator', { replace: true });
                 }
                 if (res.status === 400) {
                     alert("La cuenta de administrador ya está pendiente o ha sido registrada anteriormente.");
@@ -199,12 +199,9 @@ function UpdateDeleteModal({type, setOpenModal, navigation, routeid, route, info
     }
 
     const handleAdminDelete = () => {
-        //alert("This administrator will be deactivated.");
         administratorDeleteHandler(administrator.admin_id).then((res) => {
             if (res.status === 200) {
-                //alert("Administrator deactivated successfully.");
-                //alertnavigate('/Active_Administrator', { replace: true });
-                //setUpdateDeleteModalOpen(true);
+                alert("El administrador ha sido desactivado satisfactoriamente.");
             }
         });
     }
@@ -224,10 +221,10 @@ function UpdateDeleteModal({type, setOpenModal, navigation, routeid, route, info
     }
 
     const handleCategoryDelete = () => {
-        console.log(category);
-        deleteAllOfficeCategoriesByCategoryID(category).then((res) => {
+        console.log(category)
+        deleteAllOfficeCategoriesByCategoryID(category.categoryID).then((res) => {
             if(res.status === 200){
-                deleteCategoryHandler(category).then((res => {
+                deleteCategoryHandler(category.categoryID).then((res => {
                     if(res.status === 200){
                         alert("La categoria ha sido borrada exitosamente")
                     }
@@ -294,8 +291,7 @@ function UpdateDeleteModal({type, setOpenModal, navigation, routeid, route, info
             else if(modalUse === "CREATE") {
                 return(<button onClick={() => {
                     handleAdminCreate();
-                    navigation(`${route}`, {replace: true})
-                }}>
+                    navigation(`${route}`, {replace: true})}}>
                     Si
                 </button>)
             }
@@ -304,15 +300,15 @@ function UpdateDeleteModal({type, setOpenModal, navigation, routeid, route, info
             if(modalUse === "EDIT"){
                 return(<button onClick={() => {
                     handleCategoryUpdate()
-                    navigation(`${route}`, { replace: true })}}>
+                    navigation(`/Categories_Directory`, { replace: true })
+                    }}>
                         Si
                     </button>)     
             }
             else if(modalUse === "DELETE"){
                 return(<button onClick={() => {
                     handleCategoryDelete();
-                    window.location.reload();
-                    // navigation(`${route}`, {replace: true})
+                    setOpenModal(false);
                     }}>
                         Si
                     </button>)

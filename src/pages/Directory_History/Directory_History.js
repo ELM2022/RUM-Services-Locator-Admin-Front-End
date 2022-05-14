@@ -54,10 +54,10 @@ class Directory_History extends Component {
     renderTableHeader() {
         return(
             <tr>
-                <th>Editor Administrator</th>
-                <th>Updated Office Name</th>
-                <th>Update Time</th>
-                <th>Justification</th>
+                <th>Administrador Editor</th>
+                <th>Nombre de Oficina Actualizada</th>
+                <th>Tiempo de Actualización</th>
+                <th>Justificación</th>
             </tr>
         )
     }

@@ -113,12 +113,7 @@ const Category_Edit = () => {
                             {renderEditableTableData()}
                         </tbody>
                     </table>
-
-                    <div class='form-group'>
-                        <h2 id='title'>Justificación</h2>
-                        <label for='textArea' id='title'>Por favor escribir justificación de cambio</label>
-                        <textarea class='form-control' id='textArea' onChange={(e) => setJustification(e.target.value)}></textarea>
-                    </div>
+                    <h3></h3>
                      <button class='btn btn-success btn-block' onClick={(e) => handleSave(e)}>Guardar</button>
                  <a href={`/Categories_Directory`}>
                      <button class='btn btn-danger btn-block'>Cancelar</button>

@@ -122,30 +122,34 @@ const Edit_Office = () => {
             setErrorModalOpen(true);
         }
         else{
-            const new_office = {
-                office_id: officeid,
-                office_name: officeName,
-                office_description: officeDescription,
-                office_schedule: officeSchedule,
-                office_latitude: officeLatitude,
-                office_longitude: officeLongitude,
-                office_entrance_latitude: officeEntranceLatitude,
-                office_entrance_longitude: officeEntranceLongitude,
-                office_route_instructions: officeRouteInstructions,
-                office_search_description: officeSearchDescription,
-                office_floor_number: officeFloorNumber,
-                office_room_code: officeRoomCode,
-                office_email: officeEmail,
-                office_phone_number: officePhoneNumber,
-                office_extension_number: officeExtensionNumber,
-                office_website: officeWebsite,
-                office_active_status: officeActiveStatus
+            if(justification === ''){
+                alert("Debe de llenar la justificación.")
             }
-
-
-            setEditedOffice(new_office);
+            else{
+                const new_office = {
+                    office_id: officeid,
+                    office_name: officeName,
+                    office_description: officeDescription,
+                    office_schedule: officeSchedule,
+                    office_latitude: officeLatitude,
+                    office_longitude: officeLongitude,
+                    office_entrance_latitude: officeEntranceLatitude,
+                    office_entrance_longitude: officeEntranceLongitude,
+                    office_route_instructions: officeRouteInstructions,
+                    office_search_description: officeSearchDescription,
+                    office_floor_number: officeFloorNumber,
+                    office_room_code: officeRoomCode,
+                    office_email: officeEmail,
+                    office_phone_number: officePhoneNumber,
+                    office_extension_number: officeExtensionNumber,
+                    office_website: officeWebsite,
+                    office_active_status: officeActiveStatus
+                }
     
-            setUpdateDeleteModalOpen(true);
+                setEditedOffice(new_office);
+        
+                setUpdateDeleteModalOpen(true);
+            }
         }
         setFormInvalid(false);
 
@@ -426,6 +430,8 @@ const Edit_Office = () => {
     }
     
     function render() {
+        console.log(context.getUserId())
+        console.log(context.getUserEmail())
         return (
             <><div>
                 <Home />

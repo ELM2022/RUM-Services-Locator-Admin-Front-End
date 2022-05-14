@@ -60,15 +60,20 @@ const Edit_Administrator = () => {
             setErrorModalOpen(true);
         }
         else{
-            const new_admin = {
-                admin_id: adminid,
-                admin_email: administratorEmail,
-                admin_name: administratorName,
-                admin_last_name: administratorLastName
+            if(justification === ''){
+                alert("Debe de llenar la justificación.")
             }
-            setEditedAdministrator(new_admin);
-
-            setUpdateDeleteModalOpen(true);
+            else{
+                const new_admin = {
+                    admin_id: adminid,
+                    admin_email: administratorEmail,
+                    admin_name: administratorName,
+                    admin_last_name: administratorLastName
+                }
+                setEditedAdministrator(new_admin);
+    
+                setUpdateDeleteModalOpen(true);
+            }
         }
         setFormInvalid(false);
 
@@ -146,6 +151,7 @@ const Edit_Administrator = () => {
             }
     
     function render() {
+        console.log(context.getUserId())
         return (
             <><div>
                 <Home />

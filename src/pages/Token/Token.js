@@ -16,7 +16,9 @@ const Token = () => {
             const login_token = {token};
             validateAdministratorLoginHandler(login_token).then((res) => {
                 if (res.status === 200) {
+                    console.log(res.data);
                     context.authenticateUser(res.data);
+                    //console.log(context.getUserId())
                     window.location.href = '/Home';
                 }
                 else if(res.status === 400){
