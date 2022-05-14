@@ -4,7 +4,7 @@ import '../Table_Format.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import { officeGetHandler, officeUpdateHandler } from '../../handlers/officeHandler';
 import { addOfficeUpdateHandler } from '../../handlers/officeHistoryHandler'
-import { getAllCategoriesHandler, getOfficeCategoriesHandler, addCategoryHandler, 
+import { getAllCategoriesHandler, getAllActiveCategories, getOfficeCategoriesHandler, addCategoryHandler, 
         addCategoryMembershipHandler, deleteOfficeCategoriesHandler } 
 from '../../handlers/categoriesHandler'
 import AuthContext from '../../contexts/AuthContext'
@@ -77,7 +77,7 @@ const Edit_Office = () => {
     }, [officeid])
 
     useEffect(() => {
-        getAllCategoriesHandler().then((res) => {
+        getAllActiveCategories().then((res) => {
             if (res.status === 200) {
                 const result = [];
                 res.data.data.categories.map((category) => {

@@ -21,7 +21,11 @@ export default function Login_Screen() {
                 if (res.status === 200) {
                     context.authenticateUser(res.data);
                     navigate('/Token', { replace: true });
-                } else {
+                }
+                else if(res.status === 401){
+                    alert("Contraseña Incorrecta. Favor de intentar nuevamente.")
+                } 
+                else {
                     console.log(res);
                 }
             });

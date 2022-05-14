@@ -34,7 +34,7 @@ class Active_Directory extends Component{
             return(
                 <tr key={index}>
                     <td>{office_name}</td>
-                    <td><a href={`/Office_Information/${office_id}`}><button class="btn btn-primary btn-success" id='menu_button'>Ver Mas</button></a></td>
+                    <td><a href={`/Office_Information/${office_id}`}><button class="btn btn-primary btn-success" id='menu_button'>Ver Más</button></a></td>
                 </tr>
             )
         })

@@ -30,7 +30,7 @@ class Active_Administrator extends Component {
                     <td>{`${admin_name} ${admin_last_name}`}</td>
                     <td>
                         <a href={`/Admin_Information/${admin_id}`}>
-                            <button class='btn btn-primary btn-success' id='menu_button'>Ver Mas</button>
+                            <button class='btn btn-primary btn-success' id='menu_button'>Ver Más</button>
                         </a>
                     </td>
                 </tr>

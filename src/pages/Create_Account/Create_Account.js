@@ -23,6 +23,14 @@ const Create_Account = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        if(email === "" || name === "" || lastName === "" || password === "" || confirmPassword === ""){
+            alert("No se puede crear una cuenta que contenga una o más de las siguientes entradas en blanco:\n\n Correo Electrónico\n Nombre\n Apellido\n Contraseña\n\n Favor intentar de nuevo.")
+        }
+        else if( password !== confirmPassword){
+            alert("Las contraseñas ingresadas no coinciden, favor de verificar e intentar nuevamente");
+        }
+        else{
+
         try {
             getPendingAdminByEmail(email).then((res) => {
                 if (res.status === 200) {
@@ -74,6 +82,7 @@ const Create_Account = () => {
         } catch (error) {
             console.log(error);
         }
+    }
     }
 
     const render = () => {
